@@ -444,15 +444,30 @@ Year & GDP & CPI & UNRATE\tabularnewline
 \bottomrule
 \end{longtable}
 
-To load this CSV file as a NumPy array, we use \texttt{loadtxt()}:
+To load this CSV file as a NumPy array, we use \texttt{loadtxt()}. As in
+the previous unit, it is advantageous to globally set the path to the
+\texttt{data/} directory that can point either to the local directory or
+to the \texttt{data/} directory on GitHub.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{1}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Uncomment this to use files in the local data/ directory}
+\PY{c+c1}{\PYZsh{} DATA\PYZus{}PATH = \PYZsq{}../data\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Load data directly from GitHub}
+\PY{n}{DATA\PYZus{}PATH} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{https://raw.githubusercontent.com/richardfoltyn/MLFP\PYZhy{}ECON5130/main/data}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 
+
 \PY{c+c1}{\PYZsh{} relative path to CSV file}
-\PY{n}{file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/FRED.csv}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{file} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{DATA\PYZus{}PATH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/FRED.csv}\PY{l+s+s1}{\PYZsq{}}
 
 \PY{c+c1}{\PYZsh{} load CSV}
 \PY{n}{data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{loadtxt}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{n}{skiprows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -461,7 +476,7 @@ To load this CSV file as a NumPy array, we use \texttt{loadtxt()}:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{1}{\boxspacing}
+\prompt{Out}{outcolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 array([[1948. , 2118.5,   24. ,    3.8],
        [1949. , 2106.6,   23.8,    6. ]])
@@ -496,11 +511,11 @@ with more complex data sets. For example, when we try to load our sample
 of universities with \texttt{loadtxt()}, we get the following error:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{2}{\boxspacing}
+\prompt{In}{incolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 
-\PY{n}{file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/universities.csv}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{file} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{DATA\PYZus{}PATH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/universities.csv}\PY{l+s+s1}{\PYZsq{}}
 
 \PY{c+c1}{\PYZsh{} Try to load CSV data that contains strings}
 \PY{c+c1}{\PYZsh{} This will result in an error!}
@@ -533,7 +548,7 @@ accomplished by constructing a special \texttt{dtype} object that
 specifies the field names and their data types:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{3}{\boxspacing}
+\prompt{In}{incolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Define names and data types for fields in CSV file}
 \PY{c+c1}{\PYZsh{}   Data types are defined using two tokens:}
@@ -563,7 +578,7 @@ We can get around this by using \texttt{genfromtxt()}, which is more
 flexible and can also deal with missing data:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{4}{\boxspacing}
+\prompt{In}{incolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} load data using genfromtxt()}
 \PY{c+c1}{\PYZsh{} We still need to specify the dtype defined above!}
@@ -581,7 +596,7 @@ flexible and can also deal with missing data:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{4}{\boxspacing}
+\prompt{Out}{outcolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 array([('"University of Strathclyde"', '"Scotland"', 1964, 22640,   -1, 3200,
 304.4, 0),
@@ -616,7 +631,7 @@ To save a NumPy array to a CSV file, there is a logical counterpart to
 \texttt{np.loadtxt()} which is called \texttt{np.savetxt()}.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{5}{\boxspacing}
+\prompt{In}{incolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{k+kn}{import} \PY{n+nn}{os}\PY{n+nn}{.}\PY{n+nn}{path}
@@ -642,7 +657,7 @@ To save a NumPy array to a CSV file, there is a logical counterpart to
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Saving CSV file to /tmp/tmp8o8baj8c/data.csv
+Saving CSV file to /tmp/tmpr33k55e1/data.csv
     \end{Verbatim}
 
     The above code creates a \(10 \times 5\) matrix of random floats and
@@ -739,12 +754,12 @@ To illustrate, we repeat the above examples using pandas's
 data, the result is very similar to reading in a NumPy array.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{6}{\boxspacing}
+\prompt{In}{incolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
 
 \PY{c+c1}{\PYZsh{} relative path to CSV file}
-\PY{n}{file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/FRED.csv}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{file} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{DATA\PYZus{}PATH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/FRED.csv}\PY{l+s+s1}{\PYZsq{}}
 
 \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}          \PY{c+c1}{\PYZsh{} Display the first 2 rows of data}
@@ -752,7 +767,7 @@ data, the result is very similar to reading in a NumPy array.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{6}{\boxspacing}
+\prompt{Out}{outcolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
    Year     GDP   CPI  UNRATE
 0  1948  2118.5  24.0     3.8
@@ -765,12 +780,12 @@ load our university data: this works out of the box, without the need to
 specify any data types or to handle missing values:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{7}{\boxspacing}
+\prompt{In}{incolor}{8}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
 
 \PY{c+c1}{\PYZsh{} relative path to CSV file}
-\PY{n}{file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/universities.csv}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{file} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{DATA\PYZus{}PATH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/universities.csv}\PY{l+s+s1}{\PYZsq{}}
 
 \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{;}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \PY{n}{df}\PY{o}{.}\PY{n}{tail}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}      \PY{c+c1}{\PYZsh{} show last 3 rows}
@@ -778,7 +793,7 @@ specify any data types or to handle missing values:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{7}{\boxspacing}
+\prompt{Out}{outcolor}{8}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
                    Institution           Country  Founded  Students   Staff  \textbackslash{}
 20      University of Stirling          Scotland     1967      9548     NaN
@@ -799,12 +814,12 @@ Unlike NumPy, pandas can also process other popular data formats such as
 MS Excel files (or OpenDocument spreadsheets):
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{8}{\boxspacing}
+\prompt{In}{incolor}{9}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
 
 \PY{c+c1}{\PYZsh{} Excel file containing university data}
-\PY{n}{file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/universities.xlsx}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{file} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{DATA\PYZus{}PATH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/universities.xlsx}\PY{l+s+s1}{\PYZsq{}}
 
 \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{n}{sheet\PYZus{}name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{universities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
@@ -812,7 +827,7 @@ MS Excel files (or OpenDocument spreadsheets):
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{8}{\boxspacing}
+\prompt{Out}{outcolor}{9}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
                 Institution   Country  Founded  Students   Staff   Admin  \textbackslash{}
 0     University of Glasgow  Scotland     1451     30805  2942.0  4003.0
@@ -860,12 +875,12 @@ files, the width (\ie the number of characters) has to be explicitly
 specified:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{9}{\boxspacing}
+\prompt{In}{incolor}{10}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
 
 \PY{c+c1}{\PYZsh{} File name of FRED data, stored as fixed\PYZhy{}width text}
-\PY{n}{file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/FRED\PYZhy{}fixed.csv}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{file} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{DATA\PYZus{}PATH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/FRED\PYZhy{}fixed.csv}\PY{l+s+s1}{\PYZsq{}}
 
 \PY{c+c1}{\PYZsh{} field widths are passed as list to read\PYZus{}fwf()}
 \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}fwf}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{n}{widths}\PY{o}{=}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{]}\PY{p}{)}
@@ -874,7 +889,7 @@ specified:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{9}{\boxspacing}
+\prompt{Out}{outcolor}{10}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
    Year     GDP   CPI  UNRATE
 0  1948  2118.5  24.0     3.8
@@ -900,7 +915,7 @@ automatically supported. For example, we can pickle a list containing a
 \texttt{tuple}, a string and a NumPy array:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{10}{\boxspacing}
+\prompt{In}{incolor}{11}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{k+kn}{import} \PY{n+nn}{pickle}
@@ -929,13 +944,13 @@ automatically supported. For example, we can pickle a list containing a
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Pickled data written to /tmp/tmpko3y7jsf/data.bin
+Pickled data written to /tmp/tmp8g8zsmzm/data.bin
     \end{Verbatim}
 
     We can then read back the data as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{11}{\boxspacing}
+\prompt{In}{incolor}{12}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} load pickle data from above}
 \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
@@ -948,7 +963,7 @@ Pickled data written to /tmp/tmpko3y7jsf/data.bin
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{11}{\boxspacing}
+\prompt{Out}{outcolor}{12}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 array([[0, 1, 2, 3, 4],
        [5, 6, 7, 8, 9]])
