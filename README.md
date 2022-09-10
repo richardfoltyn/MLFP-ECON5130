@@ -11,7 +11,7 @@ to one interactive Jupyter notebook, which is also available
 as a static PDF file. Alternatively, you can download the entire course as a 
 **[single PDF](latex/MLFP-part1.pdf)**.
 
-1.  Language and NumPy basics [[PDF](latex/unit01.pdf)]
+1.  Language and NumPy basics [[PDF](latex/unit01.pdf)] [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit01.ipynb)
 2.  Control flow and list comprehensions [[PDF](latex/unit02.pdf)]
 3.  Reusing code - Functions, modules and packages [[PDF](latex/unit03.pdf)]
 4.  Plotting [[PDF](latex/unit04.pdf)]
