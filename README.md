@@ -42,7 +42,7 @@ Python installation is required.
 
 If you are familiar with git, clone the repository:
 ```bash
-git clone https://github.com/richardfoltyn/python-statistics.git
+git clone https://github.com/richardfoltyn/MLFP-ECON5130.git
 ```
 Otherwise, download the contents as a ZIP file by clicking on
 ![Code](images/gh-code.png) above.
