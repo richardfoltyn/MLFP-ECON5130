@@ -3,6 +3,7 @@
     \input{overrides-pre}
 
     \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
     
 
     % Basic figure setup, for now with no caption control since it's done
@@ -165,9 +166,10 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \newcommand*{\mytitle}{Unit 1: Crash course for the impatient}
-    
+    \newcommand*{\mytitle}{Unit 2: Language and NumPy basics}
+
     \input{overrides-post}
+    
     
     
     
@@ -391,110 +393,661 @@
     
 
     
-    \hypertarget{crash-course-for-the-impatient}{%
-\section{Crash course for the
-impatient}\label{crash-course-for-the-impatient}}
+    \hypertarget{language-and-numpy-basics}{%
+\section{Language and NumPy basics}\label{language-and-numpy-basics}}
 
-This crash course is intended to illustrate the main concepts involved
-when using Python for data analysis in less than 30 minutes.
-
-\hypertarget{language-syntax}{%
-\subsection{Language syntax}\label{language-syntax}}
-
-Python has a very straightforward syntax:
+In this unit we start exploring the Python language, covering the
+following topics:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
-  Everything following a \texttt{\#} is a comment.
+  Basic syntax
 \item
-  Names are case sensitive.
+  Built-in data types
 \item
-  Variables are dynamically typed and are created by assignment:
-
-\begin{verbatim}
-varname = value
-\end{verbatim}
-\item
-  There is no need to terminate a statement with \texttt{;}
-\item
-  Indentation matters and is used to group blocks of code such as
-  functions.
+  NumPy arrays
 \end{enumerate}
 
-\hypertarget{built-in-data-types}{%
-\subsubsection{Built-in data types}\label{built-in-data-types}}
+\hypertarget{basic-syntax}{%
+\subsection{Basic syntax}\label{basic-syntax}}
 
-For data analysis, the most important built-in data types are integers,
-floats, strings and lists.
+\begin{itemize}
+\tightlist
+\item
+  Everything after a \# character (until the end of the line) is a
+  comment and will be ignored.
+\item
+  Variable names are case sensitive.
+\item
+  Whitespace characters matter (unlike in most languages)!
+\item
+  Python uses indentation (usually 4 spaces) to group statements, for
+  example loop bodies, functions, etc.
+\item
+  You don't need to add a character to terminate a line, unlike in some
+  languages.
+\item
+  You can use the \texttt{print()} function to inspect almost any
+  object.
+\end{itemize}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{1}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{x} \PY{o}{=} \PY{l+m+mi}{1}           \PY{c+c1}{\PYZsh{} integer}
-\PY{n}{x} \PY{o}{=} \PY{l+m+mf}{1.0}         \PY{c+c1}{\PYZsh{} floating\PYZhy{}point number (float)}
-\PY{n}{x} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}       \PY{c+c1}{\PYZsh{} string}
-\PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}   \PY{c+c1}{\PYZsh{} list}
+\PY{c+c1}{\PYZsh{} First example}
+
+\PY{c+c1}{\PYZsh{} create a variable named \PYZsq{}text\PYZsq{} that stores the string \PYZsq{}Hello, world!\PYZsq{}}
+\PY{n}{text} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Hello, world!}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} print contents of \PYZsq{}text\PYZsq{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{text}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \hypertarget{indexing}{%
-\subsubsection{Indexing}\label{indexing}}
+    \begin{Verbatim}[commandchars=\\\{\}]
+Hello, world!
+    \end{Verbatim}
 
-Lists and other containers are indexed using brackets \texttt{{[}{]}}.
-Python indices start at 0:
+    In Jupyter notebooks and interactive command-line environments, we can
+also display a value by simply writing the variable name.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}       \PY{c+c1}{\PYZsh{} list containing 3 integers}
-\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}                \PY{c+c1}{\PYZsh{} returns first item}
+\PY{n}{text}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-1
+'Hello, world!'
 \end{Verbatim}
 \end{tcolorbox}
         
-    Negative integer values index items from the \emph{end} of the list:
+    Alternatively, we don't even need to create a variable but can instead
+directly evaluate expressions and print the result:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{x}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}               \PY{c+c1}{\PYZsh{} returns last item}
+\PY{l+m+mi}{2}\PY{o}{*}\PY{l+m+mi}{3}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-3
+6
 \end{Verbatim}
 \end{tcolorbox}
         
-    Ranges of items can be selected using slices, which are triples of the
-form \texttt{start:stop:step}. Any of the three tokens can be omitted.
-\texttt{stop} is not included in the selection:
+    This does not print anything in \emph{proper} Python script files that
+are run through the interpreter, though.
+
+Calling \texttt{print()} is also useful if we want to display multiple
+expressions from a single notebook cell, as otherwise only the last
+value is shown:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}         \PY{c+c1}{\PYZsh{} create list of three integers}
-
-\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{]}                \PY{c+c1}{\PYZsh{} all items; equivalent to x[::], or just x}
-\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}              \PY{c+c1}{\PYZsh{} every second item, returns [1, 3]}
-\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}              \PY{c+c1}{\PYZsh{} second and third items, returns [2, 3]}
-\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}             \PY{c+c1}{\PYZsh{} all items in reverse order, returns [3, 2, 1]}
+\PY{n}{text} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Hello world!}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{var} \PY{o}{=} \PY{l+m+mi}{1}
+\PY{n}{text}        \PY{c+c1}{\PYZsh{} does NOT print contents of text}
+\PY{n}{var}         \PY{c+c1}{\PYZsh{} prints only value of var}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[3, 2, 1]
+1
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{text}\PY{p}{)} \PY{c+c1}{\PYZsh{} print text explicitly}
+\PY{n}{var}         \PY{c+c1}{\PYZsh{} var is shown automatically}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Hello world!
+    \end{Verbatim}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+1
+\end{Verbatim}
+\end{tcolorbox}
+        
+
+\hypertarget{built-in-data-types}{%
+\subsection{Built-in data types}\label{built-in-data-types}}
+
+Pythons is a dynamically-typed language:
+
+\begin{itemize}
+\tightlist
+\item
+  Unlike in C or Fortran, you don't need to declare a variable or its
+  type.
+\item
+  You can inspect a variable's type using the built-in \texttt{type()}
+  function, but you rarely need to do this.
+\end{itemize}
+
+We now look at the most useful built-in data types:
+
+\textbf{Basic types}
+
+\begin{itemize}
+\tightlist
+\item
+  integers (\texttt{int})
+\item
+  floating-point numbers (\texttt{float})
+\item
+  boolean (\texttt{bool})
+\item
+  strings (\texttt{str})
+\end{itemize}
+
+\textbf{Containers (or collections)}
+
+\begin{itemize}
+\tightlist
+\item
+  tuples (\texttt{tuple})
+\item
+  lists (\texttt{list})
+\item
+  dictionaries (\texttt{dict})
+\end{itemize}
+
+    \hypertarget{integers-and-floats}{%
+\subsubsection{Integers and floats}\label{integers-and-floats}}
+
+Integers and floats (floating-point numbers) are the two main built-in
+data types to store numerical data (we ignore complex numbers in this
+tutorial). Floating-point is the standard way to represent real numbers
+on computers since these cannot store real numbers with arbitrary
+precision.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Integer variables}
+\PY{n}{i} \PY{o}{=} \PY{l+m+mi}{1}
+\PY{n+nb}{type}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+int
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Floating\PYZhy{}point variables}
+\PY{n}{x} \PY{o}{=} \PY{l+m+mf}{1.0}
+\PY{n+nb}{type}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+float
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} A name can reference any data type:}
+\PY{c+c1}{\PYZsh{} Previously, x was a float, now it\PYZsq{}s an integer!}
+\PY{n}{x} \PY{o}{=} \PY{l+m+mi}{1}
+\PY{n+nb}{type}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+int
+\end{Verbatim}
+\end{tcolorbox}
+        
+    It is good programming practice to specify floating-point literals using
+a decimal point. It makes a difference in a few cases (especially when
+using NumPy arrays, or Python extensions such as Numba or Cython):
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{x} \PY{o}{=} \PY{l+m+mf}{1.0}         \PY{c+c1}{\PYZsh{} instead of x = 1}
+\end{Verbatim}
+\end{tcolorbox}
+
+    A boolean (\texttt{bool}) is a special integer type that can only store
+two values, \texttt{True} and \texttt{False}. We create booleans by
+assigning one of these values to a variable:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{x} \PY{o}{=} \PY{k+kc}{True}
+\PY{n}{x} \PY{o}{=} \PY{k+kc}{False}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Boolean values are most frequently used for conditional execution, \ie
+a block of code is run only when some variable is \texttt{True}. We
+study conditional execution in the next unit.
+
+    \hypertarget{strings}{%
+\subsubsection{Strings}\label{strings}}
+
+The string data type stores sequences of characters:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Strings need to be surrounded by single (\PYZsq{}) or double (\PYZdq{}) quotes!}
+\PY{n}{institution} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{University of Glasgow}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{institution} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{University of Glasgow}\PY{l+s+s2}{\PYZdq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Strings support various operations some of which we explore in the
+exercises at the end of this section. For example, we can use the
+addition operation \texttt{+} to concatenate strings:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Define two strings}
+\PY{n}{str1} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Python}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{str2} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{course}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Concatenate strings using +}
+\PY{n}{str1} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{str2} 
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'Python course'
+\end{Verbatim}
+\end{tcolorbox}
+        
+    An extremely useful variant of strings are the so-called
+\emph{f-strings}. These allow us to dynamically insert a variable value
+into a string, a feature we'll use throughout this course.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Approximate value of pi}
+\PY{n}{pi} \PY{o}{=} \PY{l+m+mf}{3.1415}
+
+\PY{c+c1}{\PYZsh{} Use f\PYZhy{}strings to embed the value of the variable version inside the string}
+\PY{n}{s} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pi is approximately equal to }\PY{l+s+si}{\PYZob{}}\PY{n}{pi}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{s}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'Pi is approximately equal to 3.1415'
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{tuples}{%
+\subsubsection{Tuples}\label{tuples}}
+
+Tuples represent a collection of several items which can have different
+data types. They are created whenever several items are separated by
+commas. The parentheses are optional:
+
+\begin{verbatim}
+(item1, item2, ...)
+\end{verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} A tuple containing a string, an integer and a float}
+\PY{n}{items} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{foo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}
+\PY{n}{items}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+('foo', 1, 1.0)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    The parenthesis are optional, but improve readability:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{items} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{foo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1.0}       \PY{c+c1}{\PYZsh{} equivalent way to create a tuple}
+\PY{n}{items}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+('foo', 1, 1.0)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    We use brackets \texttt{{[}{]}} to access an element in a tuple (or any
+other container object)
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{first} \PY{o}{=} \PY{n}{items}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}            \PY{c+c1}{\PYZsh{} variable first now contains \PYZsq{}foo\PYZsq{}}
+\PY{n}{first}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'foo'
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Python indices are 0-based, so 0 references the first element, 1 the
+second element, etc.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{17}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{second} \PY{o}{=} \PY{n}{items}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}           \PY{c+c1}{\PYZsh{} second element}
+\PY{n}{second}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{17}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+1
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Tuples are immutable, which means that the items stored in the tuple
+cannot be changed!
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{18}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} This raises an error!}
+\PY{n}{items} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{foo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1.0}
+\PY{n}{items}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{123}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
+\textcolor{ansi-red}{TypeError}\textcolor{ansi-red}{:} 'tuple' object does not support item assignment
+
+    \end{Verbatim}
+
+    \hypertarget{lists}{%
+\subsubsection{Lists}\label{lists}}
+
+Lists are like tuples, except that they can be modified. We create lists
+using brackets,
+
+\begin{verbatim}
+[item1, item2, ...]
+\end{verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create list which contains a string, an integer and a float}
+\PY{n}{lst} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{foo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{]}
+\PY{n}{lst}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+['foo', 1, 1.0]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Accessing list items works the same way as with tuples
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lst}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}                  \PY{c+c1}{\PYZsh{} print first item}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'foo'
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Lists items can be modified:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lst}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}          \PY{c+c1}{\PYZsh{} first element is now \PYZsq{}bar\PYZsq{}}
+\PY{n}{lst}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+['bar', 1, 1.0]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Lists are full-fledged objects that support various operations, for
+example
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lst}\PY{o}{.}\PY{n}{insert}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}    \PY{c+c1}{\PYZsh{} insert element at position 0}
+\PY{n}{lst}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mf}{2.0}\PY{p}{)}         \PY{c+c1}{\PYZsh{} append element at the end}
+\PY{k}{del} \PY{n}{lst}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}              \PY{c+c1}{\PYZsh{} delete the 4th element}
+\PY{n}{lst}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+['abc', 'bar', 1, 2.0]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    The built-in function \texttt{len()} returns the number of elements in a
+list (and any other container object)
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{23}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{len}\PY{p}{(}\PY{n}{lst}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{23}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+4
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{dictionaries}{%
+\subsubsection{Dictionaries}\label{dictionaries}}
+
+Dictionaries are container objects that map keys to values.
+
+\begin{itemize}
+\tightlist
+\item
+  Both keys and values can be (almost any) Python objects, even though
+  usually we use strings as keys.
+\item
+  Dictionaries are created using curly braces:
+  \texttt{\{key1:\ value1,\ key2:\ value2,\ ...\}}.
+\end{itemize}
+
+For example, to create a dictionary with three items we write
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{dct} \PY{o}{=} \PY{p}{\PYZob{}}
+   \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{institution}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{University of Glasgow}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+   \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{course}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Python course}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+   \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2021}
+\PY{p}{\PYZcb{}}
+\PY{n}{dct}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\{'institution': 'University of Glasgow',
+ 'course': 'Python course',
+ 'year': 2021\}
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Specific values are accessed using the syntax \texttt{dict{[}key{]}}:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{dct}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{institution}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'University of Glasgow'
+\end{Verbatim}
+\end{tcolorbox}
+        
+    We can use the same syntax to either modify an existing key or add a new
+key-value pair:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{dct}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{course}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Introduction to Python}\PY{l+s+s1}{\PYZsq{}}        \PY{c+c1}{\PYZsh{} modify value of existing key}
+\PY{n}{dct}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{city}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Glasgow}\PY{l+s+s1}{\PYZsq{}}                         \PY{c+c1}{\PYZsh{} add new key\PYZhy{}value pair}
+\PY{n}{dct}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\{'institution': 'University of Glasgow',
+ 'course': 'Introduction to Python',
+ 'year': 2021,
+ 'city': 'Glasgow'\}
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Moreover, we can use the methods \texttt{keys()} and \texttt{values()}
+to get the collection of a dictionary's keys and values:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{27}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{dct}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{27}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+dict\_keys(['institution', 'course', 'year', 'city'])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{28}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{dct}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{28}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+dict\_values(['University of Glasgow', 'Introduction to Python', 2021,
+'Glasgow'])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    When we try to retrieve a key that is not in the dictionary, this will
+produce an error:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{29}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{dct}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
+\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} 'country'
+
+    \end{Verbatim}
+
+    One way to get around this is to use the \texttt{get()} method which
+accepts a default value that will be returned whenever a key is not
+present:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{30}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{dct}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Scotland}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}      \PY{c+c1}{\PYZsh{} return \PYZsq{}Scotland\PYZsq{} if \PYZsq{}country\PYZsq{} is}
+                                    \PY{c+c1}{\PYZsh{} not a valid key}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{30}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'Scotland'
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -502,541 +1055,1385 @@ form \texttt{start:stop:step}. Any of the three tokens can be omitted.
 \hypertarget{numpy-arrays}{%
 \subsection{NumPy arrays}\label{numpy-arrays}}
 
-We store numerical data in NumPy arrays. NumPy is not part of the
-standard library and has to be imported before usage:
+NumPy is a library that allows us to efficiently store and access
+(mainly) numerical data and apply numerical operations similar to those
+available in Matlab.
 
-\begin{verbatim}
-import numpy as np
-\end{verbatim}
+\begin{itemize}
+\tightlist
+\item
+  NumPy is not part of the core Python project.
+\item
+  Python itself has an array type, but there is really no reason to use
+  it. Use NumPy!
+\item
+  NumPy types and functions are not built-in, we must first import them
+  to make them visible. We do this using the \texttt{import} statement.
+\end{itemize}
 
-\hypertarget{creating-arrays}{%
-\subsubsection{Creating arrays}\label{creating-arrays}}
-
-NumPy arrays can be created using a number of ways:
+The convention is to make NumPy functionality available using the
+\texttt{np} namespace:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{5}{\boxspacing}
+\prompt{In}{incolor}{31}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}         \PY{c+c1}{\PYZsh{} integer array from list}
-\PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{3.0}\PY{p}{]}\PY{p}{)}   \PY{c+c1}{\PYZsh{} floating\PYZhy{}point array from list}
-
-\PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}               \PY{c+c1}{\PYZsh{} range of integers 0,...,9}
-\PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)}   \PY{c+c1}{\PYZsh{} 11 floats uniformly spaced on [0, 1]}
-
-\PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}             \PY{c+c1}{\PYZsh{} 3x3 matrix of zeros}
-\PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}                 \PY{c+c1}{\PYZsh{} 10\PYZhy{}element vector of ones}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \hypertarget{element-wise-operations}{%
-\subsubsection{Element-wise operations}\label{element-wise-operations}}
+    \hypertarget{creating-arrays}{%
+\subsubsection{Creating arrays}\label{creating-arrays}}
 
-With NumPy, the default is to apply operators element-by-element (unlike
-in Matlab, where you would use \texttt{.*} for element-wise
-multiplication):
+NumPy offers a multitude of functions to create arrays.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{6}{\boxspacing}
+\prompt{In}{incolor}{32}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}                \PY{c+c1}{\PYZsh{} vector [0,1,2,3,4]}
-\PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}             \PY{c+c1}{\PYZsh{} vector [5,6,7,8,9]}
-
-\PY{c+c1}{\PYZsh{} resulting vector is of the same size}
-\PY{n}{x} \PY{o}{+} \PY{n}{y}                           \PY{c+c1}{\PYZsh{} vector [5,7,9,11,13]}
-\PY{n}{x} \PY{o}{*} \PY{n}{y}
-\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{y}
-\PY{n}{x} \PY{o}{/} \PY{n}{y}
+\PY{c+c1}{\PYZsh{} Create a 1\PYZhy{}dimensional array with 10 elements, initialise values to 0.}
+\PY{c+c1}{\PYZsh{} We need to prefix the NumPy function zeros() with \PYZsq{}np\PYZsq{}}
+\PY{n}{arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+\PY{n}{arr}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{6}{\boxspacing}
+\prompt{Out}{outcolor}{32}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([0.        , 0.16666667, 0.28571429, 0.375     , 0.44444444])
+array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
 \end{Verbatim}
 \end{tcolorbox}
         
-    \hypertarget{matrix-operations}{%
-\subsubsection{Matrix operations}\label{matrix-operations}}
-
-Matrix-matrix and matrix-vector multiplication is performed using the
-\texttt{np.dot()} function, or alternatively, the \texttt{@} operator:
-
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{7}{\boxspacing}
+\prompt{In}{incolor}{33}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-
-\PY{c+c1}{\PYZsh{} create 2x3 matrix}
-\PY{n}{mat} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,}
-                \PY{p}{[}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{]}\PY{p}{]}\PY{p}{)}
-\PY{n}{mat}                             \PY{c+c1}{\PYZsh{} print matrix}
+\PY{n}{arr1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}       \PY{c+c1}{\PYZsh{} vector of five ones}
+\PY{n}{arr1}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{7}{\boxspacing}
+\prompt{Out}{outcolor}{33}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([1., 1., 1., 1., 1.])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    We can also create sequences of integers using the \texttt{np.arange()}
+function:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{34}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{arr2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}     \PY{c+c1}{\PYZsh{} vector [0,1,2,3,4]}
+\PY{n}{arr2}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{34}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([0, 1, 2, 3, 4])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \texttt{np.arange()} accepts initial values and increments as optional
+arguments. The end value is \emph{not} included.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{35}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{start} \PY{o}{=} \PY{l+m+mi}{2}
+\PY{n}{end} \PY{o}{=} \PY{l+m+mi}{10}
+\PY{n}{step} \PY{o}{=} \PY{l+m+mi}{2}
+\PY{n}{arr3} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{start}\PY{p}{,} \PY{n}{end}\PY{p}{,} \PY{n}{step}\PY{p}{)}
+\PY{n}{arr3}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{35}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([2, 4, 6, 8])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    As in Matlab, there is a \texttt{np.linspace()} function that creates a
+vector of uniformly-spaced real values.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{36}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create 11 elements, equally spaced on the interval [0.0, 1.0]}
+\PY{n}{arr5} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)}
+\PY{n}{arr5}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{36}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([0. , 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1. ])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    We create arrays of higher dimension by specifying the desired shape.
+Shapes are specified as \texttt{tuple} arguments; for example, the shape
+of an \(m\times n\) matrix is \texttt{(m,n)}.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{37}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mat} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}    \PY{c+c1}{\PYZsh{} Create 2x2 matrix of ones}
+\PY{n}{mat}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{37}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([[1., 1.],
+       [1., 1.]])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \textbf{Creating arrays from other Python objects}
+
+Arrays can be created from other objects such as lists and tuples by
+calling \texttt{np.array()}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{38}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create array from list [1,2,3]}
+\PY{n}{arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+\PY{n}{arr}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{38}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([1, 2, 3])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{39}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create array from tuple}
+\PY{n}{arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{(}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{3.0}\PY{p}{)}\PY{p}{)}
+\PY{n}{arr}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{39}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([1., 2., 3.])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{40}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create two\PYZhy{}dimensional array from nested list}
+\PY{n}{arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\PY{n}{arr}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{40}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 array([[1, 2, 3],
        [4, 5, 6]])
 \end{Verbatim}
 \end{tcolorbox}
         
+    \hypertarget{reshaping-arrays}{%
+\subsubsection{Reshaping arrays}\label{reshaping-arrays}}
+
+The \texttt{reshape()} method of an array object can be used to reshape
+it to some other (conformable) shape.
+
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{8}{\boxspacing}
+\prompt{In}{incolor}{41}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} create length\PYZhy{}2 vector}
-\PY{n}{vec} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
-\PY{n}{vec}                             \PY{c+c1}{\PYZsh{} print vector}
+\PY{c+c1}{\PYZsh{} Create vector of 4 elements and reshape it to a 2x2 matrix}
+\PY{n}{mat} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+\PY{n}{mat}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{8}{\boxspacing}
+\prompt{Out}{outcolor}{41}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([1, 2])
+array([[0, 1],
+       [2, 3]])
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{9}{\boxspacing}
+\prompt{In}{incolor}{42}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} vector\PYZhy{}matrix multiplication}
-\PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{vec}\PY{p}{,} \PY{n}{mat}\PY{p}{)}                \PY{c+c1}{\PYZsh{} or vec @ mat}
+\PY{c+c1}{\PYZsh{} reshape back to vector of 4 elements}
+\PY{n}{vec} \PY{o}{=} \PY{n}{mat}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}
+\PY{n}{vec}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{9}{\boxspacing}
+\prompt{Out}{outcolor}{42}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([ 9, 12, 15])
+array([0, 1, 2, 3])
 \end{Verbatim}
 \end{tcolorbox}
         
+    We use \texttt{-1} to let NumPy automatically compute the size of
+\emph{one} remaining dimension.
+
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{10}{\boxspacing}
+\prompt{In}{incolor}{43}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} matrix\PYZhy{}matrix multiplication}
-\PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{mat}\PY{p}{,} \PY{n}{mat}\PY{o}{.}\PY{n}{T}\PY{p}{)}              \PY{c+c1}{\PYZsh{} or mat @ mat}
+\PY{c+c1}{\PYZsh{} with 2 dimensions, second dimension must have size 2}
+\PY{n}{mat} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+\PY{n}{mat}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{10}{\boxspacing}
+\prompt{Out}{outcolor}{43}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([[14, 32],
-       [32, 77]])
+array([[0, 1],
+       [2, 3]])
 \end{Verbatim}
 \end{tcolorbox}
         
-    We use \texttt{.T} to transpose a matrix.
-
-    \hypertarget{numpy-functions}{%
-\subsubsection{NumPy functions}\label{numpy-functions}}
-
-NumPy implements the usual gamut of mathematical functions you'd expect,
-such as:
+    If we want to convert an arbitrary array to a vector, we can
+alternatively use the \texttt{flatten()} method.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{11}{\boxspacing}
+\prompt{In}{incolor}{44}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mat}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{44}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([0, 1, 2, 3])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \emph{Important:} the reshaped array must have the same number of
+elements!
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{45}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}              \PY{c+c1}{\PYZsh{} integers 1,...,5}
-
-\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{x}\PY{p}{)}                      \PY{c+c1}{\PYZsh{} square root}
-\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{n}{x}\PY{p}{)}                       \PY{c+c1}{\PYZsh{} exponential function}
-\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{x}\PY{p}{)}                       \PY{c+c1}{\PYZsh{} natural logarithm}
-\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{)}                       \PY{c+c1}{\PYZsh{} sine function}
+\PY{n}{mat} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+\PY{n}{mat}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}      \PY{c+c1}{\PYZsh{} Cannot reshape 6 into 4 elements!}
 \end{Verbatim}
 \end{tcolorbox}
 
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{11}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-array([ 0.84147098,  0.90929743,  0.14112001, -0.7568025 ])
-\end{Verbatim}
-\end{tcolorbox}
-        
+    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
+\textcolor{ansi-red}{ValueError}\textcolor{ansi-red}{:} cannot reshape array of size 6 into shape (2,2)
 
-\hypertarget{plotting}{%
-\subsection{Plotting}\label{plotting}}
+    \end{Verbatim}
 
-The most common plotting library used in Python is \emph{matplotlib}. To
-use it, we need to import it as follows:
+    \hypertarget{indexing}{%
+\subsubsection{Indexing}\label{indexing}}
 
-\begin{verbatim}
-import matplotlib.pyplot as plt
-\end{verbatim}
+\textbf{Single element indexing}
 
-The main plotting routine is \texttt{plot()} which displays lines; other
-useful routines are \texttt{scatter()} and \texttt{bar()}.
-
-The following code demonstrates how to plot some randomly generated
-data:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{12}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
-\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-
-\PY{c+c1}{\PYZsh{} Create figure with three panels (axes) arranged in three columns}
-\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{11}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{)}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} plot square\PYZhy{}root function}
-\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Square root}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Line plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} scatter plot of random uniformly distributed data}
-\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{1234}\PY{p}{)}
-\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{l+m+mi}{50}\PY{p}{)}
-\PY{n}{yvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{l+m+mi}{50}\PY{p}{)}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{)}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Scatter plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)}
-\PY{n}{yvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}\PY{p}{)}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{,} \PY{l+m+mf}{0.09}\PY{p}{)}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bar plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{12}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-Text(0.5, 1.0, 'Bar plot')
-\end{Verbatim}
-\end{tcolorbox}
-        
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit01_files/unit01_21_1.pdf}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
-
-\hypertarget{functions}{%
-\subsection{Functions}\label{functions}}
-
-Functions are the most important way to reuse and encapsulate code. They
-are defined using the \texttt{def} keyword. The function body is written
-as an indented block:
-
-\begin{verbatim}
-def func(x):
-    # perform computations on x
-    return y
-\end{verbatim}
-
-For example, assume that we have a 3rd-order polynomial given by
-\[p(x; \alpha) = \alpha x^3 + b_2 x^2 + b_1 x + b_0\]
-
-where \(\alpha\) is a parameter and \(b_2\), \(b_1\) and \(b_0\) are
-fixed. A function to evaluate this polynomial could be implemented as
-follows:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{13}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{poly}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{:}
-    \PY{n}{b2} \PY{o}{=} \PY{o}{\PYZhy{}} \PY{l+m+mf}{2.0}
-    \PY{n}{b1} \PY{o}{=} \PY{l+m+mf}{1.0}
-    \PY{n}{b0} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{2.0}
-    \PY{n}{p} \PY{o}{=} \PY{n}{alpha} \PY{o}{*} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{3.0} \PY{o}{+} \PY{n}{b2} \PY{o}{*} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0} \PY{o}{+} \PY{n}{b1} \PY{o}{*} \PY{n}{x} \PY{o}{+} \PY{n}{b0}
-    \PY{k}{return} \PY{n}{p}
-\end{Verbatim}
-\end{tcolorbox}
-
-    We can use this definition to evaluate and plot the polynomial for
-various values of \(\alpha\).
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{14}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
-\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-
-\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{1.25}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}
-
-\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mf}{4.5}\PY{p}{)}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Evaluate polynomial with alpha = 1.0}
-\PY{n}{yvalues} \PY{o}{=} \PY{n}{poly}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{alpha=1.0\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Evaluate polynomial with alpha = 1.2}
-\PY{n}{yvalues} \PY{o}{=} \PY{n}{poly}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{1.2}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{alpha=1.2\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Evaluate polynomial with alpha = 0.5}
-\PY{n}{yvalues} \PY{o}{=} \PY{n}{poly}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{alpha=0.5\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}p(x; }\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{alpha)\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{14}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7f60567446d0>
-\end{Verbatim}
-\end{tcolorbox}
-        
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit01_files/unit01_25_1.pdf}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
-    Note that \emph{matplotlib} allows us to use \(\LaTeX\) symbols in
-labels and legends.
-
-
-\hypertarget{working-with-data}{%
-\subsection{Working with data}\label{working-with-data}}
-
-\hypertarget{loading-data}{%
-\subsubsection{Loading data}\label{loading-data}}
-
-The \texttt{data/} directory contains the text file \texttt{FRED.csv} of
-comma-separated annual U.S. data for the following variables:
+To retrieve a single element, we specify the element's index on each
+axis (axis is the NumPy terminology for an array dimension).
 
 \begin{itemize}
 \tightlist
 \item
-  real GDP (in billions of chained 2012 dollars);
+  Remember that just like Python in general, NumPy arrays use 0-based
+  indices.
 \item
-  the consumer price index (CPI); and
-\item
-  the unemployment rate (UNRATE, in percent).
+  Unlike lists or tuples, NumPy arrays support multi-dimensional
+  indexing.
 \end{itemize}
 
-The data was downloaded from the
-\href{https://fred.stlouisfed.org/}{FRED database}, a standard source
-for macroeconomic time series.
-
-The first two rows of this data are
-
-\begin{longtable}[]{@{}llll@{}}
-\toprule
-Year & GDP & CPI & UNRATE\tabularnewline
-\midrule
-\endhead
-1948 & 2118.5 & 24.0 & 3.8\tabularnewline
-1949 & 2106.6 & 23.8 & 6.0\tabularnewline
-\bottomrule
-\end{longtable}
-
-We use the \texttt{loadtxt} function to read the CSV file into a NumPy
-array as follows:
-
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{15}{\boxspacing}
+\prompt{In}{incolor}{46}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 
-\PY{n}{filename} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/FRED.csv}\PY{l+s+s1}{\PYZsq{}}
-\PY{c+c1}{\PYZsh{} Load data into NumPy array}
-\PY{n}{data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{loadtxt}\PY{p}{(}\PY{n}{filename}\PY{p}{,} \PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{skiprows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-\PY{c+c1}{\PYZsh{} Print first 5 rows of data}
-\PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}
+\PY{n}{mat} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+\PY{n}{mat}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{15}{\boxspacing}
+\prompt{Out}{outcolor}{46}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([[1948. , 2118.5,   24. ,    3.8],
-       [1949. , 2106.6,   23.8,    6. ],
-       [1950. , 2289.5,   24.1,    5.2],
-       [1951. , 2473.8,   26. ,    3.3],
-       [1952. , 2574.9,   26.6,    3. ]])
+array([[0, 1],
+       [2, 3],
+       [4, 5]])
 \end{Verbatim}
 \end{tcolorbox}
         
-    \hypertarget{visualising-data}{%
-\subsubsection{Visualising data}\label{visualising-data}}
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{47}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mat}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}    \PY{c+c1}{\PYZsh{} returns element in row 1, column 2}
+\end{Verbatim}
+\end{tcolorbox}
 
-We can now proceed to analyse the data. First, we plot all three time
-series in separate graphs (since their scales are vastly different).
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{47}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+1
+\end{Verbatim}
+\end{tcolorbox}
+        
+    It is important to pass multi-dimensional indices as a tuple within
+brackets, \ie \texttt{{[}0,1{]}} in the above example. We could
+alternatively write \texttt{mat{[}0{]}{[}1{]}}, which would give the
+same result:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{16}{\boxspacing}
+\prompt{In}{incolor}{48}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
-
-\PY{c+c1}{\PYZsh{} Split array into separate time series}
-\PY{c+c1}{\PYZsh{} Years are in the first column; convert them to integer values}
-\PY{n}{years} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
-
-\PY{n}{gdp} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}    \PY{c+c1}{\PYZsh{} GDP in column 2}
-\PY{n}{cpi} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{]}    \PY{c+c1}{\PYZsh{} CPI in column 3}
-\PY{n}{unr} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}    \PY{c+c1}{\PYZsh{} unemployment rate in column 4}
-
-\PY{c+c1}{\PYZsh{} create figure and 3 sub\PYZhy{}plots, each in a new row}
-\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Plot GDP in first panel}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{years}\PY{p}{,} \PY{n}{gdp}\PY{p}{)}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Billions of 2012 USD}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Plot CPI in second panel}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{years}\PY{p}{,} \PY{n}{cpi}\PY{p}{)}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Price level (1982\PYZhy{}1984 = 100)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPI}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Plot unemployment rate in third panel}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{years}\PY{p}{,} \PY{n}{unr}\PY{p}{)}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Unempl. rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Percent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{mat}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{==} \PY{n}{mat}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}       \PY{c+c1}{\PYZsh{} don\PYZsq{}t do this!}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{16}{\boxspacing}
+\prompt{Out}{outcolor}{48}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-Text(0, 0.5, 'Percent')
+True
 \end{Verbatim}
 \end{tcolorbox}
         
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit01_files/unit01_30_1.pdf}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
-    \hypertarget{transforming-data}{%
-\subsubsection{Transforming data}\label{transforming-data}}
+    This is substantially less efficient, though, as it first creates a
+sub-dimensional array \texttt{mat{[}0{]}}, and then applies the second
+index to this array.
 
-GDP and CPI levels are not that informative, so let's transform them to
-annual growth rates.
+    \textbf{Index slices}
+
+There are numerous ways to retrieve a subset of elements from an array.
+The most common way is to specify a triplet of values
+\texttt{start:stop:step} called \texttt{slice} for some axis:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{49}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create a 3x2 matrix}
+\PY{n}{mat} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+\PY{n}{mat}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{49}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([[0, 1, 2],
+       [3, 4, 5]])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{50}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Retrieve only the first and third columns:}
+\PY{n}{mat}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{50}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([[0, 2],
+       [3, 5]])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Indexing with slices can get quite intricate. Some basic rules:
 
 \begin{itemize}
 \tightlist
 \item
-  We do this by defining a function that accepts a vector as input and
-  computes the percentage changes.
+  all tokens in \texttt{start:stop:step} are optional, with the obvious
+  default values. We could therefore write \texttt{::} to include all
+  indices, which is the same as \texttt{:}
 \item
-  The output vector has one fewer element as we need two observations to
-  compute a growth rate.
+  The end value is \emph{not} included. Writing \texttt{vec{[}0:n{]}}
+  does not include element with index \(n\)!
+\item
+  Any of the elements of \texttt{start:stop:step} can be negative.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    If \texttt{start} or \texttt{stop} are negative, elements are
+    counted from the end of the array: \texttt{vec{[}:-1{]}} retrieves
+    the whole vector except for the last element.
+  \item
+    If \texttt{step} is negative, the order of elements is reversed.
+  \end{itemize}
 \end{itemize}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{17}{\boxspacing}
+\prompt{In}{incolor}{51}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Define function to compute growth rates}
-\PY{k}{def} \PY{n+nf}{growth\PYZus{}rate}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
-    \PY{c+c1}{\PYZsh{} Compute absolute difference: subtract lagged observations}
-    \PY{n}{diff} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
-    \PY{c+c1}{\PYZsh{} Growth rate = relative difference}
-    \PY{c+c1}{\PYZsh{} Return growth rates in percent!}
-    \PY{n}{reldiff} \PY{o}{=} \PY{p}{(}\PY{n}{diff} \PY{o}{/} \PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{*} \PY{l+m+mf}{100.0}
-    \PY{k}{return} \PY{n}{reldiff}
-
-\PY{c+c1}{\PYZsh{} Apply function to GDP and CPI}
-\PY{n}{gdp\PYZus{}growth} \PY{o}{=} \PY{n}{growth\PYZus{}rate}\PY{p}{(}\PY{n}{gdp}\PY{p}{)}
-\PY{n}{cpi\PYZus{}growth} \PY{o}{=} \PY{n}{growth\PYZus{}rate}\PY{p}{(}\PY{n}{cpi}\PY{p}{)}       \PY{c+c1}{\PYZsh{} CPI growth rate, a.k.a. inflation}
+\PY{n}{vec} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} These are equivalent ways to return the WHOLE vector}
+\PY{n}{vec}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{]}      \PY{c+c1}{\PYZsh{} all three tokens present}
+\PY{n}{vec}\PY{p}{[}\PY{p}{:}\PY{p}{:}\PY{p}{]}         \PY{c+c1}{\PYZsh{} omit all tokens}
+\PY{n}{vec}\PY{p}{[}\PY{p}{:}\PY{p}{]}          \PY{c+c1}{\PYZsh{} omit all tokens}
+\PY{n}{vec}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}         \PY{c+c1}{\PYZsh{} end value only}
+\PY{n}{vec}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{5}\PY{p}{:}\PY{p}{]}        \PY{c+c1}{\PYZsh{} start value only, using negative index}
 \end{Verbatim}
 \end{tcolorbox}
 
-    We can now plot the growth rates. Since they will be of similar
-magnitude, we use a single graph.
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{51}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([0, 1, 2, 3, 4])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    You can reverse the order like this:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{18}{\boxspacing}
+\prompt{In}{incolor}{52}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{)}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{years}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{gdp\PYZus{}growth}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{years}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{cpi\PYZus{}growth}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPI}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mf}{2.0}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Percent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Growth rates}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{100}\PY{p}{)}
+\PY{n}{vec}\PY{p}{[}\PY{p}{:}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit01_files/unit01_34_0.pdf}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
-    \hypertarget{summary-statistics}{%
-\subsubsection{Summary statistics}\label{summary-statistics}}
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{52}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([4, 3, 2, 1, 0])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    With multi-dimensional arrays, the above rules apply for each dimension.
 
-We can compute some summary statistics for all three time series using
-functions such as \texttt{np.mean()} and \texttt{np.std()}, where the
-latter returns the standard deviation:
+\begin{itemize}
+\tightlist
+\item
+  We can, however, omit explicit indices for higher-order dimensions if
+  all elements should be included.
+\end{itemize}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{19}{\boxspacing}
+\prompt{In}{incolor}{53}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{print\PYZus{}stats}\PY{p}{(}\PY{n}{name}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{:}
-    \PY{c+c1}{\PYZsh{} Define formatting string to print results}
-    \PY{n}{fmt} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}:12s\PYZcb{}}\PY{l+s+s1}{: mean = }\PY{l+s+si}{\PYZob{}:.2f\PYZcb{}}\PY{l+s+s1}{, std. dev. = }\PY{l+s+si}{\PYZob{}:.2f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
-    \PY{n}{mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{x}\PY{p}{)}
-    \PY{n}{std} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{x}\PY{p}{)}
-    \PY{n+nb}{print}\PY{p}{(}\PY{n}{fmt}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{name}\PY{p}{,} \PY{n}{mean}\PY{p}{,} \PY{n}{std}\PY{p}{)}\PY{p}{)}
+\PY{n}{mat}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}      \PY{c+c1}{\PYZsh{} includes all columns of row 2; same as mat[1,:]}
+\end{Verbatim}
+\end{tcolorbox}
 
-\PY{c+c1}{\PYZsh{} GDP growth rate}
-\PY{n}{print\PYZus{}stats}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP growth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{gdp\PYZus{}growth}\PY{p}{)}
-\PY{c+c1}{\PYZsh{} CPI growth rate = inflation}
-\PY{n}{print\PYZus{}stats}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Inflation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{cpi\PYZus{}growth}\PY{p}{)}
-\PY{c+c1}{\PYZsh{} Unempl. rate}
-\PY{n}{print\PYZus{}stats}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Unempl. rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{unr}\PY{p}{)}
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{53}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([3, 4, 5])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    We cannot omit the indices for leading axes, though! If an entire
+leading axis is to be included, we specify this using \texttt{:}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{54}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mat}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}   \PY{c+c1}{\PYZsh{} includes all rows of column 2}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{54}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([1, 4])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \textbf{Indexing lists and tuples}
+
+The basic indexing rules we have covered so far also apply to the
+built-in \texttt{tuple} and \texttt{list} types. However, \texttt{list}
+and \texttt{tuple} do not support advanced indexing available for NumPy
+arrays which we study in later units.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{55}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Apply start:stop:step indexing to tuple}
+\PY{n}{tpl} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}
+\PY{n}{tpl}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{55}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+(1, 3)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{numerical-data-types-advanced}{%
+\subsubsection{Numerical data types
+(advanced)}\label{numerical-data-types-advanced}}
+
+We can explicitly specify the numerical data type when creating NumPy
+arrays.
+
+So far we haven't done so, and then NumPy does the following:
+
+\begin{itemize}
+\tightlist
+\item
+  Functions such as \texttt{zeros()} and \texttt{ones()} default to
+  using \texttt{np.float64}, a 64-bit floating-point data type (this is
+  also called \emph{double precision})
+\item
+  Other functions such as \texttt{arange()} and \texttt{array()} inspect
+  the input data and return a corresponding array.
+\item
+  Most array creation routines accept a \texttt{dtype} argument which
+  allows you to explicitly set the data type.
+\end{itemize}
+
+\emph{Examples:}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{56}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{c+c1}{\PYZsh{} Floating\PYZhy{}point arguments return array of type np.float64}
+\PY{n}{arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{5.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}
+\PY{n}{arr}\PY{o}{.}\PY{n}{dtype}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{56}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+dtype('float64')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{57}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Integer arguments return array of type np.int64}
+\PY{n}{arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{arr}\PY{o}{.}\PY{n}{dtype}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{57}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+dtype('int64')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Often we don't care about the data type too much, but keep in mind that
+
+\begin{itemize}
+\tightlist
+\item
+  Floating-point has limited precision, even for integers if these are
+  larger than (approximately) \(10^{16}\)
+\item
+  Integer values cannot represent fractional numbers and (often) have a
+  more limited range.
+\end{itemize}
+
+This might lead to surprising consequences:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{58}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create integer array}
+\PY{n}{arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{int64}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Store floating\PYZhy{}point in second element}
+\PY{n}{arr}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{l+m+mf}{1.234}
+\PY{n}{arr}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{58}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([1, 1, 1, 1, 1])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    The array is unchanged because it's impossible to represent 1.234 as an
+integer value!
+
+The take-away is to explicitly write floating-point literal values and
+specify a floating-point \texttt{dtype} argument when we want data to be
+interpreted as floating-point values. For example, always write 1.0
+instead of 1, unless you \emph{really} want an integer!
+
+
+\hypertarget{exercises}{%
+\subsection{Exercises}\label{exercises}}
+
+    \hypertarget{exercise-1-string-operations}{%
+\subsubsection{Exercise 1: string
+operations}\label{exercise-1-string-operations}}
+
+Experiment with operators applied to strings and integers.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Define two string variables and concatenate them using \texttt{+}
+\item
+  Define a string variable and multiply it by 2 using \texttt{*}. What
+  happens?
+\item
+  Define two strings and compare whether they are equal using the
+  \texttt{==} and \texttt{!=} relational operators.
+\item
+  Define a string. Use the operators \texttt{in} and \texttt{not\ in} to
+  test whether a character is contained in the string.
+\item
+  Define two string variables and assign them the same value. Use the
+  \texttt{is} operator to test whether these are identical objects.
+\item
+  Define a string variable and use the \texttt{+=} assignment operator
+  to append another string.
+
+  The \texttt{+=} operator is one of several operators in Python that
+  combine assignment with another operation, such as addition. In this
+  particular case, these statements are equivalent:
+
+\begin{verbatim}
+a += b
+a = a + b
+\end{verbatim}
+\end{enumerate}
+
+    \hypertarget{exercise-2-string-formatting}{%
+\subsubsection{Exercise 2: string
+formatting}\label{exercise-2-string-formatting}}
+
+We frequently want to create strings that incorporate integer and
+floating-point data, possibly formatted in a particular way.
+
+Python offers quite powerful formatting capabilities which can become so
+complex that they are called the \emph{Format Specification
+Mini-Language} (see the
+\href{https://docs.python.org/3/library/string.html\#format-specification-mini-language}{docs}).
+In this exercise, we explore a small but useful subset of formatting
+instructions.
+
+A format specification is a string that contains one or several
+\texttt{\{\}}, for example:
+
+\begin{verbatim}
+s = 'The current version of Python is {}'
+\end{verbatim}
+
+The token \texttt{\{\}} will be replaced with data converted to a string
+when we apply the \texttt{format()} method:
+
+\begin{verbatim}
+s = 'The current version of Python is {}'.format(3.10)
+\end{verbatim}
+
+The string \texttt{s} now contains the value
+
+\begin{verbatim}
+'The current version of Python is 3.10'
+\end{verbatim}
+
+What if we want to format the float \texttt{3.10} in a particular way?
+We can augment the \texttt{\{\}} to achieve that goal. For example, if
+the data to be formatted is of type integer, we can specify
+
+\begin{itemize}
+\item
+  \texttt{\{:wd\}} where \texttt{w} denotes the total field width and
+  \texttt{d} indicates that the data type is an integer.
+
+  To print an integer into a field that is 3 characters wide, we would
+  thus write \texttt{\{:3d\}}.
+\end{itemize}
+
+For floats we have additional options:
+
+\begin{itemize}
+\item
+  \texttt{\{:w.df\}} specifies that a float should be formatted using a
+  field width \texttt{w} and \texttt{d} decimal digits.
+
+  To print a float into a field of 10 characters using 5 decimal digits,
+  we would thus specify \texttt{\{:10.5f\}}
+\item
+  \texttt{\{:w.de\}} is similar, but instead uses scientific notation
+  with exponents.
+
+  This is particularly useful for very large or very small numbers.
+\item
+  \texttt{\{:w.dg\}}, where \texttt{g} stands for \emph{general} format,
+  is a superset of \texttt{f} and \texttt{e} formatting. Either fixed or
+  exponential notation is used depending on a number's magnitude.
+\end{itemize}
+
+In all these cases the field width \texttt{w} is optional and can be
+omitted. Python then uses however many characters are required.
+
+Now what we have introduced the formatting language, you are asked to
+perform the following exercises:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Define two strings and concatenate them using the \texttt{format()}
+  function. Add a space between them.
+\item
+  Use the above example format string, but truncate the Python version
+  to its major version number. Do you get the expected result?
+\item
+  Print \(\pi\) using a precision of 10 decimal digits. \emph{Hint:} the
+  value of \(\pi\) is available as
+
+\begin{verbatim}
+from math import pi
+\end{verbatim}
+\item
+  Print \texttt{exp(10.0)} using exponential notation and three decimal
+  digits. \emph{Hint:} To use the exponential function, you need to
+  import it using
+
+\begin{verbatim}
+from math import exp
+\end{verbatim}
+\end{enumerate}
+
+    \hypertarget{exercise-3-string-formatting-with-f-strings}{%
+\subsubsection{Exercise 3: string formatting with
+f-strings}\label{exercise-3-string-formatting-with-f-strings}}
+
+Since Python 3.6 there is an additional, more convenient way to format
+strings, the so-called \emph{formatted string literals} or
+\emph{f-strings}
+(\href{https://www.python.org/dev/peps/pep-0498/}{official
+documentation}). Instead of calling the \texttt{format()} method as in
+the previous example, one can instead define a string which contain
+expressions that will be evaluated at runtime.
+
+The simplest example is to print the value of a variable using default
+formatting:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{59}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{name} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Python}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{s} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ programming is fun!}\PY{l+s+s1}{\PYZsq{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{s}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-GDP growth  : mean = 3.17, std. dev. = 2.30
-Inflation   : mean = 3.42, std. dev. = 2.77
-Unempl. rate: mean = 5.73, std. dev. = 1.61
+Python programming is fun!
     \end{Verbatim}
 
-    We can of course also plot these moments, for example using a bar graph:
+    Note that the string needs to be prefixed by an \texttt{f} to indicate
+that it contains expressions which need to be evaluated. These
+expressions are again wrapped in braces. Within braces, a syntax similar
+to the one shown in the previous exercise can be used to specify
+detailed formatting instructions. For example, you can specify the
+number of decimal digits as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{20}{\boxspacing}
+\prompt{In}{incolor}{60}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP growth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Inflation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Unempl. rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-\PY{n}{means} \PY{o}{=} \PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{p}{(}\PY{n}{gdp\PYZus{}growth}\PY{p}{,} \PY{n}{cpi\PYZus{}growth}\PY{p}{,} \PY{n}{unr}\PY{p}{)}\PY{p}{]}
-\PY{n}{stds} \PY{o}{=} \PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{p}{(}\PY{n}{gdp\PYZus{}growth}\PY{p}{,} \PY{n}{cpi\PYZus{}growth}\PY{p}{,} \PY{n}{unr}\PY{p}{)}\PY{p}{]}
-\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mf}{4.5}\PY{p}{)}\PY{p}{)}
-\PY{n}{width} \PY{o}{=} \PY{l+m+mf}{0.3}
-\PY{n}{xticks} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{xticks} \PY{o}{\PYZhy{}} \PY{n}{width}\PY{o}{/}\PY{l+m+mf}{2.0}\PY{p}{,} \PY{n}{means}\PY{p}{,} \PY{n}{width}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{xticks} \PY{o}{+} \PY{n}{width}\PY{o}{/}\PY{l+m+mf}{2.0}\PY{p}{,} \PY{n}{stds}\PY{p}{,} \PY{n}{width}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Std. dev.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{n}{xticks}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xticklabels}\PY{p}{(}\PY{n}{labels}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Percent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{value} \PY{o}{=} \PY{l+m+mf}{1.2345}
+\PY{n}{s} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Value with 2 significant digits: }\PY{l+s+si}{\PYZob{}}\PY{n}{value}\PY{l+s+si}{:}\PY{l+s+s1}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Value with 2 significant digits: 1.23
+    \end{Verbatim}
+
+    Note that in the above examples, the variables \texttt{name} and
+\texttt{value} need to be known when the f-string is being defined.
+Otherwise, you'll get the following error:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{61}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} cannot create f\PYZhy{}string using unknown names}
+\PY{n}{s} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{unknown}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ is not defined}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
+\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'unknown' is not defined
+
+    \end{Verbatim}
+
+    Now that you have seen the basic usage, repeat Exercise 2 using
+f-strings instead of the \texttt{format()} method!
+
+    \hypertarget{exercise-4-operations-on-tuples-and-lists}{%
+\subsubsection{Exercise 4: operations on tuples and
+lists}\label{exercise-4-operations-on-tuples-and-lists}}
+
+Perform the following tasks and examine their results:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Create two lists and add them using \texttt{+}.
+\item
+  Multiply a list by the integer 2.
+\item
+  Create a list \texttt{list1} and inspect the result of
+
+\begin{verbatim}
+list1 += ['x', 'y', 'z']
+\end{verbatim}
+\item
+  Create a list \texttt{list1} and inspect the result of
+
+\begin{verbatim}
+list1 *= 2
+\end{verbatim}
+\end{enumerate}
+
+Repeat steps 1-4 using tuples instead of lists.
+
+Finally, create a list and a tuple and try to add them using \texttt{+}.
+Does this work?
+
+
+\hypertarget{solutions}{%
+\subsection{Solutions}\label{solutions}}
+
+\hypertarget{solution-for-exercise-1}{%
+\subsubsection{Solution for exercise 1}\label{solution-for-exercise-1}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{62}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 1. string concatenation using addition}
+\PY{n}{str1} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{str2} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{xyz}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Concatenate two strings using +}
+\PY{n}{str1} \PY{o}{+} \PY{n}{str2}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{20}{\boxspacing}
+\prompt{Out}{outcolor}{62}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7f60209b4730>
+'abcxyz'
 \end{Verbatim}
 \end{tcolorbox}
         
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit01_files/unit01_38_1.pdf}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
-    \hypertarget{next-steps}{%
-\subsection{Next steps}\label{next-steps}}
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{63}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 2. string multiplication by integers}
+\PY{n}{str1} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}
+\PY{c+c1}{\PYZsh{} Repeat string using multiplication!}
+\PY{n}{str1} \PY{o}{*} \PY{l+m+mi}{2}
+\end{Verbatim}
+\end{tcolorbox}
 
-This truly was a crash course, conveying the minimum information
-necessary to get you started with data analysis using Python.
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{63}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'abcabc'
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{64}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 3. Test for string equality}
+\PY{n}{str1} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{str2} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{xyz}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{str1} \PY{o}{==} \PY{n}{str2}
+\end{Verbatim}
+\end{tcolorbox}
 
-We will flesh out these concepts in much more detail in the next few
-units.
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{64}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+False
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{65}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 3. Test for string inequality}
+\PY{n}{str1} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{str2} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{xyz}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{str1} \PY{o}{!=} \PY{n}{str2}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{65}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+True
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{66}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 4. Test whether individual character is included in string}
+\PY{n}{str1} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}
+\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{str1}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{66}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+True
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{67}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 4. Test whether individual character is NOT included in string}
+\PY{n}{str1} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}
+\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{str1}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{67}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+True
+\end{Verbatim}
+\end{tcolorbox}
+        
+    The last two examples illustrate that in Python strings will be
+interpreted as collections (of characters), just like lists or tuples,
+if the context requires it. We can therefore apply the \texttt{in}
+operator to test for membership.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{68}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 5. Test for identity}
+\PY{n}{str1} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{str2} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{str1} \PY{o+ow}{is} \PY{n}{str2}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{68}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+True
+\end{Verbatim}
+\end{tcolorbox}
+        
+    This result should be surprising and is somewhat specific to Python. We
+would not expect two objects that were created completely independently
+from each other to be \emph{identical}, \ie point to the same memory.
+Python, however, caches string literals for reasons of efficiency, so it
+actually does keep only \emph{one} copy of
+\texttt{\textquotesingle{}abc\textquotesingle{}} around, irrespective of
+how many variables containing \texttt{abc} are created.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{69}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 6. Append using +=}
+\PY{n}{str1} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{str1} \PY{o}{+}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{xyx}\PY{l+s+s1}{\PYZsq{}}       \PY{c+c1}{\PYZsh{} Append \PYZsq{}xyz\PYZsq{} to value in str1, assign result to str1}
+\PY{n}{str1}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{69}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'abcxyx'
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{solution-for-exercise-2}{%
+\subsubsection{Solution for exercise 2}\label{solution-for-exercise-2}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{70}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 1. String concatenation}
+\PY{n}{str1} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{str2} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{xyz}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} format specification to concatenate two string with a space in between}
+\PY{n}{fmt} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{fmt}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{str1}\PY{p}{,} \PY{n}{str2}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{70}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'abc xyz'
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{71}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 2. Truncate Python version to major version number}
+\PY{c+c1}{\PYZsh{} To do this, we specify 0 decimal digits!}
+\PY{n}{fmt} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The current major version of Python is }\PY{l+s+si}{\PYZob{}:.0f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{fmt}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+m+mf}{3.10}\PY{p}{)}     \PY{c+c1}{\PYZsh{} Now this didn\PYZsq{}t work out as intended :)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{71}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'The current major version of Python is 3'
+\end{Verbatim}
+\end{tcolorbox}
+        
+    This does not work as intended because formatting with zero decimal
+digits rounds the floating-point number, instead of just truncating the
+decimal part. We could instead convert the \texttt{float} to
+\texttt{int} before applying formatting, since the function
+\texttt{int()} will truncate the fractional part:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{72}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{version} \PY{o}{=} \PY{l+m+mf}{3.10}
+\PY{n}{fmt} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The current major version of Python is }\PY{l+s+si}{\PYZob{}:d\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{fmt}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb}{int}\PY{p}{(}\PY{n}{version}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The current major version of Python is 3
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{73}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 3. Print pi using 10 decimal digits}
+\PY{k+kn}{from} \PY{n+nn}{math} \PY{k+kn}{import} \PY{n}{pi}
+\PY{n}{fmt} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The first 10 digits of pi: }\PY{l+s+si}{\PYZob{}:.10f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{fmt}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{pi}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{73}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'The first 10 digits of pi: 3.1415926536'
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{74}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 4. Print exp(10.0) using three decimal digits and exponential notation}
+\PY{k+kn}{from} \PY{n+nn}{math} \PY{k+kn}{import} \PY{n}{exp}
+\PY{n}{fmt} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{exp(10.0) = }\PY{l+s+si}{\PYZob{}:.3e\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{fmt}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{exp}\PY{p}{(}\PY{l+m+mf}{10.0}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{74}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'exp(10.0) = 2.203e+04'
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{solution-for-exercise-3}{%
+\subsubsection{Solution for exercise 3}\label{solution-for-exercise-3}}
+
+We now repeat exercise 2 using f-strings instead of the
+\texttt{format()} method.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{75}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 1. String concatenation}
+\PY{n}{str1} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{str2} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{xyz}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} format specification to concatenate two string with a space inbetween}
+\PY{n}{s} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{str1}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ }\PY{l+s+si}{\PYZob{}}\PY{n}{str1}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+abc abc
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{76}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 2. Truncate Python version to major version number}
+\PY{c+c1}{\PYZsh{} To do this, we specify 0 decimal digits!}
+\PY{n}{version} \PY{o}{=} \PY{l+m+mf}{3.10}
+\PY{n}{s} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The current major version of Python is }\PY{l+s+si}{\PYZob{}}\PY{n}{version}\PY{l+s+si}{:}\PY{l+s+s1}{.0f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{s}\PY{p}{)}        \PY{c+c1}{\PYZsh{} does not work as intended!}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The current major version of Python is 3
+    \end{Verbatim}
+
+    This does not work as intended because formatting with zero decimal
+digits rounds the floating-point number, instead of just truncating the
+decimal part. See the previous exercise for one possible solution.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{77}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 3. Print pi using 10 decimal digits}
+\PY{k+kn}{from} \PY{n+nn}{math} \PY{k+kn}{import} \PY{n}{pi}
+\PY{n}{s} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The first 10 digits of pi: }\PY{l+s+si}{\PYZob{}}\PY{n}{pi}\PY{l+s+si}{:}\PY{l+s+s1}{.10f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The first 10 digits of pi: 3.1415926536
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{78}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 4. Print exp(10.0) using three decimal digits and exponential notation}
+\PY{k+kn}{from} \PY{n+nn}{math} \PY{k+kn}{import} \PY{n}{exp}
+\PY{n}{s} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{exp(10.0) = }\PY{l+s+si}{\PYZob{}}\PY{n}{exp}\PY{p}{(}\PY{l+m+mf}{10.0}\PY{p}{)}\PY{l+s+si}{:}\PY{l+s+s1}{.3e}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+exp(10.0) = 2.203e+04
+    \end{Verbatim}
+
+    The last example illustrates that f-string expressions can also be
+function calls, not just variable names!
+
+    \hypertarget{solution-for-exercise-4}{%
+\subsubsection{Solution for exercise 4}\label{solution-for-exercise-4}}
+
+\textbf{List operators}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{79}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{list1} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}
+\PY{n}{list2} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{c}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} 1. Adding two lists concatenates the second list to the first}
+\PY{c+c1}{\PYZsh{} and returns a new list object}
+\PY{n}{list1} \PY{o}{+} \PY{n}{list2}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{79}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[1, 2, 3, 'a', 'b', 'c']
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{80}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 2. multiplication of list and integer replicates the list!}
+\PY{n}{list1} \PY{o}{*} \PY{l+m+mi}{2}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{80}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[1, 2, 3, 1, 2, 3]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{81}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 3. Extending list in place using +=}
+\PY{n}{list1} \PY{o}{+}\PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{list1}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{81}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[1, 2, 3, 'x', 'y', 'z']
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Note that we cannot append an element to the list that is not a list:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{82}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{list1} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{10}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
+\textcolor{ansi-red}{TypeError}\textcolor{ansi-red}{:} 'int' object is not iterable
+
+    \end{Verbatim}
+
+    Instead, we need to wrap a singular element to create a list like this:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{83}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{list1} \PY{o}{+}\PY{o}{=} \PY{p}{[}\PY{l+m+mi}{10}\PY{p}{]}
+\PY{n}{list1}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{83}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[1, 2, 3, 'x', 'y', 'z', 10]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{84}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 4. Replicating list in place using *=}
+\PY{n}{list1} \PY{o}{*}\PY{o}{=} \PY{l+m+mi}{2}
+\PY{n}{list1}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{84}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[1, 2, 3, 'x', 'y', 'z', 10, 1, 2, 3, 'x', 'y', 'z', 10]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \textbf{Tuple operators}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{85}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{tpl1} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}
+\PY{n}{tpl2} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{c}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} 1. Adding two tuples concatenates the second tuple to the first}
+\PY{c+c1}{\PYZsh{} and returns a new tuple object}
+\PY{n}{tpl1} \PY{o}{+} \PY{n}{tpl2}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{85}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+(1, 2, 3, 'a', 'b', 'c')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{86}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 2. multiplication of tuple and integer replicates the tuple!}
+\PY{n}{tpl1} \PY{o}{*} \PY{l+m+mi}{2}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{86}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+(1, 2, 3, 1, 2, 3)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{87}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 3. Extending tuple in place}
+\PY{n}{tpl1} \PY{o}{+}\PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{tpl1}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{87}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+(1, 2, 3, 'x', 'y', 'z')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    It might be surprising that this works since a \texttt{tuple} is an
+immutable object. However, what happens is that the original
+\texttt{tuple} is discarded and the reference \texttt{tpl1} now points
+to a newly created \texttt{tuple}.
+
+The same happens when we replicate a \texttt{tuple} with \texttt{*=}:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{88}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} 4. Replicate tuple in place using *=}
+\PY{n}{tpl1} \PY{o}{*}\PY{o}{=} \PY{l+m+mi}{2}
+\PY{n}{tpl1}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{88}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+(1, 2, 3, 'x', 'y', 'z', 1, 2, 3, 'x', 'y', 'z')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \textbf{Tuple and list operators}
+
+We cannot mix tuples and lists as operands!
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{89}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lst} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}
+\PY{n}{tpl} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{c}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Cannot concatenate list and tuple!}
+\PY{n}{lst} \PY{o}{+} \PY{n}{tpl}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
+\textcolor{ansi-red}{TypeError}\textcolor{ansi-red}{:} can only concatenate list (not "tuple") to list
+
+    \end{Verbatim}
 
 
     % Add a bibliography block to the postdoc

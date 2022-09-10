@@ -1,7 +1,6 @@
 \documentclass{scrartcl}
 
-    \input{overrides-pre}
-
+  \input{overrides-pre}
 
     \usepackage[breakable]{tcolorbox}
     \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
@@ -167,7 +166,7 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \newcommand*{\mytitle}{Unit 4: Reusing code -- Functions, modules and packages}
+    \newcommand*{\mytitle}{Unit 5: Plotting}
 
     \input{overrides-post}
     
@@ -394,1257 +393,858 @@
     
 
     
-    \hypertarget{reusing-code-functions-modules-and-packages}{%
-\section{Reusing code: Functions, modules and
-packages}\label{reusing-code-functions-modules-and-packages}}
+    \hypertarget{plotting}{%
+\section{Plotting}\label{plotting}}
 
-In this unit, we learn how to build reusable code with functions. We
-will also briefly discuss modules and packages.
+In this unit, we take a first look at plotting numerical data. Python
+itself does not have any built-in plotting capabilities, so we will be
+using \emph{matplotlib (MPL)}, the most popular graphics library for
+Python.
 
-\hypertarget{functions}{%
-\subsection{Functions}\label{functions}}
-
-Functions are used to implement code that performs a narrowly defined
-task. We use functions for two reasons:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
+\begin{itemize}
 \tightlist
 \item
-  A function can be called repeatedly without having to write code again
-  and again.
+  For details on a particular plotting function, see the
+  \href{https://matplotlib.org/contents.html}{official documentation}.
 \item
-  Even if a function is not called frequently, functions allow us to
-  write code that is ``shielded'' from other code we write and is called
-  via a clean interface. This helps to write more robust and error-free
-  code.
-\end{enumerate}
+  There is an official introductory
+  \href{https://matplotlib.org/tutorials/introductory/pyplot.html}{tutorial}
+  which you can use along-side this unit.
+\end{itemize}
 
-Functions are defined using the \texttt{def} keyword, and the function
-body needs to be an indented block:
+When using matplotlib in interactive Jupyter notebooks (such as this
+one), we can enable a more fancy plotting backend that allows us to
+dynamically adjust the zoom, etc. This is done by adding the line
+
+\begin{verbatim}
+%matplotlib widget
+\end{verbatim}
+
+For this to work, the \texttt{ipympl} package needs to be installed, see
+\href{https://github.com/matplotlib/ipympl}{here} for details. Note that
+this is not supported (and in fact produces a syntax error) in regular
+\texttt{*.py} Python script files.
+
+In order to access the functions and objects from matplotlib, we first
+need to import them. The general convention is to use the namespace
+\texttt{plt} for this purpose:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{1}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{func called}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} invoke func without arguments}
-\PY{n}{func}\PY{p}{(}\PY{p}{)}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-func called
-    \end{Verbatim}
 
-    \hypertarget{arguments}{%
-\subsubsection{Arguments}\label{arguments}}
+\hypertarget{line-plots}{%
+\subsection{Line plots}\label{line-plots}}
 
-Functions can have an arbitrary number of positional arguments (also
-called parameters).
+One of the simplest plots we can generate is a line defined by a list of
+points.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Define func to accept argument x}
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
-    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{func called with argument }\PY{l+s+si}{\PYZob{}}\PY{n}{x}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} import matplotlib library}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 
-\PY{c+c1}{\PYZsh{} call function with various arguments.}
-\PY{n}{func}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
-\PY{n}{func}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{foo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Plot list of integers}
+\PY{n}{yvalues} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{yvalues}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-func called with argument 1
-func called with argument foo
-    \end{Verbatim}
-
-    \hypertarget{return-values}{%
-\subsubsection{Return values}\label{return-values}}
-
-Functions can also return values to their caller using the
-\texttt{return} statement.
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[<matplotlib.lines.Line2D at 0x7f284c22ba60>]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_3_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    We didn't even have to specify the corresponding \(x\)-values, as MPL
+automatically assumes them to be {[}0, 1, 2, \ldots{}{]}. Usually, we
+want to plot for a given set of \(x\)-values like this:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
-    \PY{k}{return} \PY{n}{x} \PY{o}{*} \PY{l+m+mf}{2.0}
-
-\PY{n}{result} \PY{o}{=} \PY{n}{func}\PY{p}{(}\PY{l+m+mf}{1.0}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{result}\PY{p}{)}       \PY{c+c1}{\PYZsh{} prints 2.0}
+\PY{c+c1}{\PYZsh{} explicitly specify x\PYZhy{}values}
+\PY{n}{xvalues} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{,} \PY{l+m+mi}{40}\PY{p}{]}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-2.0
-    \end{Verbatim}
-
-    A \texttt{return} statement without any argument immediately exits the
-functions. The default return value is the special type \texttt{None}.
-
-A function can return multiple values which are then automatically
-collected into a tuple:
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[<matplotlib.lines.Line2D at 0x7f2837b9d120>]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_5_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Similar to Matlab, we can also specify multiple lines to be plotted in a
+single graph:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-    \PY{k}{return} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}
-
-\PY{n}{values} \PY{o}{=} \PY{n}{func}\PY{p}{(}\PY{p}{)}         \PY{c+c1}{\PYZsh{} call func(), get tuple of values}
-\PY{n+nb}{type}\PY{p}{(}\PY{n}{values}\PY{p}{)}
+\PY{n}{yvalues2} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{3.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{]}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-tuple
+[<matplotlib.lines.Line2D at 0x7f2837a3c5e0>,
+ <matplotlib.lines.Line2D at 0x7f2837a3d7b0>]
 \end{Verbatim}
 \end{tcolorbox}
         
-    Python supports ``unpacking'' of tuples, lists, etc. We can use this to
-directly assign names to multiple return values:
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_7_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The characters following each set of \(y\)-values are style
+specifications that are very similar to the ones used in Matlab. More
+specifically, the letters are short-hand notations for colours (see
+\href{https://matplotlib.org/stable/tutorials/colors/colors.html}{here}
+for details):
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{b}: blue
+\item
+  \texttt{g}: green
+\item
+  \texttt{r}: red
+\item
+  \texttt{c}: cyan
+\item
+  \texttt{m}: magenta
+\item
+  \texttt{y}: yellow
+\item
+  \texttt{k}: black
+\item
+  \texttt{w}: white
+\end{itemize}
+
+The remaining characters set the line styles. Valid values are
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{-} solid line
+\item
+  \texttt{-\/-} dashed line
+\item
+  \texttt{-.} dash-dotted line
+\item
+  \texttt{:} dotted line
+\end{itemize}
+
+Additionally, we can append marker symbols to the style specification.
+The most frequently used ones are
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{o}: circle
+\item
+  \texttt{s}: square
+\item
+  \texttt{*}: star
+\item
+  \texttt{x}: x
+\item
+  \texttt{d}: (thin) diamond
+\end{itemize}
+
+The whole list of supported symbols can be found
+\href{https://matplotlib.org/stable/api/markers_api.html}{here}.
+
+    Instead of passing multiple values to be plotted at once, we can also
+repeatedly call \texttt{plot()} to add additional elements to a graph.
+This is more flexible since we can pass additional arguments which are
+specific to one particular set of data, such as labels displayed in
+legends
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-    \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{c}\PY{l+s+s1}{\PYZsq{}}
-
-\PY{n}{value1}\PY{p}{,} \PY{n}{value2}\PY{p}{,} \PY{n}{value3} \PY{o}{=} \PY{n}{func}\PY{p}{(}\PY{p}{)}     \PY{c+c1}{\PYZsh{} call func(), unpack return values}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Value 1: }\PY{l+s+si}{\PYZob{}}\PY{n}{value1}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{, Value 2: }\PY{l+s+si}{\PYZob{}}\PY{n}{value2}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{, Value 3: }\PY{l+s+si}{\PYZob{}}\PY{n}{value3}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Plot two lines by calling plot() twice}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b\PYZhy{}o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k\PYZhy{}\PYZhy{}o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-Value 1: a, Value 2: b, Value 3: c
-    \end{Verbatim}
-
-    \hypertarget{accessing-data-from-the-outer-scope}{%
-\subsubsection{Accessing data from the outer
-scope}\label{accessing-data-from-the-outer-scope}}
-
-A function need not have arguments or a return value, but that limits
-its usefulness somewhat. However, a function can access outside data
-which is defined in the so-called outer scope:
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[<matplotlib.lines.Line2D at 0x7f2837abacb0>]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_10_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Individual calls to \texttt{plot()} also allow us to specify styles more
+explicitly using keyword arguments:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{x} \PY{o}{=} \PY{l+m+mf}{1.0}
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-    \PY{c+c1}{\PYZsh{} Read x from outer scope}
-    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{func accessing x from outer scope: x = }\PY{l+s+si}{\PYZob{}}\PY{n}{x}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} prints value of x from within func()}
-\PY{n}{func}\PY{p}{(}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} pass plot styles as explicit keyword arguments}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues2}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-func accessing x from outer scope: x = 1.0
-    \end{Verbatim}
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[<matplotlib.lines.Line2D at 0x7f28379183d0>]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_12_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Note that in the example above, we use named colours such as
+\texttt{red} or \texttt{blue}. Alternatively, we can use RGB color codes
+of the form \texttt{\#dddddd} where \texttt{d} are hexadecimal digits.
 
-    We can write functions without any arguments that only operate on
-outside data. However, this is terrible programming practice and should
-be avoided in most cases.
+    Matplotlib accepts abbreviations for the most common style definitions
+using the following shortcuts:
 
-Because functions can operate on external data, they are not analogous
-to mathematical functions. If we write \(f(x)\), we usually mean that
-\(f\) is a function of \(x\) only (and possibly some constant
-parameters). By definition we must have
+\begin{itemize}
+\tightlist
+\item
+  \texttt{c} or \texttt{color}
+\item
+  \texttt{ls} or \texttt{linestyle}
+\item
+  \texttt{lw} or \texttt{linewidth}
+\end{itemize}
 
-\[x_1 = x_2 \Longrightarrow f(x_1) = f(x_2),\]
-
-\ie a function always returns the same value when called with the same
-parameters. However, this is not the case in Python or most other
-programming languages:
+We can write thus rewrite the above code as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{a} \PY{o}{=} \PY{l+m+mf}{1.0}
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
-    \PY{k}{return} \PY{n}{a}\PY{o}{*}\PY{n}{x}
-
-\PY{n}{x} \PY{o}{=} \PY{l+m+mf}{1.0}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{func}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}      \PY{c+c1}{\PYZsh{} prints 1.0}
-
-\PY{n}{a} \PY{o}{=} \PY{l+m+mf}{2.0}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{func}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}      \PY{c+c1}{\PYZsh{} x unchanged, but prints 2.0}
+\PY{c+c1}{\PYZsh{} abbreviate plot style keywords}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ls}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues2}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ls}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-1.0
-2.0
-    \end{Verbatim}
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[<matplotlib.lines.Line2D at 0x7f2837999900>]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_15_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    There is a third way to plot multiple lines in the same plot by passing
+the \(y\)-values as a 2-dimensional array. We explore this alternative
+in the exercises.
 
-    \hypertarget{more-on-arguments}{%
-\subsubsection{More on arguments}\label{more-on-arguments}}
+    \hypertarget{scatter-plots}{%
+\subsection{Scatter plots}\label{scatter-plots}}
 
-\textbf{Default arguments}
-
-Python offers an extremely convenient way to specify default values for
-arguments, so these need not be passed when the function is called:
+We use the \texttt{scatter()} function to create scatter plots in a
+similar fashion to line plots:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{8}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} define function with a default value for argument alpha}
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{:}
-    \PY{k}{return} \PY{n}{x} \PY{o}{*} \PY{n}{alpha}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{func}\PY{p}{(}\PY{l+m+mf}{2.0}\PY{p}{)}\PY{p}{)}        \PY{c+c1}{\PYZsh{} uses default value for alpha}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{func}\PY{p}{(}\PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{)}   \PY{c+c1}{\PYZsh{} explicitly specified optional argument}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{func}\PY{p}{(}\PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{3.0}\PY{p}{)}\PY{p}{)}   \PY{c+c1}{\PYZsh{} use some other value for alpha}
+\PY{c+c1}{\PYZsh{} Create 50 uniformly\PYZhy{}spaced values on unit interval}
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Draw random numbers (we learn how to do this in a later unit)}
+\PY{n}{yvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{l+m+mi}{123}\PY{p}{)}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{l+m+mi}{50}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-2.0
-2.0
-6.0
-    \end{Verbatim}
-
-    \textbf{Keyword (or named) arguments}
-
-Arguments don't need to be provided in the same order as specified in
-the function signature. We can use argument names to explicitly assign
-values to the corresponding argument.
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<matplotlib.collections.PathCollection at 0x7f283782af20>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_18_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    We could in principle create scatter plots using \texttt{plot()} by
+turning off the connecting lines. However, \texttt{scatter()} allows us
+to specify the color and marker size as collections, so we can vary
+these for every point. \texttt{plot()}, on the other hand, imposes the
+same style on all points plotted in that particular function call.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{9}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{n}{arg1}\PY{p}{,} \PY{n}{arg2}\PY{p}{)}\PY{p}{:}
-    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{arg1: }\PY{l+s+si}{\PYZob{}}\PY{n}{arg1}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{, arg2: }\PY{l+s+si}{\PYZob{}}\PY{n}{arg2}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Draw random marker sizes}
+\PY{n}{size} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{l+m+mi}{456}\PY{p}{)}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{yvalues}\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{l+m+mf}{150.0}
 
-\PY{n}{func}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}              \PY{c+c1}{\PYZsh{} Call using purely positional arguments}
-\PY{n}{func}\PY{p}{(}\PY{n}{arg1}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{arg2}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}    \PY{c+c1}{\PYZsh{} Use argument names to explicitly assign values}
-\PY{n}{func}\PY{p}{(}\PY{n}{arg2}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{arg1}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}    \PY{c+c1}{\PYZsh{} With keyword arguments, the order does not matter!}
+\PY{c+c1}{\PYZsh{} plot with point\PYZhy{}specific marker sizes}
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{n}{size}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-arg1: 1, arg2: 2
-arg1: 1, arg2: 2
-arg1: 1, arg2: 2
-    \end{Verbatim}
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<matplotlib.collections.PathCollection at 0x7f2837879fc0>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_20_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
 
-    \textbf{Arbitrary number of optional arguments}
+\hypertarget{plotting-categorical-data}{%
+\subsection{Plotting categorical data}\label{plotting-categorical-data}}
 
-Python supports functions which accept an arbitrary number of positional
-and keyword arguments. This is accomplished via two special tokens:
+Instead of numerical values on the x-axis, we can also plot categorical
+variables by passing them directly to the plotting function.
 
-\begin{itemize}
-\tightlist
-\item
-  \texttt{*args}: collects any number of ``excess'' \emph{positional
-  arguments} and packs them into a tuple.
-\item
-  \texttt{**kwargs}: collects any number of ``excess'' \emph{keyword
-  arguments} and packs them into a dictionary. Needs to be placed at the
-  end of the argument list!
-\end{itemize}
-
-\emph{Examples:}
+For example, assume we have three categories and each has an associated
+numerical value:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{10}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Define function with mandatory, optional, optional positional}
-\PY{c+c1}{\PYZsh{} and optional keyword arguments}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{opt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{default}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{o}{*}\PY{n}{args}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}\PY{p}{:}
-    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Required argument x: }\PY{l+s+si}{\PYZob{}}\PY{n}{x}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Optional argument opt: }\PY{l+s+si}{\PYZob{}}\PY{n}{opt}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-    \PY{k}{if} \PY{n}{args}\PY{p}{:}
-        \PY{c+c1}{\PYZsh{} if the tuple \PYZsq{}args\PYZsq{} is non\PYZhy{}empty, print its contents}
-        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Optional positional arguments:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{k}{for} \PY{n}{arg} \PY{o+ow}{in} \PY{n}{args}\PY{p}{:}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{  }\PY{l+s+si}{\PYZob{}}\PY{n}{arg}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-    \PY{k}{if} \PY{n}{kwargs}\PY{p}{:}
-        \PY{c+c1}{\PYZsh{} if the dictionary \PYZsq{}kwargs\PYZsq{} is non\PYZhy{}empty, print its contents}
-        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Optional keyword arguments:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{value} \PY{o+ow}{in} \PY{n}{kwargs}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{  }\PY{l+s+si}{\PYZob{}}\PY{n}{key}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{: }\PY{l+s+si}{\PYZob{}}\PY{n}{value}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{cities} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Glasgow}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Edinburgh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{St. Andrews}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{population} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{630000}\PY{p}{,} \PY{l+m+mi}{488000}\PY{p}{,}  \PY{l+m+mi}{16800}\PY{p}{]}
+\PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{cities}\PY{p}{,} \PY{n}{population}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Population}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0.5, 1.0, 'Population')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_22_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    We use \texttt{barh()} to create \emph{horizontal} bars:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{11}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Call only with required argument}
-\PY{n}{func}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{barh}\PY{p}{(}\PY{n}{cities}\PY{p}{,} \PY{n}{population}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Population}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-Required argument x: 0
-Optional argument opt: default
-    \end{Verbatim}
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0.5, 0, 'Population')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_24_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+\hypertarget{adding-labels-and-annotations}{%
+\subsection{Adding labels and
+annotations}\label{adding-labels-and-annotations}}
+
+Matplotlib has numerous functions to add labels and annotations:
+
+\begin{itemize}
+\tightlist
+\item
+  Use \texttt{title()} and \texttt{suptitle()} to add titles to your
+  graphs. The latter adds a title for the whole figure, which might span
+  multiple plots (axes).
+\item
+  We can add axis labels by calling \texttt{xlabel()} and
+  \texttt{ylabel()}.
+\item
+  To add a legend, call \texttt{legend()}, which in its most simple form
+  takes a list of labels which are in the same order as the plotted
+  data.
+  {[}\href{https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.legend.html}{documentation}{]}
+\item
+  Use \texttt{text()} to add additional text at arbitrary locations.
+  {[}\href{https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.text.html}{documentation}{]}
+\item
+  Use \texttt{annotate()} to display text next to some data point; it's
+  easier to position correctly than \texttt{text()} and you can add
+  arrows!
+  {[}\href{https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.annotate.html}{documentation}{]}
+\end{itemize}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{12}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Call with required and optional arguments}
-\PY{n}{func}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{optional}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+
+\PY{n}{xvalues} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}
+\PY{n}{yvalues} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}
+\PY{n}{yvalues2} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{3.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{]}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{suptitle}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Figure title}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Axes\PYZhy{}specific title}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Label for x\PYZhy{}axis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Label for y\PYZhy{}axis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Red line}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Blue line}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Adds text at data coordinates (0.05, 0.05)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mf}{0.05}\PY{p}{,} \PY{l+m+mf}{0.05}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{More text}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Annotate second point}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Point 2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{(}\PY{n}{xvalues}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{yvalues2}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{,}
+             \PY{n}{textcoords}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{offset points}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{n}{arrowprops}\PY{o}{=}\PY{p}{\PYZob{}}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{facecolor}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{width}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{headwidth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{10.0}
+                \PY{p}{\PYZcb{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-Required argument x: 0
-Optional argument opt: optional
-    \end{Verbatim}
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(20, -20, 'Point 2')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_26_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+\hypertarget{plot-limits-ticks-and-tick-labels}{%
+\subsection{Plot limits, ticks and tick
+labels}\label{plot-limits-ticks-and-tick-labels}}
+
+We adjust the plot limits, ticks and tick labels as follows:
+
+\begin{itemize}
+\tightlist
+\item
+  Plotting limits are set using the \texttt{xlim()} and \texttt{ylim()}
+  functions. Each accepts a tuple \texttt{(min,max)} to set the desired
+  range.
+\item
+  Ticks and tick labels can be set by calling \texttt{xticks()} or
+  \texttt{yticks()}.
+\end{itemize}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{13}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Call with required and optional arguments, and}
-\PY{c+c1}{\PYZsh{} optional positional arguments}
-\PY{n}{func}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{optional}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Set major ticks for x and y axes, and xtick labels.}
+\PY{c+c1}{\PYZsh{} We can use LaTeX code in labels!}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{pi\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}2}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{pi\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{yticks}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{]}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Adjust plot limits in x and y direction}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{+} \PY{l+m+mf}{0.5}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{1.1}\PY{p}{,} \PY{l+m+mf}{1.1}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-Required argument x: 0
-Optional argument opt: optional
-Optional positional arguments:
-  1
-  2
-  3
-    \end{Verbatim}
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+(-1.1, 1.1)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_28_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+\hypertarget{object-oriented-interface}{%
+\subsection{Object-oriented interface}\label{object-oriented-interface}}
+
+So far, we have only used the so-called \texttt{pyplot} interface which
+involves calling \emph{global} plotting functions from
+\texttt{matplotlib.pyplot}. This interface is intended to be similar to
+Matlab, but is also somewhat limited and less clean.
+
+We can instead use the object-oriented interface (called this way
+because we call methods of the
+\href{https://matplotlib.org/stable/api/figure_api.html}{\texttt{Figure}}
+and
+\href{https://matplotlib.org/stable/api/axes_api.html}{\texttt{Axes}}
+objects). While there is not much point in using the object-oriented
+interface in a Jupyter notebook when we want to create a single graph,
+it should be the preferred method when writing re-usable code in Python
+files.
+
+To use the object-oriented interface, we need to get figure and axes
+objects. The easiest way to accomplish this is using the
+\texttt{subplots()} function, like this:
+
+\begin{verbatim}
+fig, ax = plt.subplots()
+\end{verbatim}
+
+As an example, we recreate the graph from the section on labels and
+annotations using the object-oriented interface:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Call with required and optional arguments, and}
-\PY{c+c1}{\PYZsh{} optional positional and keyword arguments}
-\PY{n}{func}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{optional}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{arg1}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{value1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{arg2}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{value2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+
+\PY{n}{xvalues} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}
+\PY{n}{yvalues} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}
+\PY{n}{yvalues2} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{3.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{]}
+
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Red line}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues2}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Blue line}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Label for x\PYZhy{}axis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Label for y\PYZhy{}axis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Plot with object\PYZhy{}oriented interface}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mf}{0.05}\PY{p}{,} \PY{l+m+mf}{0.05}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{More text}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Annotate second point}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Point 2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{(}\PY{n}{xvalues}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{yvalues2}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{,}
+             \PY{n}{textcoords}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{offset points}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{n}{arrowprops}\PY{o}{=}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{facecolor}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{width}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{0.5}\PY{p}{,}
+                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{headwidth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{10.0}\PY{p}{\PYZcb{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-Required argument x: 0
-Optional argument opt: optional
-Optional positional arguments:
-  1
-  2
-  3
-Optional keyword arguments:
-  arg1: value1
-  arg2: value2
-    \end{Verbatim}
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(20, -20, 'Point 2')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_30_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The code is quite similar, except that attributes are set using the
+\texttt{set\_xxx()} methods of the \texttt{ax} object. For example,
+instead of calling \texttt{xlim()}, we use \texttt{ax.set\_xlim()}.
 
-    We don't even need to specify arguments in the order they are defined in
-the function, except for optional positional arguments, since these have
-no argument names. We can just use the \texttt{name=value} syntax:
+
+\hypertarget{working-with-multiple-plots-axes}{%
+\subsection{Working with multiple plots
+(axes)}\label{working-with-multiple-plots-axes}}
+
+The object-oriented interface becomes particularly useful if we want to
+create multiple axes (or figures). This can also be achieved using with
+the \texttt{pyplot} programming model but is somewhat more obscure.
+
+For example, to create a row with two plots, we use:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{15}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} call func() with interchanged argument order}
-\PY{n}{func}\PY{p}{(}\PY{n}{opt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{optional value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+
+\PY{c+c1}{\PYZsh{} Create one figure with 2 axes objects, arranged as two columns in a single row}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-Required argument x: 1
-Optional argument opt: optional value
-    \end{Verbatim}
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_33_0.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    With multiple axes objects in a single figure (as in the above example),
+the \texttt{ax} returned by \texttt{subplots()} is a NumPy array. Its
+elements map to the individual panels within the figure in a natural
+way.
 
-    Note, however, that in a function call any positional arguments must
-come first and those passed as \texttt{name=value} pairs last:
+We can visualise this mapping for the case of a single row and two
+columns as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{16}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{x} \PY{o}{=} \PY{l+m+mi}{1}
-
-\PY{c+c1}{\PYZsh{} this will not work, cannot specify positional arguments last}
-\PY{n}{func}\PY{p}{(}\PY{n}{opt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{optional value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{p}{)}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{)}\PY{p}{)}
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{axes} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{ax}\PY{p}{)}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} Turn off ticks of both axes}
+    \PY{n}{axes}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+    \PY{n}{axes}\PY{o}{.}\PY{n}{set\PYZus{}yticks}\PY{p}{(}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} Label axes object}
+    \PY{n}{text} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ax[}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}
+    \PY{n}{axes}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{text}\PY{p}{,} \PY{n}{transform}\PY{o}{=}\PY{n}{axes}\PY{o}{.}\PY{n}{transAxes}\PY{p}{,} \PY{n}{va}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ha}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-cyan}{  Input }\textcolor{ansi-green}{In [16]}
-\textcolor{ansi-red}{    func(opt='optional value', x)}
-                                \^{}
-\textcolor{ansi-red}{SyntaxError}\textcolor{ansi-red}{:} positional argument follows keyword argument
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_35_0.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Don't worry about the details of how this graph is generated, the only
+take-away here is how axes objects are mapped to the panels in the
+figure.
 
-    \end{Verbatim}
-
-    The same applies for optional arguments passed in via \texttt{*args} and
-\texttt{**kwargs}:
+If we request panels in two dimensions, the \texttt{ax} object will be a
+2-dimensional array, and the mapping of axes objects to panels will look
+like this instead:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{17}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} fails because arguments collected in *args must}
-\PY{c+c1}{\PYZsh{} be specified before arguments collected in **kwargs!}
-\PY{n}{func}\PY{p}{(}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{opt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{arg1}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{value1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{arg2}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{value2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}
-     
+\PY{c+c1}{\PYZsh{} Request figure with 2 rows, 3 columns}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{axrow} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{ax}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{j}\PY{p}{,} \PY{n}{axes} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{axrow}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} Turn off ticks of both axes}
+        \PY{n}{axes}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{axes}\PY{o}{.}\PY{n}{set\PYZus{}yticks}\PY{p}{(}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Label axes object}
+        \PY{n}{text} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ax[}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{,}\PY{l+s+si}{\PYZob{}}\PY{n}{j}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{axes}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{text}\PY{p}{,} \PY{n}{transform}\PY{o}{=}\PY{n}{axes}\PY{o}{.}\PY{n}{transAxes}\PY{p}{,} \PY{n}{va}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ha}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-cyan}{  Input }\textcolor{ansi-green}{In [17]}
-\textcolor{ansi-red}{    func(1.0, 'opt', arg1='value1', arg2='value2', 1, 2, 3)}
-                                                          \^{}
-\textcolor{ansi-red}{SyntaxError}\textcolor{ansi-red}{:} positional argument follows keyword argument
-
-    \end{Verbatim}
-
-    \hypertarget{modifying-data-in-the-outer-scope}{%
-\subsubsection{Modifying data in the outer
-scope}\label{modifying-data-in-the-outer-scope}}
-
-So far, we covered read-only access to data defined outside of a
-function and relied on return values to pass results back to the caller.
-However, it is possible to directly \emph{modify} data in the outer
-scope, even though this should usually be avoided:
-
-\begin{itemize}
-\tightlist
-\item
-  Using arguments and return values clearly defines a function's
-  interface, there are no unpleasant surprises.
-\item
-  Conversely, if a function starts modifying values in the caller's
-  environment, there is no way to be sure what the function is changing
-  in the outer scope\\
-  other than examining its source code.
-\end{itemize}
-
-Consider first the following attempt to modify a value defined outside
-of the function:
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_37_0.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Returning to our initial example, we can use the elements of \texttt{ax}
+to plot into individual panels:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{18}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{outer scope}\PY{l+s+s1}{\PYZsq{}}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 
-\PY{c+c1}{\PYZsh{} Create function, assign value to var}
-\PY{k}{def} \PY{n+nf}{modify\PYZus{}var}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-    \PY{n}{var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inner scope}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}
 
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{var}\PY{p}{)}
-\PY{n}{modify\PYZus{}var}\PY{p}{(}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{var}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Plot into first column}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{xvalues}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Plot into second column}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{xvalues}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-outer scope
-outer scope
-    \end{Verbatim}
-
-    This code prints
-\texttt{\textquotesingle{}outer\ scope\textquotesingle{}} twice. What
-happened? Without any further instructions, the assignment inside the
-function creates a \emph{local} variable \texttt{var} that is completely
-disconnected from \texttt{var} in the outer scope!
-
-We need to use the \texttt{global} statement to tell Python to instead
-assign to a variable in the global (outer) scope:
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{18}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[<matplotlib.lines.Line2D at 0x7f2835a6a7a0>]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_39_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The next example illustrates how to create a figure with four panels:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{19}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{var}  \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{outer scope}\PY{l+s+s1}{\PYZsq{}}
+\PY{c+c1}{\PYZsh{} create figure with 2 rows, 2 columns}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
 
-\PY{k}{def} \PY{n+nf}{modify\PYZus{}var}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-    \PY{k}{global} \PY{n}{var} 
-    \PY{n}{var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inner scope}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}
 
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{var}\PY{p}{)}
-\PY{n}{modify\PYZus{}var}\PY{p}{(}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{var}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Plot the first four Chebyshev polynomials on the interval [\PYZhy{}1,1]}
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{:}
+        \PY{n}{yvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{p}{(}\PY{n}{j} \PY{o}{+} \PY{n}{i}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{arccos}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}\PY{p}{)}
+        \PY{n}{ax}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{yvalues}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-outer scope
-inner scope
-    \end{Verbatim}
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_41_0.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Note the use of \texttt{sharex=True} and \texttt{sharey=True}. This
+tells matplotlib that all axes share the same plot limits, so the tick
+labels can be omitted in the figure's interior to preserve space.
 
-    The second output now reads
-\texttt{\textquotesingle{}inner\ scope\textquotesingle{}}.
+    With multiple axes per figure, we can also see the difference between
+the labels generated by \texttt{set\_title()} and \texttt{suptitle()}.
 
-Note that \texttt{global} in Python actually means global to a module,
-\ie a symbol that is defined at the top level within a module (we
-discuss modules below). There are no truly global variables in Python
-unlike in languages such as C.
-
-The requirement that the name in the \texttt{global} statement refers to
-a global variable has subtle implications. Consider the following
-example of two \emph{nested} functions:
+To illustrate, we re-use the previous example with two panels in a
+single row:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{20}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{outer}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-    \PY{n}{var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{outer function}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{)}\PY{p}{)}
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{axes} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{ax}\PY{p}{)}\PY{p}{:}
+    \PY{n}{axes}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+    \PY{n}{axes}\PY{o}{.}\PY{n}{set\PYZus{}yticks}\PY{p}{(}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+    \PY{n}{text} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ax[}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}
+    \PY{n}{axes}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{text}\PY{p}{,} \PY{n}{transform}\PY{o}{=}\PY{n}{axes}\PY{o}{.}\PY{n}{transAxes}\PY{p}{,} \PY{n}{va}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ha}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{)}
     
-    \PY{k}{def} \PY{n+nf}{inner}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-        \PY{c+c1}{\PYZsh{} Bind var to global name var}
-        \PY{k}{global} \PY{n}{var}
-        \PY{n}{var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inner function}\PY{l+s+s1}{\PYZsq{}}
-
-    \PY{n+nb}{print}\PY{p}{(}\PY{n}{var}\PY{p}{)}
-    \PY{n}{inner}\PY{p}{(}\PY{p}{)}
-    \PY{n+nb}{print}\PY{p}{(}\PY{n}{var}\PY{p}{)}
-
-\PY{n}{outer}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-outer function
-outer function
-    \end{Verbatim}
-
-    Surprisingly, the code above prints
-\texttt{\textquotesingle{}outer\ function\textquotesingle{}} twice. The
-reason is that \texttt{var} defined in \texttt{outer()} is \emph{not} a
-global variable as it was not defined at the top level within a module.
-Instead, it is a \emph{local} variable in \texttt{outer()}.
-
-For such scenarios, Python has the \texttt{nonlocal} statement which
-works similarly to \texttt{global} except that it operates on a name in
-the immediate outer scope, irrespective of whether this outer scope is
-another function or the module itself.
-
-We can use \texttt{nonlocal} to get the desired behaviour:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{21}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{outer}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-    \PY{c+c1}{\PYZsh{} var is in outer\PYZsq{}s local scope}
-    \PY{n}{var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{outer function}\PY{l+s+s1}{\PYZsq{}}
+    \PY{c+c1}{\PYZsh{} Add axes\PYZhy{}specific title}
+    \PY{n}{axes}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Title for ax[}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
     
-    \PY{k}{def} \PY{n+nf}{inner}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-        \PY{c+c1}{\PYZsh{} bind var to name in immediate outer scope,}
-        \PY{c+c1}{\PYZsh{} which is the local scope of outer()}
-        \PY{k}{nonlocal} \PY{n}{var}
-        \PY{n}{var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inner function}\PY{l+s+s1}{\PYZsq{}}
-
-    \PY{n+nb}{print}\PY{p}{(}\PY{n}{var}\PY{p}{)}
-    \PY{n}{inner}\PY{p}{(}\PY{p}{)}
-    \PY{n+nb}{print}\PY{p}{(}\PY{n}{var}\PY{p}{)}
-
-\PY{n}{outer}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-outer function
-inner function
-    \end{Verbatim}
-
-    \hypertarget{pass-by-value-or-pass-by-reference}{%
-\subsubsection{Pass by value or pass by
-reference?}\label{pass-by-value-or-pass-by-reference}}
-
-Can functions modify their arguments? This questions usually comes down
-to whether a function call uses \emph{pass by value} or \emph{pass by
-reference}:
-
-\begin{itemize}
-\tightlist
-\item
-  \emph{pass by value} means that a copy of every argument is created
-  before it is passed into the function. A function therefore cannot
-  modify a value in the caller's environment.
-\item
-  \emph{pass by reference} means that only a reference to a value is
-  passed to the function, so the function can directly modify values at
-  the call site.
-\end{itemize}
-
-This programming model is used in languages such as C (pass by value) or
-Fortran (pass by reference), but not in Python. Sloppily speaking, we
-can say that in Python a reference (``variable name'') is passed by
-value. This means assigning a different value to an argument (``the
-reference'') within a function has no effect outside of the function:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{22}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
-    \PY{c+c1}{\PYZsh{} x now points to something else}
-    \PY{n}{x} \PY{o}{=} \PY{l+m+mf}{1.0}
-
-\PY{n}{x} \PY{o}{=} \PY{l+m+mi}{123}
-\PY{n}{func}\PY{p}{(}\PY{n}{x}\PY{p}{)}
-
-\PY{n}{x}       \PY{c+c1}{\PYZsh{} prints 123, x in the outer scope is unchanged}
+\PY{c+c1}{\PYZsh{} set overall figure title:}
+\PY{c+c1}{\PYZsh{} this is an attribute of the Figure object!}
+\PY{n}{fig}\PY{o}{.}\PY{n}{suptitle}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Figure title}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{18}\PY{p}{,} \PY{n}{va}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bottom}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+m+mf}{1.02}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{22}{\boxspacing}
+\prompt{Out}{outcolor}{20}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-123
+Text(0.5, 1.02, 'Figure title')
 \end{Verbatim}
 \end{tcolorbox}
         
-    However, if a variable is a mutable object (such as a \texttt{list} or a
-\texttt{dict}), the function can use its own copy of the reference to
-that object to modify the object even in the outer scope:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{23}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
-    \PY{c+c1}{\PYZsh{} uses reference x to modify list object outside of func()}
-    \PY{n}{x}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}
-
-\PY{n}{lst} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}
-\PY{n}{func}\PY{p}{(}\PY{n}{lst}\PY{p}{)}
-\PY{n}{lst}     \PY{c+c1}{\PYZsh{} prints [1,2,3,4]}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{23}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-[1, 2, 3, 4]
-\end{Verbatim}
-\end{tcolorbox}
-        
-    Nevertheless, even for mutable objects the rule from above applies: when
-a new value is \emph{assigned} to a named argument, that name then
-references a different object, leaving the original object unmodified:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{24}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
-    \PY{c+c1}{\PYZsh{} this does not modify object in outer scope,}
-    \PY{c+c1}{\PYZsh{} x now references a new (local) object.}
-    \PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{c}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-
-\PY{n}{lst} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}
-\PY{c+c1}{\PYZsh{} pass list, which is mutable and can thus be changed in func()}
-\PY{n}{func}\PY{p}{(}\PY{n}{x}\PY{p}{)}
-
-\PY{n}{lst}     \PY{c+c1}{\PYZsh{} prints [1,2,3]}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{24}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-[1, 2, 3]
-\end{Verbatim}
-\end{tcolorbox}
-        
-    For immutable objects such as tuples, the reference passed to the
-function of course cannot be used to modify the object inside the
-function:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{25}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
-    \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{modified in func}\PY{l+s+s1}{\PYZsq{}}
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_44_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
     
-\PY{n}{items} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}          \PY{c+c1}{\PYZsh{} create tuple of integers}
-\PY{n}{func}\PY{p}{(}\PY{n}{items}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{TypeError}\textcolor{ansi-red}{:} 'tuple' object does not support item assignment
-
-    \end{Verbatim}
-
-    Passing in a mutable collection such as a list, however, works as
-expected:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{26}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{items} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}
-
-\PY{n}{func}\PY{p}{(}\PY{n}{items}\PY{p}{)}
-
-\PY{n}{items}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{26}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-['modified in func', 2, 3]
-\end{Verbatim}
-\end{tcolorbox}
-        
-    \hypertarget{methods}{%
-\subsubsection{Methods}\label{methods}}
-
-Methods are simply functions that perform an action on a particular
-object which they are bound to. We will not write methods in this course
-ourselves (they are part of what's called object-oriented programming),
-but we frequently use them when we invoke actions on objects such as
-lists:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{27}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Create a list}
-\PY{n}{lst} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}
-
-\PY{c+c1}{\PYZsh{} append() is a method of the list class and can be invoked}
-\PY{c+c1}{\PYZsh{} on list objects.}
-\PY{n}{lst}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}
-\PY{n}{lst}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{27}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-[1, 2, 3, 4]
-\end{Verbatim}
-\end{tcolorbox}
-        
-    \hypertarget{functions-as-objects}{%
-\subsubsection{Functions as objects}\label{functions-as-objects}}
-
-Functions are objects in their own right, which means that you can
-perform various operations with them:
-
-\begin{itemize}
-\tightlist
-\item
-  Assign a function to a variable.
-\item
-  Store functions in collections.
-\item
-  Pass function as an argument to other functions.
-\end{itemize}
-
-\emph{Examples:}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{28}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{func1}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
-    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{func1 called with argument }\PY{l+s+si}{\PYZob{}}\PY{n}{x}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{k}{def} \PY{n+nf}{func2}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
-    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{func2 called with argument }\PY{l+s+si}{\PYZob{}}\PY{n}{x}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-
-\PY{c+c1}{\PYZsh{} List of functions}
-\PY{n}{funcs} \PY{o}{=} \PY{p}{[}\PY{n}{func1}\PY{p}{,} \PY{n}{func2}\PY{p}{]}
-
-\PY{c+c1}{\PYZsh{} Assign functions to variable f}
-\PY{k}{for} \PY{n}{f} \PY{o+ow}{in} \PY{n}{funcs}\PY{p}{:}
-    \PY{c+c1}{\PYZsh{} call function referenced by f}
-    \PY{n}{f}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{foo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-func1 called with argument foo
-func2 called with argument foo
-    \end{Verbatim}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{29}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Pass one function as argument to another function}
-\PY{n}{func1}\PY{p}{(}\PY{n}{func2}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-func1 called with argument <function func2 at 0x7ff523485ea0>
-    \end{Verbatim}
-
-    \hypertarget{lambda-expressions}{%
-\subsubsection{lambda expressions}\label{lambda-expressions}}
-
-You can think of lambda expressions as light-weight functions. The
-syntax is
-
-\begin{verbatim}
-lambda x: <do something with x>
-\end{verbatim}
-
-The return value of a lambda expression is whatever its body evaluates
-to. There is no need (or possibility) to explicitly add a
-\texttt{return} statement.
-
-One big difference to regular functions is that lambda expressions are
-\emph{expressions}, not statements.
-
-\begin{itemize}
-\tightlist
-\item
-  At this point we gain little from a technical discussion on
-  \emph{statements} vs \emph{expressions}. Loosely speaking, statements
-  are one level above expressions in the Python syntax hierarchy, and
-  the language puts restrictions on where statements can appear.
-  Function definitions, \texttt{for} and \texttt{while} loops, and
-  \texttt{if/elif/else} blocks are statements, among others.
-\item
-  Conversely, \emph{expressions} are more flexible and can appear
-  basically anywhere. They usually evaluate to some object that can be
-  assigned, passed to a function, \etc, whereas statements usually
-  can't.
-\end{itemize}
-
-The take-away is that we can fiddle in lambda expressions almost
-anywhere, even as arguments in function calls!
-
-For example, we might have a function that applies some algebraic
-operation to its arguments, and the operation can be flexibly defined by
-the caller.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{30}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{n}{items}\PY{p}{,} \PY{n}{operation}\PY{o}{=}\PY{k}{lambda} \PY{n}{z}\PY{p}{:} \PY{n}{z} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
-    \PY{c+c1}{\PYZsh{} default operation: increment value by 1}
-    \PY{n}{result} \PY{o}{=} \PY{p}{[}\PY{n}{operation}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{items}\PY{p}{]}
-    \PY{k}{return} \PY{n}{result}
-
-\PY{n}{numbers} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{3.0}\PY{p}{]}
-\PY{c+c1}{\PYZsh{} call with default operation}
-\PY{n}{func}\PY{p}{(}\PY{n}{numbers}\PY{p}{)}               \PY{c+c1}{\PYZsh{} prints [2.0, 3.0, 4.0]}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{30}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-[2.0, 3.0, 4.0]
-\end{Verbatim}
-\end{tcolorbox}
-        
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{31}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} We can also use lambda expressions to specify}
-\PY{c+c1}{\PYZsh{} an alternative operation directly in the call!}
-
-\PY{n}{func}\PY{p}{(}\PY{n}{numbers}\PY{p}{,} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0}\PY{p}{)}     \PY{c+c1}{\PYZsh{} prints [1.0, 4.0, 9.0]}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{31}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-[1.0, 4.0, 9.0]
-\end{Verbatim}
-\end{tcolorbox}
-        
-    While we could have defined the operation using a ``regular'' function
-statement, this is shorter.
-
-
-\hypertarget{modules-and-packages}{%
-\subsection{Modules and packages}\label{modules-and-packages}}
-
-\hypertarget{modules}{%
-\subsubsection{Modules}\label{modules}}
-
-Modules allow us to further encapsulate code that implements some
-particular functionality.
-
-\begin{itemize}
-\tightlist
-\item
-  Each Python file (with the extension \texttt{.py}) automatically
-  corresponds to a module of the same name.
-\item
-  Objects defined within such a module are by default not visible
-  outside of the module, thus helping to avoid naming conflicts.
-\end{itemize}
-
-To actually demonstrate the usage of modules, we need to use files
-outside of this notebook. To this end, there is an additional Python
-file in the current directory:
-
-\begin{verbatim}
-lectures/
-    unit04_mod.py
-\end{verbatim}
-
-The module \texttt{unit04\_mod.py} contains the following definitions:
-
-\begin{verbatim}
-# Contents of unit04_mod.py
-
-# global variable in this module
-var = 'Variable defined in unit04_mod'
-
-# global function in this module
-def func():
-    print(f'func in module unit04_mod called')
-\end{verbatim}
-
-    \textbf{Module search path}
-
-Before getting into the details, we first need to verify that we can
-import the module \texttt{unit04\_mod} using the \texttt{import}
-statement:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{32}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{unit04\PYZus{}mod}
-\end{Verbatim}
-\end{tcolorbox}
-
-    Depending on where exactly you are running this code, the above import
-statement might fail with a \texttt{ModuleNotFoundError} (if no error
-was raised you can skip the rest of this section). This happens whenever
-the directory in which the module resides is not in the \emph{module
-search path} used by Python.
-
-To fix this, check the module search path as follows:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{33}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{sys}
-\PY{n}{sys}\PY{o}{.}\PY{n}{path}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{33}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-['/home/richard/repos/python-statistics/lectures',
- '/home/richard/.conda/envs/py3-default/lib/python310.zip',
- '/home/richard/.conda/envs/py3-default/lib/python3.10',
- '/home/richard/.conda/envs/py3-default/lib/python3.10/lib-dynload',
- '',
- '/home/richard/.conda/envs/py3-default/lib/python3.10/site-packages',
- '/home/richard/.conda/envs/py3-default/lib/python3.10/site-
-packages/PyQt5\_sip-12.11.0-py3.10-linux-x86\_64.egg']
-\end{Verbatim}
-\end{tcolorbox}
-        
-    If the \texttt{lectures/} directory is not included in this list, you
-can add it manually. For example, this notebook is executed in the git
-repository's root directory, you need to exectute
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{34}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{sys}
-\PY{c+c1}{\PYZsh{} add lectures/ directory using a relative path}
-\PY{n}{sys}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./lectures/}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}        
-\end{Verbatim}
-\end{tcolorbox}
-
-    \textbf{Importing symbols}
-
-We now want to use \texttt{func} and \texttt{var} in our notebook.
-However, by default these symbols are not visible and first need to be
-imported. We can do this in several ways:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  We can import the module and use fully qualified names to reference
-  objects from \texttt{unit04\_mod}.
-\item
-  We can select which names from \texttt{unit04\_mod} should be directly
-  accessible.
-\end{enumerate}
-
-The first variant looks like this:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{35}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{unit04\PYZus{}mod}
-
-\PY{c+c1}{\PYZsh{} Access variable defined in unit04\PYZus{}mod}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{unit04\PYZus{}mod}\PY{o}{.}\PY{n}{var}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Call function defined in unit04\PYZus{}mod}
-\PY{n}{unit04\PYZus{}mod}\PY{o}{.}\PY{n}{func}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Variable defined in unit04\_mod
-func in module unit04\_mod called
-    \end{Verbatim}
-
-    If a symbol from \texttt{unit04\_mod} is used frequently, we might want
-to make it accessible without the \texttt{unit04\_mod} prefix. This is
-the second variant:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{36}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{from} \PY{n+nn}{unit04\PYZus{}mod} \PY{k+kn}{import} \PY{n}{var}\PY{p}{,} \PY{n}{func}
-
-\PY{c+c1}{\PYZsh{} Access variable defined in unit04\PYZus{}mod}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{var}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Call function defined in unit04\PYZus{}mod}
-\PY{n}{func}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Variable defined in unit04\_mod
-func in module unit04\_mod called
-    \end{Verbatim}
-
-    What if our notebook itself defines a function \texttt{func()} which
-would overwrite the reference to the one imported from
-\texttt{unit04\_mod}, as in the following example?
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{37}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{from} \PY{n+nn}{unit04\PYZus{}mod} \PY{k+kn}{import} \PY{n}{func}
-
-\PY{c+c1}{\PYZsh{} Calls func() defined in unit04\PYZus{}mod}
-\PY{n}{func}\PY{p}{(}\PY{p}{)}         
-
-\PY{c+c1}{\PYZsh{} overwrites definition from unit04\PYZus{}mod with local version}
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{func in notebook called}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Calls func() defined in notebook}
-\PY{n}{func}\PY{p}{(}\PY{p}{)}          
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-func in module unit04\_mod called
-func in notebook called
-    \end{Verbatim}
-
-    In such a scenario, we can assign aliases to imported symbols using
-\texttt{as}:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{38}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{from} \PY{n+nn}{unit04\PYZus{}mod} \PY{k+kn}{import} \PY{n}{func} \PY{k}{as} \PY{n}{imported\PYZus{}func}     \PY{c+c1}{\PYZsh{} The function formerly known}
-                                                 \PY{c+c1}{\PYZsh{} as func is now imported\PYZus{}func}
-
-\PY{k}{def} \PY{n+nf}{func}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{func in notebook called}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} call our own func}
-\PY{n}{func}\PY{p}{(}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} call func from module unit04\PYZus{}mod}
-\PY{n}{imported\PYZus{}func}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-func in notebook called
-func in module unit04\_mod called
-    \end{Verbatim}
-
-    We can even alias the module name itself, as we frequently do with
-widely used modules such as \texttt{numpy}:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{39}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{unit04\PYZus{}mod} \PY{k}{as} \PY{n+nn}{u4m}
-
-\PY{n}{u4m}\PY{o}{.}\PY{n}{func}\PY{p}{(}\PY{p}{)}    \PY{c+c1}{\PYZsh{} call function from module unit04\PYZus{}mod}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-func in module unit04\_mod called
-    \end{Verbatim}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{40}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} universal convention to import numpy like this}
-\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \hypertarget{packages}{%
-\subsubsection{Packages}\label{packages}}
-
-Packages are roughly speaking collections of modules and a little magic
-on top. We will not be creating packages, but we have already been using
-them: basically everything besides the built-in functions is defined in
-some package. For example, the NumPy library is a collection of
-packages.
-
 
 \hypertarget{exercises}{%
 \subsection{Exercises}\label{exercises}}
 
-    \hypertarget{exercise-1-sign-function}{%
-\subsubsection{Exercise 1: Sign
-function}\label{exercise-1-sign-function}}
+    \hypertarget{exercise-1-trigonometric-functions}{%
+\subsubsection{Exercise 1: Trigonometric
+functions}\label{exercise-1-trigonometric-functions}}
 
-Implement a function \texttt{sign} which returns the following values:
-\[
-sign(x) = 
-\begin{cases}
--1 & \text{if } x < 0 \\
-\phantom{-} 0 & \text{if } x = 0 \\
-\phantom{-} 1 & \text{if } x > 0
-\end{cases}
-\] Test your function on a negative, zero and positive argument.
+Plot the functions \(\sin(x)\) and \(\cos(x)\) on the interval
+\([-\pi, \pi]\), each in a separate graph. Include a legend for each
+plot, and add pretty tick labels at \([-\pi, 0, \pi]\) which use the
+\(\LaTeX\) symbol for \(\pi\). Add an overall title ``Trigonometric
+functions''.
 
-    \hypertarget{exercise-2-sum-of-arbitrary-number-of-elements}{%
-\subsubsection{Exercise 2: Sum of arbitrary number of
-elements}\label{exercise-2-sum-of-arbitrary-number-of-elements}}
+\emph{Hint:} NumPy defines the functions \texttt{np.sin()} and
+\texttt{np.cos()} as well as the value \texttt{np.pi}.
 
-Create a function called \texttt{my\_sum} which accepts an arbitrary
-number of arguments (possibly zero) and returns their sum. Assume that
-all arguments are numeric.
+    \hypertarget{exercise-2-logarithmic-scaling}{%
+\subsubsection{Exercise 2: Logarithmic
+scaling}\label{exercise-2-logarithmic-scaling}}
 
-Test your function with the following arguments:
+In economics and finance, we often plot using the \(\log_{10}\) scale if
+the plotted data are of very different orders of magnitude.
 
-\begin{verbatim}
-my_sum(10.0)    # one argument
-my_sum(1,2,3)   # multiple arguments
-my_sum()        # no arguments
-\end{verbatim}
+Create a figure with two sub-plots, each plotting the function
+\(f(x) = 10^x\) on a uniformly-spaced interval \([-5,5]\) with 100
+points. Use the (default) linear scale in the first plot, but apply the
+\(\log_{10}\) scale in the second.
 
-Make sure that in the last case your function returns zero, which is the
-sum over an empty set.
+\emph{Hint:} You can set the axis scale to log by calling
+\texttt{yscale(\textquotesingle{}log\textquotesingle{})}, or
+\texttt{set\_yscale(\textquotesingle{}log\textquotesingle{})} when using
+the object-oriented interface.
 
-    \hypertarget{exercise-3-fibonacci-sequence}{%
-\subsubsection{Exercise 3: Fibonacci
-sequence}\label{exercise-3-fibonacci-sequence}}
+    \hypertarget{exercise-3-multiple-lines-in-single-plot}{%
+\subsubsection{Exercise 3: Multiple lines in single
+plot}\label{exercise-3-multiple-lines-in-single-plot}}
 
-A classical introductory exercise to programming is to write a function
-that returns the first \(n\) terms of the Fibonacci sequence. The
-\(i\)-th element of this sequence is the integer \(x_i\) defined as \[
-x_i = 
-\begin{cases} 0 & \text{if } i = 0   \\
-    1  & \text{if } i = 1\\
-    x_{i-1} + x_{i-2} & \text{else}
-\end{cases}
-\]
+In this exercise, we explore yet another alternative to plot multiple
+lines in a single graph.
 
-Write a function \texttt{fibonacci(i)},
-
-\begin{verbatim}
-def fibonacci(i):
-    ...
-\end{verbatim}
-
-which returns the \(i\)-th item in the sequence using recursion. A
-recursive function is a function that calls itself to perform (part of)
-its task, \ie you should compute \(x_i\) like this:
-
-\begin{verbatim}
-xi = fibonacci(i-1) + fibonacci(i-2)
-\end{verbatim}
-
-Use this function to compute the first 10 elements of this sequence with
-a list comprehension.
-
-    \hypertarget{exercise-4-factorials}{%
-\subsubsection{Exercise 4: Factorials}\label{exercise-4-factorials}}
+The \texttt{plot()} function accepts \(y\)-values specified as a matrix
+in which each column corresponds to a different line. The number of rows
+must correspond to the length of the vector of \(x\)-values, which are
+assumed to be identical for all columns of \(y\)-values.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Implement a function that computes the factorial of a non-negative
-  integer \(n\) defined as \(n! = \prod_{i=1}^n i\). Keep in mind that
-  this definition implies that \(0! = 1\). Use the list comprehension
-  syntax to create a tuple that contains the factorials for the integers
-  \(n=1,\dots,10\).
+  Consider the following family of polynomials in \(x\) parametrised by
+  \(a\): \[
+  p(x;a) = a(x-0.5)^2
+  \]
 
-  \emph{Hint:} The factorial can be written as a recurrence relation
-  \(n! = n \cdot (n-1)!\), which you can use to implement the recursive
-  function.
-\item
-  Provide an alternative implementation that does not rely on recursion,
-  but instead uses NumPy's \texttt{prod()} function to compute the
-  product of a sequence of numbers. Again, create a \texttt{tuple} that
-  contains the factorials for the integers \(n=1,\dots,10\) using a list
-  comprehension.
+  Assume there are 5 such polynomials with \(a\)'s given by the values
 
-  \emph{Hint 1:} To compute the product of the integers
-  \(i,i+1,\dots,j\), you can use \texttt{np.prod(range(i,j+1))}.
+\begin{verbatim}
+a = np.linspace(0.4, 4.0, 5)
+\end{verbatim}
 
-  \emph{Hint 2:} The product of an empty set is 1, which is what
-  \texttt{np.prod()} returns.
-\end{enumerate}
-
-    \hypertarget{exercise-5-bisection-root-finding-algorithm-advanced}{%
-\subsubsection{Exercise 5: Bisection root-finding algorithm
-(advanced)}\label{exercise-5-bisection-root-finding-algorithm-advanced}}
-
-We revisit the binary search algorithm from unit 3, this time applied to
-finding the root of a continuous function. This is called the
-\href{https://en.wikipedia.org/wiki/Bisection_method}{bisection method}.
-
-Implement a function \texttt{bisection(f,\ a,\ b,\ tol,\ xtol)} which
-finds the root of the function \(f(x)\), \ie the value \(x_0\) where
-\(f(x_0) = 0\), on the interval \([a,b]\). Assume that \(a<b\) and that
-the function values \(f(a)\) and \(f(b)\) have opposite signs.
-
-Test your implementation using the function \(f(x) = x^2 - 4\) on the
-interval \([-3,0]\), which has a (unique) root at \(x_0 = -2\).
-
-\emph{Hint:} The bisection algorithm proceeds as follows:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Define tolerance levels \(\epsilon > 0\) and \(\epsilon_x > 0\). The
-  algorithm completes successfully whenever we have either
-  \(|f(x_0)| < \epsilon\) or \(|b-a|<\epsilon_x\).
-\item
-  Main loop of the algorithm:
-
-  \begin{enumerate}
-  \def\labelenumii{\arabic{enumii}.}
+  \begin{itemize}
   \tightlist
   \item
-    Compute the midpoint \(x_m = (a+b)/2\)
+    Create a common set of \(x\)-values using an equidistant grid of 50
+    points on the interval \([0,1]\).
   \item
-    Compute function value \(f_m = f(x_m)\)
+    Construct the matrix of \(y\)-values with shape \texttt{(50,5)} and
+    plot all polynomials with a single call to \texttt{plot()}.
   \item
-    If either \(|f_m| < \epsilon\) or \(|b-a|< \epsilon_x\), accept
-    \(x_m\) as the solution and exit.
-  \item
-    Otherwise, update either \(a\) or \(b\):
+    Add a legend that maps a value of \(a\) to the corresponding line in
+    the plot.
+  \end{itemize}
+\item
+  Plot each polynomial separately using a loop. Use the \texttt{i}-th
+  elements of the following arrays as plot styles for the \texttt{i}-th
+  polynomial:
 
-    \begin{enumerate}
-    \def\labelenumiii{\arabic{enumiii}.}
-    \item
-      If \(sign(f(b)) = sign(f_m)\), set \(b = x_m\)
+\begin{verbatim}
+colors = ['red', 'blue', 'black', 'green', 'purple']
+linewidths = [1.0, 1.5, 2.0, 1.5, 1.0]
+linestyles = ['-', '--', '-.', ':', '-']
+\end{verbatim}
 
-      \emph{Hint:} One way to check whether two non-zero values have the
-      same sign is to check if \(f(b) \cdot f_m > 0\).
-    \item
-      Otherwise, \(a = x_m\)
-    \end{enumerate}
-  \item
-    Proceed to next iteration of main loop.
-  \end{enumerate}
+  Add a legend that maps a value of \(a\) to the corresponding line in
+  the plot.
 \end{enumerate}
 
 
@@ -1655,418 +1255,175 @@ interval \([-3,0]\), which has a (unique) root at \(x_0 = -2\).
 \subsubsection{Solution for exercise 1}\label{solution-for-exercise-1}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{41}{\boxspacing}
+\prompt{In}{incolor}{21}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 
-\PY{k}{def} \PY{n+nf}{sign}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
-    \PY{k}{if} \PY{n}{x} \PY{o}{\PYZlt{}} \PY{l+m+mf}{0.0}\PY{p}{:}
-        \PY{k}{return} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1.0}
-    \PY{k}{elif} \PY{n}{x} \PY{o}{==} \PY{l+m+mf}{0.0}\PY{p}{:}
-        \PY{k}{return} \PY{l+m+mf}{0.0}
-    \PY{k}{elif} \PY{n}{x} \PY{o}{\PYZgt{}} \PY{l+m+mf}{0.0}\PY{p}{:}
-        \PY{k}{return} \PY{l+m+mf}{1.0}
-    \PY{k}{else}\PY{p}{:}
-        \PY{c+c1}{\PYZsh{} Argument is not a proper numerical value, return NaN}
-        \PY{c+c1}{\PYZsh{} (NaN = Not a Number)}
-        \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{nan}
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Create figure with two rows, one column}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
 
-\PY{c+c1}{\PYZsh{} Test on a few values}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{sign}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{123}\PY{p}{)}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{sign}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{sign}\PY{p}{(}\PY{l+m+mi}{12345}\PY{p}{)}\PY{p}{)}
+\PY{n}{xticks} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{]}
+\PY{c+c1}{\PYZsh{} Tick labels use LaTeX notation for pi, which is \PYZbs{}pi and has to be }
+\PY{c+c1}{\PYZsh{} surrounded by \PYZdl{}\PYZdl{}.}
+\PY{n}{xticklabels} \PY{o}{=} \PY{p}{[}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}\PYZhy{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{pi\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{pi\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{yticks} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Create sin() plot using first axes object}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{n}{xticks}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xticklabels}\PY{p}{(}\PY{n}{xticklabels}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}yticks}\PY{p}{(}\PY{n}{yticks}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create cos() plot using second axes object}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cos}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{n}{xticks}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xticklabels}\PY{p}{(}\PY{n}{xticklabels}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}yticks}\PY{p}{(}\PY{n}{yticks}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Add overall figure title (this is not axes\PYZhy{}specific)}
+\PY{n}{fig}\PY{o}{.}\PY{n}{suptitle}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Trigonometric functions}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
--1.0
-0.0
-1.0
-    \end{Verbatim}
-
-    Note that NumPy has a ``proper'' sign function, \texttt{np.sign()},
-which implements the same logic but is more robust, accepts array
-arguments, etc.
-
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0.5, 0.98, 'Trigonometric functions')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_50_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
     \hypertarget{solution-for-exercise-2}{%
 \subsubsection{Solution for exercise 2}\label{solution-for-exercise-2}}
 
-For a function to accept an arbitrary number of elements, we need to
-declare an \texttt{*args} argument.
-
-One possible implementation of \texttt{my\_sum()} looks as follows:
-
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{42}{\boxspacing}
+\prompt{In}{incolor}{22}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{my\PYZus{}sum}\PY{p}{(}\PY{o}{*}\PY{n}{args}\PY{p}{)}\PY{p}{:}
-    \PY{c+c1}{\PYZsh{} Initialise sum to 0}
-    \PY{n}{s} \PY{o}{=} \PY{l+m+mi}{0}
-    \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{args}\PY{p}{:}
-        \PY{n}{s} \PY{o}{+}\PY{o}{=} \PY{n}{x}
-    \PY{k}{return} \PY{n}{s}
-
-
-\PY{c+c1}{\PYZsh{} Test with built\PYZhy{}in range() object}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{my\PYZus{}sum}\PY{p}{(}\PY{l+m+mf}{10.0}\PY{p}{)}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{my\PYZus{}sum}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{my\PYZus{}sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-10.0
-6
-0
-    \end{Verbatim}
-
-    Of course in real code we would use the built-in function
-\texttt{sum()}, or preferably the NumPy variant \texttt{np.sum()}:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{43}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{l+m+mf}{10.0}\PY{p}{)}\PY{p}{)}
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{5.0}\PY{p}{,} \PY{l+m+mf}{5.0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{l+m+mf}{10.0}\PY{o}{*}\PY{o}{*}\PY{n}{xvalues}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Linear scale}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 
-\PY{c+c1}{\PYZsh{} Need to pass argument as collection}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} np.sum() cannot be invoked without arguments, but we can}
-\PY{c+c1}{\PYZsh{} call it with an empty tuple ()}
-\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{l+m+mf}{10.0}\PY{o}{*}\PY{o}{*}\PY{n}{xvalues}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Set y\PYZhy{}axis to log scale (assumes base\PYZhy{}10 log)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}yscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log scale}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-10.0
-6
-    \end{Verbatim}
-
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{43}{\boxspacing}
+\prompt{Out}{outcolor}{22}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-0.0
+Text(0.5, 1.0, 'Log scale')
 \end{Verbatim}
 \end{tcolorbox}
         
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_52_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
     \hypertarget{solution-for-exercise-3}{%
 \subsubsection{Solution for exercise 3}\label{solution-for-exercise-3}}
 
-The recursive definition of \texttt{fibonacci(i)} could look like this:
+First we plot all polynomials in a single call to \texttt{plot()}. For
+this to work, we need to pass the \(y\)-values as a matrix where each
+column corresponds to a different line.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{44}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{fibonacci}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{:}
-    \PY{k}{if} \PY{n}{i} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
-        \PY{c+c1}{\PYZsh{} No recursion needed}
-        \PY{n}{xi} \PY{o}{=} \PY{l+m+mi}{0}
-    \PY{k}{elif} \PY{n}{i} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
-        \PY{c+c1}{\PYZsh{} No recursion needed}
-        \PY{n}{xi} \PY{o}{=} \PY{l+m+mi}{1}
-    \PY{k}{else}\PY{p}{:}
-        \PY{c+c1}{\PYZsh{} Assume that i \PYZgt{} 1. We will learn later how to}
-        \PY{c+c1}{\PYZsh{} return an error if this is not the case.}
-        \PY{c+c1}{\PYZsh{} Use recursion to compute the two preceding values}
-        \PY{c+c1}{\PYZsh{} of the sequence.}
-        \PY{n}{xi} \PY{o}{=} \PY{n}{fibonacci}\PY{p}{(}\PY{n}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{n}{fibonacci}\PY{p}{(}\PY{n}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{)}
-    \PY{k}{return} \PY{n}{xi}
-
-\PY{c+c1}{\PYZsh{} Compute the first 10 elements of the sequence using a list comprehension}
-\PY{n}{first10} \PY{o}{=} \PY{p}{[}\PY{n}{fibonacci}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{]}
-\PY{n}{first10}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{44}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
-\end{Verbatim}
-\end{tcolorbox}
-        
-    Note that this is a terribly inefficient way to compute things, as the
-same elements of the sequence will needlessly be calculated over and
-over again.
-
-Also, Python has a built-in recursion limit, so you cannot call a
-function recursively arbitrarily many times. You can find out what this
-limit is as follows:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{45}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{sys}
-\PY{n+nb}{print}\PY{p}{(}\PY{n}{sys}\PY{o}{.}\PY{n}{getrecursionlimit}\PY{p}{(}\PY{p}{)}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-3000
-    \end{Verbatim}
-
-    \hypertarget{solution-for-exercise-4}{%
-\subsubsection{Solution for exercise 4}\label{solution-for-exercise-4}}
-
-The following code shows a function computing the factorial \(n!\) using
-recursion:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{46}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
-    \PY{k}{if} \PY{n}{n} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
-        \PY{k}{return} \PY{l+m+mi}{1}
-    \PY{k}{else}\PY{p}{:}
-        \PY{c+c1}{\PYZsh{} Use recursion to compute factorial}
-        \PY{k}{return} \PY{n}{n} \PY{o}{*} \PY{n}{factorial}\PY{p}{(}\PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
-
-\PY{n}{fact10} \PY{o}{=} \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
-\PY{n}{fact10}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{46}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-(1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
-\end{Verbatim}
-\end{tcolorbox}
-        
-    An implementation without recursion can be created using NumPy's
-\texttt{prod()} function which computes the product of a sequence of
-numbers:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{47}{\boxspacing}
+\prompt{In}{incolor}{23}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\PY{n}{fact10} \PY{o}{=}  \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{prod}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{n}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
-\PY{n}{fact10}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+
+\PY{c+c1}{\PYZsh{} Create common x\PYZhy{}values}
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create parameters}
+\PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.4}\PY{p}{,} \PY{l+m+mf}{4.0}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Evaluate polynomials on common x\PYZhy{}values:}
+\PY{c+c1}{\PYZsh{} each column corresponds to a different parametrisation}
+\PY{n}{poly} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Iterate over parameters and create each set of corresponding y\PYZhy{}values}
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{ai} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{:}
+    \PY{n}{poly}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{ai} \PY{o}{*} \PY{p}{(}\PY{n}{xvalues} \PY{o}{\PYZhy{}} \PY{l+m+mf}{0.5}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{poly}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}p(x;a)\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Polynomials}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create legend:}
+\PY{c+c1}{\PYZsh{} we need to pass labels in same order as the corresponding columns}
+\PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}a=}\PY{l+s+si}{\PYZob{}:.2f\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{ai}\PY{p}{)} \PY{k}{for} \PY{n}{ai} \PY{o+ow}{in} \PY{n}{a}\PY{p}{]}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{labels}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{47}{\boxspacing}
+\prompt{Out}{outcolor}{23}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-(1.0, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
+<matplotlib.legend.Legend at 0x7f283572bf40>
 \end{Verbatim}
 \end{tcolorbox}
         
-    Notice that the first element of this sequence is a floating-point value
-1.0, while the remaining elements are integers. Why is that? Examine the
-argument passed to \texttt{np.prod()} for \texttt{n=0}:
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_54_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    We now call \texttt{plot()} for each polynomial separately. This allows
+us to specify detailed style settings for each line.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{48}{\boxspacing}
+\prompt{In}{incolor}{24}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{n} \PY{o}{=} \PY{l+m+mi}{0}
-\PY{c+c1}{\PYZsh{} We have to embed range() in an expression that forces the Python}
-\PY{c+c1}{\PYZsh{} interpreter to actually expand the range object, such as a tuple().}
-\PY{n+nb}{tuple}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{n}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Different styles for each parametrisation}
+\PY{n}{colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{purple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{linewidths} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{1.5}\PY{p}{,} \PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{1.5}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{]}
+\PY{n}{linestyles} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{n}{n} \PY{o}{=} \PY{n}{poly}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+    \PY{n}{label} \PY{o}{=} \PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}a=}\PY{l+s+si}{\PYZob{}:.2f\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{a}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+    \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{poly}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{colors}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{n}{linewidths}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} 
+            \PY{n}{ls}\PY{o}{=}\PY{n}{linestyles}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{n}{label}\PY{p}{)}
+    
+\PY{c+c1}{\PYZsh{} calling legend without arguments will use the }
+\PY{c+c1}{\PYZsh{} text provided as label argument to each plot()}
+\PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}p(x;a)\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Polynomials}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{48}{\boxspacing}
+\prompt{Out}{outcolor}{24}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-()
+Text(0.5, 1.0, 'Polynomials')
 \end{Verbatim}
 \end{tcolorbox}
         
-    As you see, for \texttt{n=0} this is an empty container without
-elements. The mathematical convention is that the product over an empty
-set is \(\prod_{i \in \emptyset} = 1\), and this is exactly what
-\texttt{np.prod()} returns. However, by default NumPy creates
-floating-point values, and so the return value is 1.0, not 1.
-
-You can get around this by explicitly specifying the data type using the
-\texttt{dtype} argument, which is accepted by many NumPy functions.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{49}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\PY{c+c1}{\PYZsh{} Force result to be of integer type}
-\PY{n}{fact10} \PY{o}{=}  \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{prod}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{n}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
-\PY{n}{fact10}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{49}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-(1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
-\end{Verbatim}
-\end{tcolorbox}
-        
-    Alternatively, we can use \texttt{np.arange()} instead of
-\texttt{range()} as the former by default returns integer arrays, even
-if they are empty:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{50}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\PY{c+c1}{\PYZsh{} Force result to be of integer type}
-\PY{n}{fact10} \PY{o}{=}  \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{prod}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{n}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
-\PY{n}{fact10}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{50}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-(1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
-\end{Verbatim}
-\end{tcolorbox}
-        
-    Finally, you of course would not need to implement the factorial
-function yourself, as there is one in the \texttt{math} module shipped
-with Python:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{51}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{math}
-\PY{n}{fact10} \PY{o}{=} \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
-\PY{n}{fact10}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{51}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-(1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
-\end{Verbatim}
-\end{tcolorbox}
-        
-    \hypertarget{solution-for-exercise-5}{%
-\subsubsection{Solution for exercise 5}\label{solution-for-exercise-5}}
-
-    Below you find a simple implementation of a bisection algorithm. This
-function does not perform any error checking and assumes that the
-initial bracket \([a,b]\) actually contains a root, and that the values
-\(f(a)\) and \(f(b)\) have opposite signs.
-
-Note that we impose two termination criteria, and the algorithm will end
-successfully whenever one of them is satisfied:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  The function value is sufficiently close to zero,
-  \ie \(|f(x_0)| < \epsilon\) for some small \(\epsilon > 0\).
-\item
-  The bracket is sufficiently small, \ie \(|b-a| < \epsilon_x\), again
-  for some small \(\epsilon_x > 0\)
-\end{enumerate}
-
-This is standard practice in numerical optimisation since we don't want
-the algorithm to continue unnecessarily if the desired degree of
-precision was achieved.
-
-We specify the termination tolerance as optional arguments \texttt{tol}
-and \texttt{xtol} with sensible defaults. We also add the maximum
-permissible number of iterations as an optional argument
-\texttt{maxiter}.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{52}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{bisect}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{tol}\PY{o}{=}\PY{l+m+mf}{1.0e\PYZhy{}6}\PY{p}{,} \PY{n}{xtol}\PY{o}{=}\PY{l+m+mf}{1.0e\PYZhy{}6}\PY{p}{,} \PY{n}{maxiter}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{:}
-
-    \PY{k}{for} \PY{n}{iteration} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{maxiter}\PY{p}{)}\PY{p}{:}
-        \PY{c+c1}{\PYZsh{} Compute candidate value as midpoint between a and b}
-        \PY{n}{mid} \PY{o}{=} \PY{p}{(}\PY{n}{a} \PY{o}{+} \PY{n}{b}\PY{p}{)} \PY{o}{/} \PY{l+m+mf}{2.0}
-        \PY{k}{if} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{b}\PY{o}{\PYZhy{}}\PY{n}{a}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{xtol}\PY{p}{:}
-            \PY{c+c1}{\PYZsh{} Remaining interval is too small}
-            \PY{k}{break}
-
-        \PY{n}{fmid} \PY{o}{=} \PY{n}{f}\PY{p}{(}\PY{n}{mid}\PY{p}{)}
-
-        \PY{k}{if} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{fmid}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{tol}\PY{p}{:}
-            \PY{c+c1}{\PYZsh{} function value is close enough to zero}
-            \PY{k}{break}
-
-        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Iteration }\PY{l+s+si}{\PYZob{}}\PY{n}{iteration}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{: f(mid) = }\PY{l+s+si}{\PYZob{}}\PY{n}{fmid}\PY{l+s+si}{:}\PY{l+s+s1}{.4e}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{k}{if} \PY{n}{fmid}\PY{o}{*}\PY{n}{f}\PY{p}{(}\PY{n}{b}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mf}{0.0}\PY{p}{:}
-            \PY{c+c1}{\PYZsh{} f(mid) and f(b) have the same sign, update upper bound b}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{  Updating upper bound to }\PY{l+s+si}{\PYZob{}}\PY{n}{mid}\PY{l+s+si}{:}\PY{l+s+s1}{.8f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-            \PY{n}{b} \PY{o}{=} \PY{n}{mid}
-        \PY{k}{else}\PY{p}{:}
-            \PY{c+c1}{\PYZsh{} f(mid) and f(a) have the same sign, or at least one of}
-            \PY{c+c1}{\PYZsh{} them is zero.}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{  Updating lower bound to }\PY{l+s+si}{\PYZob{}}\PY{n}{mid}\PY{l+s+si}{:}\PY{l+s+s1}{.8f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-            \PY{n}{a} \PY{o}{=} \PY{n}{mid}
-
-    \PY{k}{return} \PY{n}{mid}
-
-\PY{c+c1}{\PYZsh{} Compute root of f(x) = x\PYZca{}2 \PYZhy{} 4 on the interval [\PYZhy{}3, 0]}
-\PY{c+c1}{\PYZsh{} We pass the function f as the first argument, and use a lambda expression}
-\PY{c+c1}{\PYZsh{} to define the function directly in the call.}
-\PY{n}{x0} \PY{o}{=} \PY{n}{bisect}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0} \PY{o}{\PYZhy{}} \PY{l+m+mf}{4.0}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{3.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Print root. The true value is \PYZhy{}2.0}
-\PY{n}{x0}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Iteration 0: f(mid) = -1.7500e+00
-  Updating upper bound to -1.50000000
-Iteration 1: f(mid) = 1.0625e+00
-  Updating lower bound to -2.25000000
-Iteration 2: f(mid) = -4.8438e-01
-  Updating upper bound to -1.87500000
-Iteration 3: f(mid) = 2.5391e-01
-  Updating lower bound to -2.06250000
-Iteration 4: f(mid) = -1.2402e-01
-  Updating upper bound to -1.96875000
-Iteration 5: f(mid) = 6.2744e-02
-  Updating lower bound to -2.01562500
-Iteration 6: f(mid) = -3.1189e-02
-  Updating upper bound to -1.99218750
-Iteration 7: f(mid) = 1.5640e-02
-  Updating lower bound to -2.00390625
-Iteration 8: f(mid) = -7.8087e-03
-  Updating upper bound to -1.99804688
-Iteration 9: f(mid) = 3.9072e-03
-  Updating lower bound to -2.00097656
-Iteration 10: f(mid) = -1.9529e-03
-  Updating upper bound to -1.99951172
-Iteration 11: f(mid) = 9.7662e-04
-  Updating lower bound to -2.00024414
-Iteration 12: f(mid) = -4.8827e-04
-  Updating upper bound to -1.99987793
-Iteration 13: f(mid) = 2.4414e-04
-  Updating lower bound to -2.00006104
-Iteration 14: f(mid) = -1.2207e-04
-  Updating upper bound to -1.99996948
-Iteration 15: f(mid) = 6.1035e-05
-  Updating lower bound to -2.00001526
-Iteration 16: f(mid) = -3.0518e-05
-  Updating upper bound to -1.99999237
-Iteration 17: f(mid) = 1.5259e-05
-  Updating lower bound to -2.00000381
-Iteration 18: f(mid) = -7.6294e-06
-  Updating upper bound to -1.99999809
-Iteration 19: f(mid) = 3.8147e-06
-  Updating lower bound to -2.00000095
-Iteration 20: f(mid) = -1.9073e-06
-  Updating upper bound to -1.99999952
-    \end{Verbatim}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{52}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
--2.000000238418579
-\end{Verbatim}
-\end{tcolorbox}
-        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_56_1.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
 
     % Add a bibliography block to the postdoc
     
