@@ -1,6 +1,6 @@
 # Machine Learning in Finance with Python - Part 1: Introduction to Python
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/richardfoltyn/python-statistics/main?filepath=index.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/richardfoltyn/MLFP-ECON5130/main?filepath=index.ipynb)
 
 Author: Richard Foltyn, University of Glasgow
 
