@@ -12,14 +12,14 @@ as a static PDF file. Alternatively, you can download the entire course as a
 **[single PDF](latex/MLFP-part1.pdf)**.
 
 1.  Language and NumPy basics [[PDF](latex/unit01.pdf)] [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit01.ipynb)
-2.  Control flow and list comprehensions [[PDF](latex/unit02.pdf)]
-3.  Reusing code - Functions, modules and packages [[PDF](latex/unit03.pdf)]
-4.  Plotting [[PDF](latex/unit04.pdf)]
-5.  Advanced NumPy [[PDF](latex/unit05.pdf)]
-6.  Random number generation and statistics [[PDF](latex/unit06.pdf)]
-7.  Handling data with pandas [[PDF](latex/unit07.pdf)]
-8.  Data input and output [[PDF](latex/unit08.pdf)]
-9.  Error handling (optional) [[PDF](latex/unit10.pdf)]
+2.  Control flow and list comprehensions [[PDF](latex/unit02.pdf)]  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit02.ipynb)
+3.  Reusing code - Functions, modules and packages [[PDF](latex/unit03.pdf)]  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit03.ipynb)
+4.  Plotting [[PDF](latex/unit04.pdf)]  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit04.ipynb)
+5.  Advanced NumPy [[PDF](latex/unit05.pdf)]  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit05.ipynb)
+6.  Random number generation and statistics [[PDF](latex/unit06.pdf)]  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit06.ipynb)
+7.  Handling data with pandas [[PDF](latex/unit07.pdf)]  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit07.ipynb)
+8.  Data input and output [[PDF](latex/unit08.pdf)]  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit08.ipynb)
+9.  Error handling (optional) [[PDF](latex/unit10.pdf)]  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit09.ipynb)
 
 
 The *launch binder* link at the top to start an interactive
@@ -31,10 +31,16 @@ notebook.
 
 ### Running without installation
 
-Click on the ![Binder](https://mybinder.org/badge_logo.svg) button
-above to use the notebooks directly in your web browser 
-(in might take a while to set up the environment). No local
-Python installation is required.
+You have two options to run these notebooks directly in the cloud:
+
+1.  Click on the ![Binder](https://mybinder.org/badge_logo.svg) button
+    above to use the notebooks directly in your web browser. It will take
+    a while to create a Python environment in the cloud, but you can
+    access all Python modules and data files in the repository.
+2.  Click on the ![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)
+    icon next to each notebook. This will immediately open the notebook
+    in [Google Colab](https://colab.research.google.com), but you need
+    a Google account to run anything and importing custom modules will not work.
 
 ### Running locally
 
