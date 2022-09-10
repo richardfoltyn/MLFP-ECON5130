@@ -1,58 +1,45 @@
-"""
-Unit 7, Exercise 1
-
-Author: Richard Foltyn
-"""
-
-import matplotlib.pyplot as plt
+import pandas as pd
 import numpy as np
-from numpy.random import default_rng
-from scipy.stats import t as standard_t
+import matplotlib.pyplot as plt
 
-# Sample sizes
-Nobs = np.array((50, 100, 500, 1000, 5000, 10000))
+filepath = '../../../data/FRED_QTR.csv'
 
-# degrees of freedom
-df = 20
+df = pd.read_csv(filepath, sep=',', index_col=['Year', 'Quarter'])
+# Alternatively, set index columns later
+# df = pd.read_csv(filepath, sep=',')
+# df.set_index(keys=['Year', 'Quarter'], inplace=True)
 
-# Determine xlims such that we cover the (0.1, 99.9) percentiles
-# of the distribution.
-xmin, xmax = standard_t.ppf((0.001, 0.999), df=df)
+# Convert to annual frequency
+# Group by year
+grp = df.groupby(['Year'])
+# Compute annual data as mean of quarterly values
+df_year = grp.mean()
 
-xvalues = np.linspace(xmin, xmax, 100)
-pdf = standard_t.pdf(xvalues, df=df)
+# Alternative ways to perform the same aggregation:
+# df_year = grp.agg('mean')
+# df_year = grp.agg(np.mean)
 
-fig, ax = plt.subplots(2, 3, sharex=True, sharey=True, figsize=(12, 6))
+# Compute CPI and GDP growth rates (in percent)
+df_year['Inflation'] = df_year['CPI'].diff() / df_year['CPI'].shift() * 100.0
+df_year['GDP_growth'] = df_year['GDP'].diff() / df_year['GDP'].shift() * 100.0
 
-# initialize default RNG
-rng = default_rng(123)
+# Drop all rows that contain any NaNs
+df_year = df_year.dropna(axis=0)
 
-for i, axes in enumerate(ax.flatten()):
-    # Sample size to be plotted in current panel
-    N = Nobs[i]
-    # Draw sample of size N
-    data = rng.standard_t(df=df, size=N)
+# Columns to plot
+varnames = ['GDP_growth', 'Inflation', 'UNRATE', 'LFPART']
+df_year.plot.line(y=varnames, subplots=True, layout=(2, 2),
+                  sharex=True, figsize=(10, 10))
 
-    # plot histogram of given sample
-    axes.hist(data, bins=50, linewidth=0.5, edgecolor='white',
-              color='steelblue', density=True, label='Sample histogram')
+# Alternatively, we can call plot() directly, which
+# defaults to generating a line plot:
+#
+# df_year.plot(y=varnames, subplots=True, layout=(2, 2),
+#              sharex=True, figsize=(10, 10))
 
-    # overlay actual PDF
-    axes.plot(xvalues, pdf, color='red', lw=2.0, label='PDF')
-
-    # create text with current sample size
-    axes.text(0.05, 0.95, f'N={N:,d}', transform=axes.transAxes, va='top')
-
-    axes.set_xlim((xmin, xmax))
-    axes.set_ylim((-0.02, 1.3))
-
-    # plot legend only for the first panel
-    if i == 0:
-        axes.legend(loc='upper right')
-
-# compress space between individual panels
+# Store figure
+# Get reference to current figure object using gcf()
+fig = plt.gcf()
 fig.tight_layout()
-# Add overall title
-fig.suptitle('Draws from the standard-t distribution', fontsize=16, y=1.05)
-
 fig.savefig('unit07_ex1.pdf')
+

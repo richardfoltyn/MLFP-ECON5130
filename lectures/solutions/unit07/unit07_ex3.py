@@ -4,68 +4,80 @@ Unit 7, Exercise 3
 Author: Richard Foltyn
 """
 
+import pandas as pd
 import numpy as np
-from numpy.random import default_rng
-from scipy.stats import lognorm
 
-# Parameters
-a = 1.0                         # Initial assets
-mu = np.array((0.04, 0.04))     # average log returns
-sigma = 0.16                    # std. dev. of log returns
-rho = 0.5                       # serial correlation
+# Load CSV file
+filepath = '../../../data/universities.csv'
+df = pd.read_csv(filepath, sep=';')
 
-# Covariance
-cov = rho*sigma**2.0
-# variance-covariance matrix
-vcv = np.array([[sigma**2.0, cov],
-                [cov, sigma**2.0]])
+###############################################################################
+# Variant 1
+# Compute means using apply()
 
-Nsample = 5000000
-rng = default_rng(123)
-# Draw MV normal samples: each row corresponds to one draw
-samples = rng.multivariate_normal(mean=mu, cov=vcv, size=Nsample)
+grp = df.groupby(['Russell'])
 
-# Evaluate total gross return at sampled points
-#   R = exp(r_1) * exp(r_2)
-returns = np.prod(np.exp(samples), axis=1)
-# Sampled terminal wealth after 2 periods
-wealth = a * returns
-# Expected terminal wealth
-exp_MC = np.mean(wealth)
+# Create Series objects with the desired means
+staff = grp.apply(lambda x: np.nanmean(x['Staff'] / x['Students']))
+admin = grp.apply(lambda x: np.nanmean(x['Admin'] / x['Students']))
+# Budget in millions of pounds
+budget = grp.apply(lambda x: np.nanmean(x['Budget'] / x['Students']))
+# Convert to pounds
+budget *= 1.0e6
 
-# Exact expectation
-var_rr = 2.0 * sigma ** 2.0 + 2.0 * rho * sigma ** 2.0
-sigma_rr = np.sqrt(var_rr)
-mu_rr = np.sum(mu)
+# Count number of institutions in each group.
+# We can accomplish this by calling size() on the group object.
+count = grp.size()
 
-exp_exact = a * np.exp(mu_rr + sigma_rr ** 2.0 / 2.0)
+# Create a new DataFrame. Each column is a Series object.
+df_all = pd.DataFrame({'Staff_Student': staff,
+                       'Admin_Student': admin,
+                       'Budget_Student': budget,
+                       'Count': count})
 
-print(f'Expected portfolio value (exact): {exp_exact:.4f}')
-print(f'Expected portfolio value (MC): {exp_MC:.4f}')
+print(df_all)
 
-################################################################################
-# Plot histogram of total gross wealth
+###############################################################################
+# Variant 2:
+# Compute ratios first, apply aggregation later
 
+# Create new variables directly in original DataFrame
+df['Staff_Student'] = df['Staff'] / df['Students']
+df['Admin_Student'] = df['Admin'] / df['Students']
+# Budget in pounds (original Budget is in million pounds)
+df['Budget_Student'] = df['Budget'] / df['Students'] * 1.0e6
+
+# Keep only newly constructed ratios
+columns_keep = [name for name in df.columns
+                if name.endswith('_Student')]
+# Also keep Russell indicator
+columns_keep += ['Russell']
+df = df[columns_keep].copy()
+
+# Aggregate by Russell indicator
+grp = df.groupby(['Russell'])
+# Count number of institutions in each group.
+# We can accomplish this by calling size() on the group object.
+count = grp.size()
+
+df_all = grp.mean()
+# Add counter
+df_all['Count'] = count
+
+print(df_all)
+
+###############################################################################
+# Plot results as bar charts, one panel for each variable
+
+# Pretty titles
+title = ['Staff/Student', 'Admin/Student', 'Budget/Student', 'Number of Univ.']
+# Create bar chart using pandas's bar() function
+df_all.plot.bar(sharey=False, subplots=True, layout=(2, 2), legend=False,
+                title=title)
+
+# Store figure in file;
+# Get reference to current figure
 import matplotlib.pyplot as plt
-
-fig, ax = plt.subplots(1, 1, figsize=(4, 3.0))
-
-ax.hist(returns, bins=75, density=True, color='steelblue', lw=0.5,
-        edgecolor='white', alpha=.8, label='Sample')
-
-# Plot log-normal PDF of total gross return
-xmin, xmax = np.amin(returns), np.amax(returns)
-xvalues = np.linspace(xmin, xmax, 200)
-pdf = lognorm.pdf(xvalues, s=sigma_rr, loc=mu_rr)
-ax.plot(xvalues, pdf, c='red', lw=1.5, label='PDF')
-
-# Add line with true expexted value
-ax.axvline(exp_exact, lw=1.0, color='black', ls='--')
-
-ax.set_xlabel('Total gross return $R$')
-ax.set_ylabel('Density')
-ax.legend(loc='upper right', frameon=False)
-
+fig = plt.gcf()
 fig.tight_layout()
 fig.savefig('unit07_ex3.pdf')
-

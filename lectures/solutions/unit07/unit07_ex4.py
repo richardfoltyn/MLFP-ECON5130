@@ -4,56 +4,71 @@ Unit 7, Exercise 4
 Author: Richard Foltyn
 """
 
-import numpy as np
-from numpy.random import default_rng
+import pandas as pd
 import matplotlib.pyplot as plt
 
-sample_sizes = np.array([10, 50, 100, 500, 1000, 5000, 10000, 50000, 100000])
-# initialize default RNG
-rng = default_rng(123)
+# Load CSV file
+filepath = '../../../data/universities.csv'
+df = pd.read_csv(filepath, sep=';')
 
-# Parameters of underlying normal distribution
-mu = 0.5
-sigma = 1.5
+# Create mask for founding period
+df['Pre1800'] = df['Founded'] < 1800
 
-# Array to store estimated mean for each sample size
-mean_hat = np.zeros(len(sample_sizes))
-# Array to store std. error for each sample size
-std_err = np.zeros_like(mean_hat)
+# Create group by country and founding period;
+grp = df.groupby(['Country', 'Pre1800'])
 
-for k, N in enumerate(sample_sizes):
-    data = rng.lognormal(mean=mu, sigma=sigma, size=N)
-    # sample mean
-    x_k = np.mean(data)
-    # residuals around mean
-    resid = data - x_k
-    # Residual variance
-    var_resid = np.sum(resid**2.0) / (N-1)
-    # std. error of mean estimate
-    se_k = np.sqrt(var_resid / N)
+# Number of universities by country and founding period.
+# Since we are grouping by two attributes, this will create a
+# Series with a multi-level (hierarchical) index
+count = grp.size()
 
-    # store sample estimates in array
-    mean_hat[k] = x_k
-    std_err[k] = se_k
+###############################################################################
+# DataFrame with countries in rows, Pre-1800 indicator in columns
 
-# Plot results
-plt.plot(sample_sizes, mean_hat, lw=2.0, label='Estim. mean')
+# Pivot inner index level to create separate columns for True/False
+# values of Pre1800 indicator
+df_count = count.unstack(level=-1, fill_value=0)
 
-# Add line indicating true mean of log-normal
-mean = np.exp(mu + sigma**2.0 / 2.0)
-plt.axhline(mean, lw=1.0, color='black', ls='--')
-plt.text(sample_sizes[0], mean + 0.05, 'True mean', va='bottom',
-         fontstyle='italic', fontfamily='serif')
+# Set name of column index to something pretty: this will
+# be used as the legend title
+df_count.columns.rename('Founding year', inplace=True)
+# Rename columns to get pretty labels in legend
+df_count.rename(columns={True: 'Before 1800', False: 'After 1800'},
+                inplace=True)
 
-plt.fill_between(sample_sizes, mean_hat - 2*std_err, mean_hat + 2*std_err,
-                 color='grey', alpha=0.25, zorder=-1, lw=0.0,
-                 label='95% CI')
+print(df_count)
 
-plt.xscale('log')
-plt.legend(loc='lower right')
-plt.xlabel('Sample size (log scale)')
-plt.ylabel('Mean')
-# Use identical y-lims across ex. 4-6
-plt.ylim((1.0, 8.0))
+# Create bar chart by country
+title = 'Number of universities by founding year'
+# pass rot=0 to undo the rotation of x-tick labels
+# which pandas applies by default
+df_count.plot.bar(xlabel='Country', rot=0, title=title)
 
-plt.savefig('unit07_ex4.pdf')
+# Store figure
+fig = plt.gcf()
+fig.tight_layout()
+fig.savefig('unit07_ex4_by_country.pdf')
+
+###############################################################################
+# DataFrame with Pre-1800 indicator in rows, countries in columns
+
+# Pivot first row index level to create separate columns for each country
+df_count = count.unstack(level=0, fill_value=0)
+
+# Set index name to something pretty
+df_count.index.rename('Founding year', inplace=True)
+# Rename index labels to get pretty text in legend
+df_count.rename(index={True: 'Before 1800', False: 'After 1800'},
+                inplace=True)
+
+print(df_count)
+
+# Create bar chart by founding year
+# pass rot=0 to undo the rotation of x-tick labels
+# which pandas applies by default
+df_count.plot.bar(rot=0, title=title)
+
+# Store figure
+fig = plt.gcf()
+fig.tight_layout()
+fig.savefig('unit07_ex4_by_year.pdf')

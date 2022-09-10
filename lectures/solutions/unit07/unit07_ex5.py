@@ -4,74 +4,121 @@ Unit 7, Exercise 5
 Author: Richard Foltyn
 """
 
-
+import pandas as pd
 import numpy as np
-from numpy.random import default_rng
 import matplotlib.pyplot as plt
 
 
-sample_sizes = np.array([10, 50, 100, 500, 1000, 5000, 10000, 50000, 100000])
-# initialize default RNG
-rng = default_rng(123)
+def regress_okun(x):
+    # x is a DataFrame, restricted to rows for the current decade
 
-# Parameters of underlying normal distribution
-mu = 0.5
-sigma = 1.5
+    # Extract dependent and regressor variables
+    outcome = x['unempl_gap'].to_numpy()
+    GDP_gap = x['GDP_gap'].to_numpy()
 
-# Array to store estimated mean for each sample size
-mean_hat = np.zeros(len(sample_sizes))
-# Array to store std. errors for each sample size
-std_err = np.zeros_like(mean_hat)
+    # Regressor matrix including intercept
+    regr = np.ones((len(GDP_gap), 2))
+    # overwrite second column with output gap
+    regr[:,1] = GDP_gap
 
-for k, N in enumerate(sample_sizes):
-    data = rng.lognormal(mean=mu, sigma=sigma, size=N)
+    # Solve least-squares problem (pass rcond=None to avoid a warning)
+    coefs, *rest = np.linalg.lstsq(regr, outcome, rcond=None)
 
-    mean_subsample = np.zeros_like(data)
+    # Construct DataFrame which will be returned to apply()
+    # Convert data to 1 x 2 matrix
+    data = coefs[None]
+    columns = ['Const', 'GDP_gap']
+    df_out = pd.DataFrame(data, columns=columns)
 
-    # Iterate over all elements, leaving one element
-    # and computing the mean of the resulting sub-sample
-    for j in range(N):
-        # Initial boolean mask: include all elements
-        mask = np.ones_like(data, dtype=bool)
-        # leave out j-th observation
-        mask[j] = False
-        subsample = data[mask]
+    return df_out
 
-        x_j = np.mean(subsample)
-        mean_subsample[j] = x_j
 
-    # compute sample mean estimate as average of
-    # sub-sample means
-    x_k = np.mean(mean_subsample)
+# Load CSV file
+filepath = '../../../data/FRED_QTR.csv'
+df = pd.read_csv(filepath, sep=',')
 
-    # Compute variance of mean estimate
-    resid = data - x_k
-    # variance of mean estimate
-    var = np.sum(resid ** 2.0) / N / (N - 1)
-    # std. err. of mean estimate
-    se = np.sqrt(var)
+# Generate output gap (in percent)
+df['GDP_gap'] = (df['GDP'] - df['GDPPOT']) / df['GDPPOT'] * 100.0
 
-    # store sample estimates in array
-    mean_hat[k] = x_k
-    std_err[k] = se
+# Generate deviations of unempl. rate from natural unempl. rate
+df['unempl_gap'] = df['UNRATE'] - df['NROU']
 
-# Plot results
-plt.plot(sample_sizes, mean_hat, lw=2.0, label='Estim. mean')
+# Assign decade using // to truncate division to
+# integer part. So we have 194x // 10 = 194 for any x.
+df['Decade'] = (df['Year'] // 10) * 10
 
-# Add line indicating true mean of log-normal
-mean = np.exp(mu + sigma ** 2.0 / 2.0)
-plt.axhline(mean, lw=1.0, color='black', ls='--')
-plt.text(sample_sizes[0], mean + 0.05, 'True mean', va='bottom',
-         fontstyle='italic', fontfamily='serif')
+# Keep only variables of interest
+df = df[['Decade', 'GDP_gap', 'unempl_gap']]
+# Drop rows with any missing obs.
+df = df.dropna(axis=0)
 
-plt.fill_between(sample_sizes, mean_hat - 2*std_err, mean_hat + 2*std_err,
-                 color='grey', alpha=0.2, zorder=-1, lw=0.0,
-                 label='95% CI')
-plt.xscale('log')
-plt.legend(loc='lower right')
-plt.xlabel('Sample size (log scale)')
-plt.ylabel('Mean')
-# Use identical y-lims across ex. 4-6
-plt.ylim((1.0, 8.0))
+# Group by decade
+grp = df.groupby(['Decade'])
 
-plt.savefig('unit07_ex5.pdf')
+# Apply regression routine to sub-set of data for each decade
+df_reg = grp.apply(regress_okun)
+# Get rid of second row index introduced by apply()
+df_reg = df_reg.reset_index(level=-1, drop=True)
+
+print(df_reg)
+
+################################################################################
+# Create scatter plots and regression lines
+
+# Number of plots (= number of decades)
+Nplots = len(df_reg)
+
+# Fix number of columns, determine rows as needed
+ncol = 3
+nrow = int(np.ceil(Nplots / ncol))
+
+fig, axes = plt.subplots(nrow, ncol, sharey=True, sharex=True,
+                         figsize=(8, 8))
+
+for i, ax in enumerate(axes.flatten()):
+
+    # skip if we are out of data (we have 9 panels, but only 8 decades)
+    if i >= Nplots:
+        # Turn off frame, axes, etc.
+        ax.get_xaxis().set_visible(False)
+        ax.get_yaxis().set_visible(False)
+        ax.set_frame_on(False)
+        break
+
+    # decade in current iteration
+    decade = df_reg.index.values[i]
+    # restrict DataFrame to decade-specific data
+    dfi = df.loc[df['Decade'] == decade]
+    # Scatter plot of raw data
+    ax.scatter(dfi['GDP_gap'], dfi['unempl_gap'], color='steelblue',
+               alpha=0.7, label='Raw data')
+    # Extract regression coefficients
+    const = df_reg.loc[decade, 'Const']
+    slope = df_reg.loc[decade, 'GDP_gap']
+
+    # plot regression line:
+    # We need to provide one point and a slope to define the line to be plotted.
+    ax.axline((0.0, const), slope=slope, color='red',
+              lw=2.0, label='Regression line')
+
+    # Add label containing the current decade
+    ax.text(0.95, 0.95, f"{decade}'s", transform=ax.transAxes,
+            va='top', ha='right')
+
+    # Add legend in the first panel only
+    if i == 0:
+        ax.legend(loc='lower left', frameon=False)
+
+    # Add x- and y-labels, but only for those panels
+    # that are on the left/lower boundary of the figure
+    if i >= nrow * (ncol - 1):
+        ax.set_xlabel('Output gap (%)')
+    if (i % 3) == 0:
+        ax.set_ylabel('Cycl. unempl. rate (%-points)')
+
+fig.suptitle("Okun's law")
+
+fig.tight_layout()
+fig.savefig('unit07_ex5.pdf')
+
+
