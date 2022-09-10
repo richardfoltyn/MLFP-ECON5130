@@ -72,7 +72,6 @@
     \usepackage{hyperref}
     % The default LaTeX title has an obnoxious amount of whitespace. By default,
     % titling removes some of it. It also provides customization options.
-    \usepackage{titling}
     \usepackage{longtable} % longtable support required by pandoc >1.10
     \usepackage{booktabs}  % table support for pandoc > 1.12.2
     \usepackage{array}     % table support for pandoc >= 2.11.3
@@ -166,7 +165,7 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \newcommand*{\mytitle}{Unit 7: Random number generation and statistics}
+    \newcommand*{\mytitle}{Unit 6: Random number generation and statistics}
 
     \input{overrides-post}
     
@@ -489,7 +488,7 @@ interval \([0.0, 1.0)\).
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([0.77762789, 0.71255835, 0.26631059, 0.84538324, 0.49831726])
+array([0.06647759, 0.23412079, 0.0705988 , 0.91797947, 0.39115549])
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -749,7 +748,7 @@ Text(0.5, 1.0, 'Histogram of normal draws')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_24_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_24_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -807,7 +806,7 @@ Text(0.5, 1.0, 'Draws from bivariate normal distribution')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_26_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_26_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -889,12 +888,12 @@ distribution as follows:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fe64d0f5360>
+<matplotlib.legend.Legend at 0x7f05e0f06260>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_29_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_29_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1514,7 +1513,7 @@ to estimate the confidence intervals of the mean estimate.
 \subsection{Solutions}\label{solutions}}
 
 The solutions are also provided as Python scripts in the
-\href{../lectures/solutions/unit7}{lectures/solutions/unit7/} folder.
+\href{../lectures/solutions/unit06}{lectures/solutions/unit06/} folder.
 
     \hypertarget{solution-for-exercise-1}{%
 \subsubsection{Solution for exercise 1}\label{solution-for-exercise-1}}
@@ -1554,7 +1553,7 @@ iterate over these axes. In each iteration, we
 \PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{n}{xmin}\PY{p}{,} \PY{n}{xmax}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
 \PY{n}{pdf} \PY{o}{=} \PY{n}{standard\PYZus{}t}\PY{o}{.}\PY{n}{pdf}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{df}\PY{o}{=}\PY{n}{df}\PY{p}{)}
 
-\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} initialize default RNG}
 \PY{n}{rng} \PY{o}{=} \PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{l+m+mi}{123}\PY{p}{)}
@@ -1598,7 +1597,7 @@ Text(0.5, 1.05, 'Draws from the standard-t distribution')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_53_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_53_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1880,12 +1879,12 @@ to plot the histogram and the true PDF.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{27}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fe64c7ed660>
+<matplotlib.legend.Legend at 0x7f05e0497f40>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_67_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_67_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1965,7 +1964,7 @@ which we then use the generate the plot.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_70_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_70_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -2075,7 +2074,7 @@ estimate of the variance is in fact identical to the standard approach.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_72_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_72_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -2207,7 +2206,7 @@ list \texttt{means\_all} which we use below to create the histograms.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_76_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_76_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -2218,7 +2217,7 @@ for larger sample sizes are much closer together.
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{32}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+\PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
 
 \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{ax} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{axes}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{:}
 
@@ -2243,7 +2242,7 @@ for larger sample sizes are much closer together.
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_78_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_78_0.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     

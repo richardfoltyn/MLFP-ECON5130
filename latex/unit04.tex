@@ -72,7 +72,6 @@
     \usepackage{hyperref}
     % The default LaTeX title has an obnoxious amount of whitespace. By default,
     % titling removes some of it. It also provides customization options.
-    \usepackage{titling}
     \usepackage{longtable} % longtable support required by pandoc >1.10
     \usepackage{booktabs}  % table support for pandoc > 1.12.2
     \usepackage{array}     % table support for pandoc >= 2.11.3
@@ -166,7 +165,7 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \newcommand*{\mytitle}{Unit 5: Plotting}
+    \newcommand*{\mytitle}{Unit 4: Plotting}
 
     \input{overrides-post}
     
@@ -414,7 +413,7 @@ Python.
 
 When using matplotlib in interactive Jupyter notebooks (such as this
 one), we can enable a more fancy plotting backend that allows us to
-dynamically adjust the zoom, etc. This is done by adding the line
+dynamically adjust the zoom, \etc This is done by adding the line
 
 \begin{verbatim}
 %matplotlib widget
@@ -458,12 +457,12 @@ points.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f284c22ba60>]
+[<matplotlib.lines.Line2D at 0x7fd9d9af3ac0>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_3_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_3_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -483,12 +482,12 @@ want to plot for a given set of \(x\)-values like this:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f2837b9d120>]
+[<matplotlib.lines.Line2D at 0x7fd9d8ee5030>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_5_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_5_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -506,13 +505,13 @@ single graph:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f2837a3c5e0>,
- <matplotlib.lines.Line2D at 0x7f2837a3d7b0>]
+[<matplotlib.lines.Line2D at 0x7fd9d8d7c610>,
+ <matplotlib.lines.Line2D at 0x7fd9d8d7d7e0>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_7_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_7_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -594,12 +593,12 @@ legends
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f2837abacb0>]
+[<matplotlib.lines.Line2D at 0x7fd9d8dfac80>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_10_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_10_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -618,12 +617,12 @@ explicitly using keyword arguments:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f28379183d0>]
+[<matplotlib.lines.Line2D at 0x7fd9d8c60250>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_12_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_12_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -658,12 +657,12 @@ We can write thus rewrite the above code as follows:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f2837999900>]
+[<matplotlib.lines.Line2D at 0x7fd9d8ce9780>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_15_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_15_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -695,12 +694,12 @@ similar fashion to line plots:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{8}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.collections.PathCollection at 0x7f283782af20>
+<matplotlib.collections.PathCollection at 0x7fd9d8b72b90>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_18_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_18_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -724,12 +723,12 @@ same style on all points plotted in that particular function call.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{9}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.collections.PathCollection at 0x7f2837879fc0>
+<matplotlib.collections.PathCollection at 0x7fd9d8bc1ff0>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_20_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_20_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -763,7 +762,7 @@ Text(0.5, 1.0, 'Population')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_22_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_22_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -785,7 +784,7 @@ Text(0.5, 0, 'Population')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_24_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_24_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -856,7 +855,7 @@ Text(20, -20, 'Point 2')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_26_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_26_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -906,7 +905,7 @@ We adjust the plot limits, ticks and tick labels as follows:
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_28_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_28_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -974,7 +973,7 @@ Text(20, -20, 'Point 2')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_30_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_30_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1004,7 +1003,7 @@ For example, to create a row with two plots, we use:
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_33_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_33_0.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1031,7 +1030,7 @@ columns as follows:
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_35_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_35_0.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1060,7 +1059,7 @@ like this instead:
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_37_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_37_0.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1087,12 +1086,12 @@ to plot into individual panels:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{18}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f2835a6a7a0>]
+[<matplotlib.lines.Line2D at 0x7fd9d8624370>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_39_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_39_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1115,7 +1114,7 @@ to plot into individual panels:
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_41_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_41_0.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1156,7 +1155,7 @@ Text(0.5, 1.02, 'Figure title')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_44_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_44_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1297,7 +1296,7 @@ Text(0.5, 0.98, 'Trigonometric functions')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_50_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_50_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1311,7 +1310,7 @@ Text(0.5, 0.98, 'Trigonometric functions')
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 
 \PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{5.0}\PY{p}{,} \PY{l+m+mf}{5.0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
-\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
 \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{l+m+mf}{10.0}\PY{o}{*}\PY{o}{*}\PY{n}{xvalues}\PY{p}{)}
 \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Linear scale}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 
@@ -1330,7 +1329,7 @@ Text(0.5, 1.0, 'Log scale')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_52_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_52_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1375,12 +1374,12 @@ column corresponds to a different line.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{23}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7f283572bf40>
+<matplotlib.legend.Legend at 0x7fd9d895be80>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_54_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_54_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1420,7 +1419,7 @@ Text(0.5, 1.0, 'Polynomials')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_56_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_56_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     

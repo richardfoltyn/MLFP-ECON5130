@@ -72,7 +72,6 @@
     \usepackage{hyperref}
     % The default LaTeX title has an obnoxious amount of whitespace. By default,
     % titling removes some of it. It also provides customization options.
-    \usepackage{titling}
     \usepackage{longtable} % longtable support required by pandoc >1.10
     \usepackage{booktabs}  % table support for pandoc > 1.12.2
     \usepackage{array}     % table support for pandoc >= 2.11.3
@@ -166,7 +165,7 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \newcommand*{\mytitle}{Unit 8: Handling data with pandas}
+    \newcommand*{\mytitle}{Unit 7: Handling data with pandas}
 
     \input{overrides-post}
     
@@ -1597,7 +1596,7 @@ pandas:
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_66_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_66_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1616,7 +1615,7 @@ pandas:
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_68_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_68_0.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1656,7 +1655,7 @@ used for the \(x\)-axis and which for the \(y\)-axis:
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_70_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_70_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1688,7 +1687,7 @@ box plot:
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_72_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_72_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1714,7 +1713,7 @@ another:
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_74_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_74_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1734,7 +1733,7 @@ another:
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_75_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_75_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1997,6 +1996,9 @@ exercises. Pandas is extremely flexible (maybe too flexible) and allows
 us to perform these tasks in many different ways, so your implementation
 might look very different.
 
+The solutions are also provided as Python scripts in the
+\href{../lectures/solutions/unit07}{lectures/solutions/unit07/} folder.
+
     \hypertarget{solution-for-exercise-1}{%
 \subsubsection{Solution for exercise 1}\label{solution-for-exercise-1}}
 
@@ -2034,7 +2036,7 @@ One possible implementation looks as follows:
 \PY{c+c1}{\PYZsh{} Columns to plot}
 \PY{n}{varnames} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP\PYZus{}growth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Inflation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UNRATE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LFPART}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
 \PY{n}{df\PYZus{}year}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{line}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{n}{varnames}\PY{p}{,} \PY{n}{subplots}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{layout}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,}  
-                  \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+                  \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
                 
 \PY{c+c1}{\PYZsh{} Alternatively, we can call plot() directly, which}
 \PY{c+c1}{\PYZsh{} defaults to generating a line plot:}
@@ -2054,7 +2056,7 @@ array([[<AxesSubplot:xlabel='Year'>, <AxesSubplot:xlabel='Year'>],
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_85_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_85_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -2246,7 +2248,7 @@ as follows:
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_90_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_90_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -2380,7 +2382,7 @@ so that each panel will have its own scaling on the \(y\)-axis.
 \PY{n}{title} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Staff/Student}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Admin/Student}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Budget/Student}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of Univ.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
 \PY{c+c1}{\PYZsh{} Create bar chart using pandas\PYZsq{}s bar() function}
 \PY{n}{df\PYZus{}all}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{sharey}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{subplots}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{layout}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{legend}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}
-                \PY{n}{title}\PY{o}{=}\PY{n}{title}\PY{p}{)}
+                \PY{n}{title}\PY{o}{=}\PY{n}{title}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
@@ -2396,7 +2398,7 @@ array([[<AxesSubplot:title=\{'center':'Staff/Student'\}, xlabel='Russell'>,
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_98_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_98_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -2521,7 +2523,7 @@ xlabel='Country'>
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_105_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_105_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -2577,7 +2579,7 @@ xlabel='Founding year'>
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_108_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_108_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -2782,7 +2784,7 @@ Text(0.5, 0.98, "Okun's law")
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_114_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_114_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
