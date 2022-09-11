@@ -77,7 +77,7 @@ conda env create -f environment.yml
 ```
 Activate the virtual environment you just created:
 ```bash
-conda activate python-statistics
+conda activate MLFP
 ```
 To start the Jupyter notebook server, navigate to where you extracted
 the repository contents and run
