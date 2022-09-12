@@ -55,7 +55,7 @@ Otherwise, download the contents as a ZIP file by clicking on
 #### Install Anaconda
 
 On Windows, you need to install a local Python environment such as 
-[Anaconda](https://www.anaconda.com/products/individual). On Linux,
+[Anaconda](https://www.anaconda.com/products/distribution). On Linux,
 your distribution comes with Python but the required packages are most likely
 outdated, so it is still recommended installing Anaconda.
 
