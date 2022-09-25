@@ -10,6 +10,9 @@ s/\\usepackage\[utf8x\]\{inputenc\}/\\usepackage[utf8]{inputenc}/
 # Delete titling package, messes with KOMA title page
 /\\usepackage\{titling\}/d
 
+# Make code box background somewhat lighted
+s/\\definecolor\{cellbackground\}\{HTML\}\{[A-F0-9]+\}/\\definecolor{cellbackground}{HTML}{FCFCFC}/
+
 s/i\.e\.,?~/\\ie /g
 s/i\.e\.,?/\\ie/g
 s/e\.g\.,?~/\\eg /g
