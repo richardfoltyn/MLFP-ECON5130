@@ -69,7 +69,7 @@
 
     % The hyperref package gives us a pdf with properly built
     % internal navigation ('pdf bookmarks' for the table of contents,
-    % internal cross-reference links, web links for URLs, etc.)
+    % internal cross-reference links, web links for URLs, \etc)
     \usepackage{hyperref}
     % The default LaTeX title has an obnoxious amount of whitespace. By default,
     % titling removes some of it. It also provides customization options.
@@ -357,7 +357,7 @@
     \definecolor{incolor}{HTML}{303F9F}
     \definecolor{outcolor}{HTML}{D84315}
     \definecolor{cellborder}{HTML}{CFCFCF}
-    \definecolor{cellbackground}{HTML}{F7F7F7}
+    \definecolor{cellbackground}{HTML}{FCFCFC}
     
     % prompt
     \makeatletter
@@ -1167,7 +1167,7 @@ func2 called with argument foo
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-func1 called with argument <function func2 at 0x7fea14255b40>
+func1 called with argument <function func2 at 0x7f6f0cd15d80>
     \end{Verbatim}
 
     \hypertarget{lambda-expressions}{%
@@ -1348,6 +1348,10 @@ repository's root directory, you need to exectute
 \PY{n}{sys}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./lectures/}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}        
 \end{Verbatim}
 \end{tcolorbox}
+
+    \textbf{Note}: Loading custom modules that reside in the GitHub
+repository currently does \emph{not} work if you opened this notebook in
+Google Colab.
 
     \textbf{Importing symbols}
 
@@ -1646,6 +1650,165 @@ interval \([-3,0]\), which has a (unique) root at \(x_0 = -2\).
   \end{enumerate}
 \end{enumerate}
 
+    \hypertarget{exercise-6-root-finding-with-scipy}{%
+\subsubsection{Exercise 6: Root-finding with
+SciPy}\label{exercise-6-root-finding-with-scipy}}
+
+In the previous exercise, you were asked to implement your own
+root-finder based on the bisection algorithm. This will rarely be
+necessary in real applications since libraries such as SciPy implement
+ready-to-use root-finding algorithms in the
+\href{https://docs.scipy.org/doc/scipy/reference/optimize.html}{\texttt{scipy.optimize}}
+package for you. In this exercise, we explore how to use these routines.
+
+Assume we have a function of a single scalar variable, \(f(x)\),
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{41}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{fcn}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} Compute function value fx = f(x)}
+    \PY{k}{return} \PY{n}{fx}
+\end{Verbatim}
+\end{tcolorbox}
+
+    which has a root on the interval \([a, b]\). We can use SciPy's
+implementation of the bisection algorithm
+\href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.bisect.html\#scipy.optimize.bisect}{\texttt{bisect()}}
+as follows:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{42}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k+kn}{import} \PY{n}{bisect}
+
+\PY{n}{root} \PY{o}{=} \PY{n}{bisect}\PY{p}{(}\PY{n}{fcn}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
+\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'b' is not defined
+
+    \end{Verbatim}
+
+    This code fragment of course does not work yet since we have not
+properly defined the function \texttt{fcn} or the interval boundaries
+\texttt{a} and \texttt{b}.
+
+Define a Python function \(f(x) = x^2 - 4\) and use SciPy's
+\texttt{bisect()} to locate the root on the interval \([-3, 0]\). Print
+the root of \(f(x)\).
+
+    \hypertarget{exercise-7-minimisation-with-scipy}{%
+\subsubsection{Exercise 7: Minimisation with
+SciPy}\label{exercise-7-minimisation-with-scipy}}
+
+In addition to the root-finding routines discussed in the previous
+exercise, the
+\href{https://docs.scipy.org/doc/scipy/reference/optimize.html}{\texttt{scipy.optimize}}
+package also includes numerous functions to perform minimisation. We
+demonstrate one such application here.
+
+For a function \(f(x)\) of a scalar variable \(x\), we can use the
+function
+\href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html}{\texttt{minimize\_scalar()}}
+to perform the minimization as follows:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{43}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k+kn}{import} \PY{n}{minimize\PYZus{}scalar}
+
+\PY{c+c1}{\PYZsh{} Call minimizer with custom function fcn}
+\PY{n}{result} \PY{o}{=} \PY{n}{minimize\PYZus{}scalar}\PY{p}{(}\PY{n}{fcn}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Print minimisation result}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Minimum found at }\PY{l+s+si}{\PYZob{}}\PY{n}{result}\PY{o}{.}\PY{n}{x}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
+\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'fx' is not defined
+
+    \end{Verbatim}
+
+    For this to work, we first need to define the objective function
+\texttt{fcn} or pass a lambda expression. Importantly,
+\texttt{minimize\_scalar()} returns an object of type
+\href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html}{\texttt{OptimizeResult}}
+which contains information about the minimisation process. For our
+purposes, the most relevant attribute is \texttt{x} which can be used to
+recover the minimum, as illustrated above. The function value at the
+minimum is stored in the attribute \texttt{fun}.
+
+    Consider the function \(f(x) = (x - 2)^2 + 1\). Use SciPy's
+\texttt{minimize\_scalar()} to find the (unique) global minimum of this
+function numerically and print the minimum (the minimum is located at
+\(x=2\) and can easily be found analytically in this case).
+
+    \hypertarget{exercise-8-maximisation-of-multivariate-functions-with-scipy}{%
+\subsubsection{Exercise 8: Maximisation of multivariate functions with
+SciPy}\label{exercise-8-maximisation-of-multivariate-functions-with-scipy}}
+
+Frequently, we want to maximize a multivariate function that depends on
+more than one scalar argument. To fix ideas, assume that we have an
+objective function given by \(f(x_1, x_2; a, b)\) where \(x_1\) and
+\(x_2\) are the arguments while \(a\) and \(b\) are additional
+parameters that are assumed constant. To find the maximum of such a
+function, we proceed as follows:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  We use SciPy's
+  \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html}{\texttt{minimize()}}
+  which can handle functions with multiple arguments. These arguments
+  have to be passed in as a vector, \ie the objective has the form
+  \(f(\mathbf{x})\) with \(\mathbf{x} \in \mathbb{R}^n\).
+\item
+  Because SciPy routines all perform minimisation whereas we are
+  interested in maximising the function \(f(\mathbf{x})\), we need to
+  return the \emph{negative} value of our objective function.
+\item
+  If \(f(\bullet)\) requires additional parameters, \eg
+  \(f(\mathbf{x}; a, b)\), we can pass these additional arguments as
+  \texttt{args=(a,b)} to \texttt{minimize()}.
+\item
+  Lastly, \texttt{minimize()} requires an initial guess \(\mathbf{x}_0\)
+  which can be passed as \texttt{x0=...}.
+\end{enumerate}
+
+The code fragment below illustrates all of these points.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{44}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k+kn}{import} \PY{n}{minimize}
+
+\PY{k}{def} \PY{n+nf}{fcn}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} Compute function value f(x, a, b)}
+    \PY{c+c1}{\PYZsh{} Return NEGATIVE function value for minimiser}
+    \PY{k}{return} \PY{o}{\PYZhy{}} \PY{n}{fx}
+
+\PY{n}{result} \PY{o}{=} \PY{n}{minimize}\PY{p}{(}\PY{n}{fcn}\PY{p}{,} \PY{n}{x0}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{args}\PY{o}{=}\PY{p}{(}\PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
+\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'b' is not defined
+
+    \end{Verbatim}
+
+    Now consider the function
+\(f(x_1, x_2; a,b) = - \Bigl[(x_1 - a)^2 + (x_2 - b)^2 \Bigr]\) where
+\(\mathbf{x} = (x_1, x_2)\) is the two-dimensional argument and \(a\)
+and \(b\) are additional parameters. Find the maximum of this function
+for \(a=1\) and \(b=-2\) and print both the maximiser \(\mathbf{x}\) and
+the function value at the maximum. Define the function \(f(\bullet)\) as
+shown in the above code fragment, \ie \(a\) and \(b\) should be passed
+as additional arguments.
+
 
 \hypertarget{solutions}{%
 \subsection{Solutions}\label{solutions}}
@@ -1654,7 +1817,7 @@ interval \([-3,0]\), which has a (unique) root at \(x_0 = -2\).
 \subsubsection{Solution for exercise 1}\label{solution-for-exercise-1}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{41}{\boxspacing}
+\prompt{In}{incolor}{45}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 
@@ -1696,7 +1859,7 @@ declare an \texttt{*args} argument.
 One possible implementation of \texttt{my\_sum()} looks as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{42}{\boxspacing}
+\prompt{In}{incolor}{46}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{my\PYZus{}sum}\PY{p}{(}\PY{o}{*}\PY{n}{args}\PY{p}{)}\PY{p}{:}
     \PY{c+c1}{\PYZsh{} Initialise sum to 0}
@@ -1723,7 +1886,7 @@ One possible implementation of \texttt{my\_sum()} looks as follows:
 \texttt{sum()}, or preferably the NumPy variant \texttt{np.sum()}:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{43}{\boxspacing}
+\prompt{In}{incolor}{47}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 
@@ -1744,7 +1907,7 @@ One possible implementation of \texttt{my\_sum()} looks as follows:
     \end{Verbatim}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{43}{\boxspacing}
+\prompt{Out}{outcolor}{47}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 0.0
 \end{Verbatim}
@@ -1756,7 +1919,7 @@ One possible implementation of \texttt{my\_sum()} looks as follows:
 The recursive definition of \texttt{fibonacci(i)} could look like this:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{44}{\boxspacing}
+\prompt{In}{incolor}{48}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{fibonacci}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{:}
     \PY{k}{if} \PY{n}{i} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
@@ -1780,7 +1943,7 @@ The recursive definition of \texttt{fibonacci(i)} could look like this:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{44}{\boxspacing}
+\prompt{Out}{outcolor}{48}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 \end{Verbatim}
@@ -1795,7 +1958,7 @@ function recursively arbitrarily many times. You can find out what this
 limit is as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{45}{\boxspacing}
+\prompt{In}{incolor}{49}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{sys}
 \PY{n+nb}{print}\PY{p}{(}\PY{n}{sys}\PY{o}{.}\PY{n}{getrecursionlimit}\PY{p}{(}\PY{p}{)}\PY{p}{)}
@@ -1813,7 +1976,7 @@ The following code shows a function computing the factorial \(n!\) using
 recursion:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{46}{\boxspacing}
+\prompt{In}{incolor}{50}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
     \PY{k}{if} \PY{n}{n} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
@@ -1828,7 +1991,7 @@ recursion:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{46}{\boxspacing}
+\prompt{Out}{outcolor}{50}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
 \end{Verbatim}
@@ -1839,7 +2002,7 @@ recursion:
 numbers:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{47}{\boxspacing}
+\prompt{In}{incolor}{51}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{n}{fact10} \PY{o}{=}  \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{prod}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{n}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
@@ -1848,7 +2011,7 @@ numbers:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{47}{\boxspacing}
+\prompt{Out}{outcolor}{51}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 (1.0, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
 \end{Verbatim}
@@ -1859,7 +2022,7 @@ numbers:
 argument passed to \texttt{np.prod()} for \texttt{n=0}:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{48}{\boxspacing}
+\prompt{In}{incolor}{52}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{n} \PY{o}{=} \PY{l+m+mi}{0}
 \PY{c+c1}{\PYZsh{} We have to embed range() in an expression that forces the Python}
@@ -1869,7 +2032,7 @@ argument passed to \texttt{np.prod()} for \texttt{n=0}:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{48}{\boxspacing}
+\prompt{Out}{outcolor}{52}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 ()
 \end{Verbatim}
@@ -1885,7 +2048,7 @@ You can get around this by explicitly specifying the data type using the
 \texttt{dtype} argument, which is accepted by many NumPy functions.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{49}{\boxspacing}
+\prompt{In}{incolor}{53}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{c+c1}{\PYZsh{} Force result to be of integer type}
@@ -1895,7 +2058,7 @@ You can get around this by explicitly specifying the data type using the
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{49}{\boxspacing}
+\prompt{Out}{outcolor}{53}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
 \end{Verbatim}
@@ -1906,7 +2069,7 @@ You can get around this by explicitly specifying the data type using the
 if they are empty:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{50}{\boxspacing}
+\prompt{In}{incolor}{54}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{c+c1}{\PYZsh{} Force result to be of integer type}
@@ -1916,7 +2079,7 @@ if they are empty:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{50}{\boxspacing}
+\prompt{Out}{outcolor}{54}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
 \end{Verbatim}
@@ -1927,7 +2090,7 @@ function yourself, as there is one in the \texttt{math} module shipped
 with Python:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{51}{\boxspacing}
+\prompt{In}{incolor}{55}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{math}
 \PY{n}{fact10} \PY{o}{=} \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
@@ -1936,7 +2099,7 @@ with Python:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{51}{\boxspacing}
+\prompt{Out}{outcolor}{55}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
 \end{Verbatim}
@@ -1974,7 +2137,7 @@ permissible number of iterations as an optional argument
 \texttt{maxiter}.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{52}{\boxspacing}
+\prompt{In}{incolor}{56}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{bisect}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{tol}\PY{o}{=}\PY{l+m+mf}{1.0e\PYZhy{}6}\PY{p}{,} \PY{n}{xtol}\PY{o}{=}\PY{l+m+mf}{1.0e\PYZhy{}6}\PY{p}{,} \PY{n}{maxiter}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{:}
 
@@ -2060,12 +2223,108 @@ Iteration 20: f(mid) = -1.9073e-06
     \end{Verbatim}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{52}{\boxspacing}
+\prompt{Out}{outcolor}{56}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 -2.000000238418579
 \end{Verbatim}
 \end{tcolorbox}
         
+    \hypertarget{solution-for-exercise-6}{%
+\subsubsection{Solution for exercise 6}\label{solution-for-exercise-6}}
+
+    All we need to do is to define the function \texttt{fcn} and the
+interval boundaries \texttt{a} and \texttt{b} which we then pass to
+SciPy's \texttt{bisect()}.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{57}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k+kn}{import} \PY{n}{bisect}
+
+\PY{c+c1}{\PYZsh{} Define function whose root should be located}
+\PY{k}{def} \PY{n+nf}{fcn}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+    \PY{n}{fx} \PY{o}{=} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0} \PY{o}{\PYZhy{}} \PY{l+m+mf}{4.0}
+    \PY{k}{return} \PY{n}{fx}
+
+\PY{c+c1}{\PYZsh{} Interval for root\PYZhy{}finder}
+\PY{n}{a} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{3}
+\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{1}
+
+\PY{c+c1}{\PYZsh{} Call Scipy\PYZsq{}s bisect() to do all the work}
+\PY{n}{x0} \PY{o}{=} \PY{n}{bisect}\PY{p}{(}\PY{n}{fcn}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Print root}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Root is located at }\PY{l+s+si}{\PYZob{}}\PY{n}{x0}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Root is located at -2.0
+    \end{Verbatim}
+
+    \hypertarget{solution-for-exercise-7}{%
+\subsubsection{Solution for exercise 7}\label{solution-for-exercise-7}}
+
+To find the minimum of the function \(f(x) = (x - 2)^2 + 1\), we can
+simply pass a lambda expression to \texttt{minimize\_scalar()} as
+follows:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{58}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k+kn}{import} \PY{n}{minimize\PYZus{}scalar}
+
+\PY{c+c1}{\PYZsh{} Call minimizer with lambda expression}
+\PY{n}{result} \PY{o}{=} \PY{n}{minimize\PYZus{}scalar}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{p}{(}\PY{n}{x}\PY{o}{\PYZhy{}}\PY{l+m+mf}{2.0}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0} \PY{o}{+} \PY{l+m+mf}{1.0}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Print minimisation result}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Minimum found at }\PY{l+s+si}{\PYZob{}}\PY{n}{result}\PY{o}{.}\PY{n}{x}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Minimum found at 1.9999999999999998
+    \end{Verbatim}
+
+    \hypertarget{solution-for-exercise-8}{%
+\subsubsection{Solution for exercise 8}\label{solution-for-exercise-8}}
+
+It is straightforward to show that the maximum of this function is
+located at \((1, -2)\) which is what \texttt{minimize()} returns:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{59}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k+kn}{import} \PY{n}{minimize}
+
+\PY{k}{def} \PY{n+nf}{fcn}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} Unpack vector x into scalars x1 and x2}
+    \PY{n}{x1}\PY{p}{,} \PY{n}{x2} \PY{o}{=} \PY{n}{x}
+    \PY{c+c1}{\PYZsh{} Evaluate function f(x1, x2)}
+    \PY{n}{fx} \PY{o}{=} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{p}{(}\PY{n}{x1} \PY{o}{\PYZhy{}} \PY{n}{a}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0} \PY{o}{+} \PY{p}{(}\PY{n}{x2} \PY{o}{\PYZhy{}} \PY{n}{b}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} Return NEGATIVE function value for minimiser}
+    \PY{k}{return} \PY{o}{\PYZhy{}} \PY{n}{fx}
+
+\PY{c+c1}{\PYZsh{} Additional arguments passed to objective}
+\PY{n}{a} \PY{o}{=} \PY{l+m+mi}{1}
+\PY{n}{b} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{2}
+\PY{n}{args} \PY{o}{=} \PY{p}{(}\PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Initial guess}
+\PY{n}{x0} \PY{o}{=} \PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Perform maximisation}
+\PY{n}{result} \PY{o}{=} \PY{n}{minimize}\PY{p}{(}\PY{n}{fcn}\PY{p}{,} \PY{n}{x0}\PY{p}{,} \PY{n}{args}\PY{o}{=}\PY{n}{args}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Print maximising vector and function at maximum}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Maximum found at }\PY{l+s+si}{\PYZob{}}\PY{n}{result}\PY{o}{.}\PY{n}{x}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{; f(x) = }\PY{l+s+si}{\PYZob{}}\PY{n}{result}\PY{o}{.}\PY{n}{fun}\PY{l+s+si}{:}\PY{l+s+s1}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Maximum found at [ 0.99999998 -2.00000003]; f(x) = 0.000
+    \end{Verbatim}
+
 
     % Add a bibliography block to the postdoc
     
