@@ -12,3 +12,5 @@ dependencies:
   - notebook
   - scikit-learn
   - statsmodels
+  - yfinance
+  - nasdaq-data-link
