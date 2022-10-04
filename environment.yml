@@ -14,3 +14,7 @@ dependencies:
   - statsmodels
   - yfinance
   - nasdaq-data-link
+  - pandas-datareader
+  - pip
+  - pip:
+    - fredapi
