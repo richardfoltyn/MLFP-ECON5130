@@ -23,6 +23,12 @@ s/\\usepackage\[utf8x\]\{inputenc\}/\\usepackage[utf8]{inputenc}/
 # Make code box background somewhat lighted
 s/\\definecolor\{cellbackground\}\{HTML\}\{[A-F0-9]+\}/\\definecolor{cellbackground}{HTML}{FCFCFC}/
 
+# Deal with parskip using KOMA settings
+/\\usepackage\{parskip\}/d
+
+# Remove white space after figures
+/\{ \\hspace\*\{\\fill\} \\\\\}/d
+
 s/i\.e\.,?~/\\ie /g
 s/i\.e\.,?/\\ie/g
 s/e\.g\.,?~/\\eg /g
