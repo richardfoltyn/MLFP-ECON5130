@@ -385,6 +385,7 @@
 \begin{document}
     
     \maketitle
+    \tableofcontents
     
     
 
@@ -404,9 +405,9 @@ three groups:
   Models in this group use both input data (often called independent
   variables, features, covariates, predictors, or X variables) and the
   corresponding output data (dependent variables, outcomes, targets) to
-  establish a relationship between these two based on a training data
-  set. We can then use this relationship to make predictions about
-  outputs in new data.
+  establish a relationship between within a training data set. We can
+  then use this relationship to make predictions about outputs in new
+  data.
 
   Subcategories within this group include
 
@@ -423,8 +424,8 @@ three groups:
   \emph{Unsupervised learning}
 
   In this scenario, machine learning algorithms operate on unlabelled
-  data (\ie there is no explicit outcome variable). We can, however,
-  use machine learning to organise or reduce this data, for example by
+  data, \ie there is no explicit outcome variable. We can, however,
+  use machine learning to structure or reduce this data, for example by
 
   \begin{itemize}
   \item
@@ -432,7 +433,7 @@ three groups:
     (clusters); or
   \item
     Dimensionality reduction, where possibly high-dimensional data is
-    compressed into a fewer dimensions while preserving relevant
+    compressed into fewer dimensions while preserving relevant
     information.
 
     One of the most widely used examples of dimensionality reduction is
@@ -452,7 +453,12 @@ analysis}\label{principal-component-analysis}}
 
 Principal component analysis (PCA) is one of the most widely used
 dimensionality reduction techniques (and thus falls under the umbrella
-of \emph{unsupervised learning}).
+of \emph{unsupervised learning}). To compute the principal components,
+we often use a matrix factorisation technique known as singular value
+decomposition, which we study in the next section. Alternatively (and
+equivalently), principal components can be computed from the eigenvalues
+and eigenvectors of the data's covariance matrix. We ignore this second
+approach in this unit.
 
     \hypertarget{singular-value-decomposition-and-principal-components}{%
 \subsection{Singular value decomposition and principal
@@ -499,13 +505,16 @@ These matrices satisfy the following useful properties: \[
 
 Once we have obtained the singular value decomposition, we can project
 the data \(\mathbf{X}\) onto the basis spanned by the principal
-components to obtained the transformed data \(\mathbf{P}\): \[
+components to obtain the transformed data \(\mathbf{P}\): \[
 \begin{aligned}
     \mathbf{P} &= \mathbf{X} \mathbf{V}
 \end{aligned}
 \] Intuitively, the \(j\)-th column of \(\mathbf{V}\) defines how the
 \(j\)-th column in \(\mathbf{P}\) is obtained as a linear combination of
-the columns of \(\mathbf{X}\).
+the columns of \(\mathbf{X}\). The power of PCA comes from the fact that
+we don't need to use all columns in \(\mathbf{V}\) so that the dimension
+of \(\mathbf{P}\) is lower than the dimension of the original data
+\(\mathbf{X}\).
 
 In Python, we compute the SVD using the
 \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html}{\texttt{svd()}}
@@ -565,11 +574,13 @@ SVD}\label{performing-pca-manually-using-svd}}
 
 In a first step, we compute the principal components manually using SVD.
 Later on, we will examine how we do the same task using
-\texttt{scikit-learn}.
+\texttt{scikit-learn}, one of the most widely used Python libraries for
+ML.
 
-Before performing PCA, it is recommended to standardise the variables,
-\ie transform them so that they have zero mean and unit variance. For
-this example, we will only demean the data but ignore the variance.
+Before performing PCA, it is often recommended to standardise the
+variables, \ie transform them so that they have zero mean and unit
+variance. For this example, we will only demean the data but ignore the
+variance.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{2}{\boxspacing}
@@ -623,7 +634,7 @@ variation clearly occurs along the first axis!
 \PY{c+c1}{\PYZsh{} Plot principal components}
 
 \PY{c+c1}{\PYZsh{} Scatter plot of sample}
-\PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{)}\PY{p}{)}
+\PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
 \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZus{}1\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -651,7 +662,7 @@ variation clearly occurs along the first axis!
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7faf1195f1c0>
+<matplotlib.lines.Line2D at 0x7f83359363e0>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -664,8 +675,8 @@ variation clearly occurs along the first axis!
 scikit-learn}\label{performing-pca-using-scikit-learn}}
 
 Of course, in real applications we don't need to manually compute the
-principal components, but can use a library such as
-\texttt{scikit-learn} to do it for us (see the documentation for
+principal components but can use a library such as \texttt{scikit-learn}
+to do it for us (see the documentation for
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html\#sklearn.decomposition.PCA}{\texttt{PCA}}
 for details).
 
@@ -686,7 +697,7 @@ paradigm:
   \texttt{fit()} method.
 \item
   Frequently, we can use the \texttt{transform()} method to transform
-  any other data (\eg a test or validation sample) using the fitted
+  any other data (\eg the test or validation sample) using the fitted
   model.
 \end{enumerate}
 
@@ -757,8 +768,9 @@ Principal components (matrix V'):
  [ 0.92324981 -0.38420018]]
     \end{Verbatim}
 
-    The fitted \texttt{pca} object contains other useful attributes. For
-example,
+    The fitted \texttt{pca} object contains other useful attributes (see the
+\href{https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html\#sklearn.decomposition.PCA}{documentation}
+for a full list). For example,
 
 \begin{itemize}
 \tightlist
@@ -841,7 +853,8 @@ For this purpose, we create highly correlated data as follows:
    \] and stack them in the matrix
   \(\mathbf{Z} \in \mathbb{R}^{N\times 2}\).
 \item
-  For some \(2 \times K\) matrix \(\mathbf{A}\), we compute \[
+  For some \(2 \times K\) matrix \(\mathbf{A}\) with \(K \gg 2\), we
+  compute \[
    \mathbf{X} = \mathbf{Z} \mathbf{A}
    \] which gives us the higher-dimensional matrix
   \(\mathbf{X} \in \mathbb{R}^{N\times K}\).
@@ -965,7 +978,7 @@ method which computes the correlation matrix between all columns of a
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{15}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Print only two decimal places}
+\PY{c+c1}{\PYZsh{} Print only three decimal places}
 \PY{n}{pd}\PY{o}{.}\PY{n}{set\PYZus{}option}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{display.precision}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Compute and print correlation matrix}
@@ -1017,7 +1030,7 @@ component analysis just as we did in the bivariate case.
 principal component (which captures most of the variation by
 construction) against some of the other principal components. As you can
 see in the code below, there is some variation left in the 2nd principal
-component, while for the 3rd and 4th components the data in the
+component, while for the 3rd and 4th components the data along these
 dimension is basically constant (this is also the case for the remaining
 principal components).
 
