@@ -1,9 +1,8 @@
 \documentclass{scrartcl}
 
-  \input{overrides-pre}
+    \usepackage{jupyterlatex}
 
     \usepackage[breakable]{tcolorbox}
-    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
     
 
     % Basic figure setup, for now with no caption control since it's done
@@ -657,7 +656,7 @@ To save a NumPy array to a CSV file, there is a logical counterpart to
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Saving CSV file to /tmp/tmp68bwvzer/data.csv
+Saving CSV file to /tmp/tmpoej8m64y/data.csv
     \end{Verbatim}
 
     The above code creates a \(10 \times 5\) matrix of random floats and
@@ -977,7 +976,7 @@ case.
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{11}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} When running via Google Colab, uncomment and execute the following line}
+\PY{c+c1}{\PYZsh{} Uncomment next line to install fredapi in your local or cloud\PYZhy{}hosted Python environment (Binder or Google Colab)}
 \PY{c+c1}{\PYZsh{}! pip install \PYZhy{}\PYZhy{}no\PYZhy{}deps fredapi}
 \end{Verbatim}
 \end{tcolorbox}
@@ -1079,7 +1078,6 @@ memory usage: 4.3 KB
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_33_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     Other popular time series available on FRED are the
 \href{https://fred.stlouisfed.org/series/CPIAUCSL}{CPI},
@@ -1159,7 +1157,7 @@ sorts of information. For example, we can get some meta data from the
 
     \begin{Verbatim}[commandchars=\\\{\}]
 S\&P 500 is an INDEX
-S\&P 500 52-week range: 3636.87 - 4818.62
+S\&P 500 52-week range: 3584.13 - 4818.62
     \end{Verbatim}
 
     We use the \texttt{history} attribute to get detailed price data. Unless
@@ -1230,7 +1228,6 @@ volume.
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_44_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \emph{Example: Retrieving data for multiple symbols}
 
@@ -1265,29 +1262,29 @@ proceed as follows:
              Adj Close                   Close                    High  \textbackslash{}
                   AMZN        MSFT        AMZN        MSFT        AMZN
 Date
-2022-06-27  113.220001  264.328949  113.220001  264.890015  117.980003
-2022-06-28  107.400002  255.936752  107.400002  256.480011  114.849998
-2022-06-29  108.919998  259.708740  108.919998  260.260010  110.989998
-2022-06-30  106.209999  256.285980  106.209999  256.829987  108.180000
-2022-07-01  109.559998  259.030182  109.559998  259.579987  109.750000
+2022-07-05  113.500000  262.293274  113.500000  262.850006  114.080002
+2022-07-06  114.330002  265.646118  114.330002  266.209991  115.480003
+2022-07-07  116.330002  267.831482  116.330002  268.399994  116.989998
+2022-07-08  115.540001  267.093079  115.540001  267.660004  116.580002
+2022-07-11  111.750000  263.949738  111.750000  264.510010  114.300003
 
                                Low                    Open              \textbackslash{}
                   MSFT        AMZN        MSFT        AMZN        MSFT
 Date
-2022-06-27  268.299988  112.699997  263.279999  117.089996  268.209991
-2022-06-28  266.910004  107.040001  256.320007  113.500000  263.980011
-2022-06-29  261.970001  106.910004  255.759995  107.379997  257.589996
-2022-06-30  259.529999  102.519997  252.899994  108.110001  257.049988
-2022-07-01  259.769989  105.849998  254.610001  106.290001  256.390015
+2022-07-05  262.980011  106.320000  254.740005  107.599998  256.160004
+2022-07-06  267.989990  112.010002  262.399994  113.209999  263.750000
+2022-07-07  269.059998  113.489998  265.019989  113.849998  265.119995
+2022-07-08  268.100006  113.690002  263.290009  114.599998  264.790009
+2022-07-11  266.529999  110.870003  262.179993  114.080002  265.649994
 
               Volume
                 AMZN      MSFT
 Date
-2022-06-27  62133200  24615100
-2022-06-28  74942900  27295500
-2022-06-29  66375300  20069800
-2022-06-30  97679400  31730900
-2022-07-01  73021200  22837700
+2022-07-05  76583700  22941000
+2022-07-06  66958900  23824400
+2022-07-07  57872300  20859900
+2022-07-08  45719700  19658800
+2022-07-11  53487600  19455200
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -1306,11 +1303,11 @@ the hierarchical column index:
 \prompt{Out}{outcolor}{22}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Date
-2022-06-27    113.220001
-2022-06-28    107.400002
-2022-06-29    108.919998
-2022-06-30    106.209999
-2022-07-01    109.559998
+2022-07-05    113.500000
+2022-07-06    114.330002
+2022-07-07    116.330002
+2022-07-08    115.540001
+2022-07-11    111.750000
 Name: (Close, AMZN), dtype: float64
 \end{Verbatim}
 \end{tcolorbox}
@@ -1334,7 +1331,6 @@ Name: (Close, AMZN), dtype: float64
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_49_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \hypertarget{nasdaq-data-api-formerly-quandl}{%
 \subsubsection{NASDAQ data API (formerly
@@ -1435,7 +1431,6 @@ of the month, monthly average) and a currency pair, if applicable.
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_53_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     As another example, we retrieve the US dollar / Sterling exchange rate
 at a monthly frequency (this is determined by the name of the time
@@ -1466,7 +1461,6 @@ using \texttt{start\_date} and \texttt{end\_date}.
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_55_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \emph{Example: Data from blockchain.com}
 
@@ -1500,7 +1494,6 @@ Bitcoin in USD.
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_57_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \emph{Example: Historical stock data}
 
@@ -1570,8 +1563,138 @@ memory usage: 25.6 KB
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_63_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
+    \hypertarget{pandas-datareader}{%
+\subsubsection{Pandas Datareader}\label{pandas-datareader}}
+
+\href{https://github.com/pydata/pandas-datareader}{\texttt{pandas-datareader}}
+is a Python library that fetches online data from multiple sources and
+returns them as pandas \texttt{DataFrame} objects. Despite its name,
+this library is not included in \texttt{pandas} and may need to be
+installed separately, \eg by running
+
+\begin{verbatim}
+pip install pandas-datareader
+\end{verbatim}
+
+The aim is to provide a uniform API to access data from multiple
+sources, including those we covered earlier. See the official
+\href{https://pandas-datareader.readthedocs.io/en/latest/}{documentation}
+for supported data sources and how to access them.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{31}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Uncomment and execute the following line if running in Google Colab}
+\PY{c+c1}{\PYZsh{} ! pip install pandas\PYZhy{}datareader}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \emph{Example: Downloading data from FRED}
+
+As a first illustration, we fetch macroeconomic data from
+\href{https://fred.stlouisfed.org/}{FRED}, but instead of
+\texttt{fredapi} we use \texttt{pandas-datareader} and set the data
+source to \texttt{\textquotesingle{}fred\textquotesingle{}}. No API key
+is required for this particular data source, but this is not true for
+all data sources supported by \texttt{pandas-datareader}.
+
+Note that we find the name of the series we want to download in the same
+way as previously discussed in the section on FRED.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{32}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} The convention is to import this library as web}
+\PY{k+kn}{import} \PY{n+nn}{pandas\PYZus{}datareader}\PY{n+nn}{.}\PY{n+nn}{data} \PY{k}{as} \PY{n+nn}{web}
+
+\PY{c+c1}{\PYZsh{} define start and end dates}
+\PY{n}{start\PYZus{}date} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{2000\PYZhy{}01\PYZhy{}01}\PY{l+s+s2}{\PYZdq{}}
+\PY{n}{end\PYZus{}date} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{2021\PYZhy{}12\PYZhy{}31}\PY{l+s+s2}{\PYZdq{}}
+
+\PY{c+c1}{\PYZsh{} Specify series name as first and \PYZsq{}fred\PYZsq{} data source as second argument}
+\PY{n}{gdp} \PY{o}{=} \PY{n}{web}\PY{o}{.}\PY{n}{DataReader}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fred}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{start\PYZus{}date}\PY{p}{,} \PY{n}{end\PYZus{}date}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Show first 3 observations}
+\PY{n}{gdp}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{32}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                  GDP
+DATE
+2000-01-01  10002.179
+2000-04-01  10247.720
+2000-07-01  10318.165
+\end{Verbatim}
+\end{tcolorbox}
+        
+    We can also fetch multiple series at the same time, for example the CPI
+and the unemployment rate.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{33}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data} \PY{o}{=} \PY{n}{web}\PY{o}{.}\PY{n}{DataReader}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPIAUCSL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UNRATE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{data\PYZus{}source}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fred}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{start}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2020\PYZhy{}01\PYZhy{}01}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{33}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+            CPIAUCSL  UNRATE
+DATE
+2020-01-01   258.682     3.5
+2020-02-01   259.007     3.5
+2020-03-01   258.165     4.4
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \emph{Example: Download data from Yahoo! Finance}
+
+As another example, we can use \texttt{pandas-datareader} as a client
+for Yahoo! Finance by specifying
+\texttt{\textquotesingle{}yahoo\textquotesingle{}} as the data source.
+As with \texttt{yfinance} we discussed earlier, we use the search
+function on \href{https://finance.yahoo.com}{Yahoo! Finance} to identify
+the ticker symbol for the data series we are interested in.
+
+The example below also illustrates that we can optionally use instances
+of \texttt{datetime} to define the sample period instead of plain
+strings.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{34}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{pandas\PYZus{}datareader}\PY{n+nn}{.}\PY{n+nn}{data} \PY{k}{as} \PY{n+nn}{web}
+\PY{k+kn}{import} \PY{n+nn}{datetime}
+
+\PY{c+c1}{\PYZsh{} Instead of strings, we can define period in terms of datetime objects:}
+\PY{c+c1}{\PYZsh{} Sample period: 2011\PYZhy{}01\PYZhy{}1 to 2021\PYZhy{}12\PYZhy{}31}
+\PY{n}{start} \PY{o}{=} \PY{n}{datetime}\PY{o}{.}\PY{n}{datetime}\PY{p}{(}\PY{l+m+mi}{2011}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{end} \PY{o}{=} \PY{n}{datetime}\PY{o}{.}\PY{n}{datetime}\PY{p}{(}\PY{l+m+mi}{2021}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{31}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Fetch stock price data for Tesla (ticker symbol TSLA)}
+\PY{n}{data} \PY{o}{=} \PY{n}{web}\PY{o}{.}\PY{n}{DataReader}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TSLA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data\PYZus{}source}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{yahoo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{start}\PY{o}{=}\PY{n}{start}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{n}{end}\PY{p}{)}
+
+\PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{34}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                High       Low      Open     Close      Volume  Adj Close
+Date
+2011-01-03  1.800000  1.726667  1.789333  1.774667  19245000.0   1.774667
+2011-01-04  1.796667  1.734667  1.777333  1.778000  17811000.0   1.778000
+2011-01-05  1.793333  1.746000  1.765333  1.788667  21700500.0   1.788667
+\end{Verbatim}
+\end{tcolorbox}
+        
 
 \hypertarget{pickling}{%
 \subsection{Pickling}\label{pickling}}
@@ -1586,7 +1709,7 @@ automatically supported. For example, we can pickle a list containing a
 \texttt{tuple}, a string and a NumPy array:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{31}{\boxspacing}
+\prompt{In}{incolor}{35}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{k+kn}{import} \PY{n+nn}{pickle}
@@ -1615,13 +1738,13 @@ automatically supported. For example, we can pickle a list containing a
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Pickled data written to /tmp/tmp3tslklb0/data.bin
+Pickled data written to /tmp/tmp9ahjcb3i/data.bin
     \end{Verbatim}
 
     We can then read back the data as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{32}{\boxspacing}
+\prompt{In}{incolor}{36}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} load pickle data from above}
 \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
@@ -1634,7 +1757,7 @@ Pickled data written to /tmp/tmp3tslklb0/data.bin
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{32}{\boxspacing}
+\prompt{Out}{outcolor}{36}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 array([[0, 1, 2, 3, 4],
        [5, 6, 7, 8, 9]])
