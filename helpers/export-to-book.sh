@@ -16,14 +16,20 @@ OUTFILE="MLFP-part1"
 
 cd "${BASEDIR}/lectures"
 
-nbmerge preface.ipynb unit*.ipynb -o "/tmp/${OUTFILE}.ipynb"
+nbmerge preface.ipynb unit*.ipynb -o "${OUTFILE}.ipynb"
 
 jupyter nbconvert \
     --execute \
     --to=latex \
     --output-dir=${BASEDIR}/latex \
-    /tmp/${OUTFILE}.ipynb
+    ${OUTFILE}.ipynb
 
 "${BASEDIR}/helpers/fix-book.sh" "${BASEDIR}/latex/${OUTFILE}.tex"
+
+# Clean up temp files
+rm "${OUTFILE}.ipynb"
+if [ -d "raw.githubusercontent.com" ]; then
+    rm -rf "raw.githubusercontent.com"
+fi
 
 cd "${OLDDIR}"
