@@ -44,7 +44,7 @@ add_rect_label(ax, (0.0, yoffset-height), width=1.0, height=height,
 yoffset -= height
 height = textheight
 
-ax.text(frac_train/2.0, yoffset - height/2.0, 'Finding parameters', 
+ax.text(frac_train/2.0, yoffset - height/2.0, 'Find (hyper)parameters', 
     va='center', ha='center', **heading)
 
 # Training data
