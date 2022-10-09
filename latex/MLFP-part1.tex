@@ -4439,7 +4439,7 @@ func2 called with argument foo
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-func1 called with argument <function func2 at 0x7fb0f807beb0>
+func1 called with argument <function func2 at 0x7ff000c8b5b0>
     \end{Verbatim}
 
     \hypertarget{lambda-expressions}{%
@@ -4578,11 +4578,6 @@ statement:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{ModuleNotFoundError}\textcolor{ansi-red}{:} No module named 'unit03\_mod'
-
-    \end{Verbatim}
-
     Depending on where exactly you are running this code, the above import
 statement might fail with a \texttt{ModuleNotFoundError} (if no error
 was raised you can skip the rest of this section). This happens whenever
@@ -4602,7 +4597,7 @@ To fix this, check the module search path as follows:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{164}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-['/tmp',
+['/home/richard/repos/teaching/MLFP-ECON5130/lectures',
  '/home/richard/.conda/envs/py3-default/lib/python310.zip',
  '/home/richard/.conda/envs/py3-default/lib/python3.10',
  '/home/richard/.conda/envs/py3-default/lib/python3.10/lib-dynload',
@@ -4662,9 +4657,9 @@ The first variant looks like this:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{ModuleNotFoundError}\textcolor{ansi-red}{:} No module named 'unit03\_mod'
-
+    \begin{Verbatim}[commandchars=\\\{\}]
+Variable defined in unit03\_mod
+func in module unit03\_mod called
     \end{Verbatim}
 
     If a symbol from \texttt{unit03\_mod} is used frequently, we might want
@@ -4684,9 +4679,9 @@ the second variant:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{ModuleNotFoundError}\textcolor{ansi-red}{:} No module named 'unit03\_mod'
-
+    \begin{Verbatim}[commandchars=\\\{\}]
+Variable defined in unit03\_mod
+func in module unit03\_mod called
     \end{Verbatim}
 
     What if our notebook itself defines a function \texttt{func()} which
@@ -4710,9 +4705,9 @@ would overwrite the reference to the one imported from
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{ModuleNotFoundError}\textcolor{ansi-red}{:} No module named 'unit03\_mod'
-
+    \begin{Verbatim}[commandchars=\\\{\}]
+func in module unit03\_mod called
+func in notebook called
     \end{Verbatim}
 
     In such a scenario, we can assign aliases to imported symbols using
@@ -4735,9 +4730,9 @@ would overwrite the reference to the one imported from
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{ModuleNotFoundError}\textcolor{ansi-red}{:} No module named 'unit03\_mod'
-
+    \begin{Verbatim}[commandchars=\\\{\}]
+func in notebook called
+func in module unit03\_mod called
     \end{Verbatim}
 
     We can even alias the module name itself, as we frequently do with
@@ -4752,9 +4747,8 @@ widely used modules such as \texttt{numpy}:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{ModuleNotFoundError}\textcolor{ansi-red}{:} No module named 'unit03\_mod'
-
+    \begin{Verbatim}[commandchars=\\\{\}]
+func in module unit03\_mod called
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -5668,7 +5662,7 @@ points.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{192}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fb0cae44eb0>]
+[<matplotlib.lines.Line2D at 0x7fefdc258fd0>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -5692,7 +5686,7 @@ want to plot for a given set of \(x\)-values like this:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{193}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fb0c87018d0>]
+[<matplotlib.lines.Line2D at 0x7fefd9b1d990>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -5714,8 +5708,8 @@ single graph:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{194}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fb0c8788df0>,
- <matplotlib.lines.Line2D at 0x7fb0c8789fc0>]
+[<matplotlib.lines.Line2D at 0x7fefd9ba4e50>,
+ <matplotlib.lines.Line2D at 0x7fefd9ba6020>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -5801,7 +5795,7 @@ legends
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{195}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fb0c85f71f0>]
+[<matplotlib.lines.Line2D at 0x7fefd9a173a0>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -5824,7 +5818,7 @@ explicitly using keyword arguments:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{196}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fb0c866ca90>]
+[<matplotlib.lines.Line2D at 0x7fefd9a80be0>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -5866,7 +5860,7 @@ We can write thus rewrite the above code as follows:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{197}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fb0c84fe080>]
+[<matplotlib.lines.Line2D at 0x7fefd9912050>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -5902,7 +5896,7 @@ similar fashion to line plots:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{198}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.collections.PathCollection at 0x7fb0c858f340>
+<matplotlib.collections.PathCollection at 0x7fefd99a3580>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -5930,7 +5924,7 @@ same style on all points plotted in that particular function call.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{199}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.collections.PathCollection at 0x7fb0c83f6740>
+<matplotlib.collections.PathCollection at 0x7fefd9812740>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -6284,7 +6278,7 @@ to plot into individual panels:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{208}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fb0c7e25780>]
+[<matplotlib.lines.Line2D at 0x7fefd923d840>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -6567,7 +6561,7 @@ column corresponds to a different line.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{213}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fb0c7c49780>
+<matplotlib.legend.Legend at 0x7fefd9065db0>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -6701,7 +6695,7 @@ simple example:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-170 µs ± 1.26 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+194 µs ± 3.89 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -6716,7 +6710,7 @@ simple example:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-1.05 µs ± 12.9 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+952 ns ± 2.41 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
     \end{Verbatim}
 
     \begin{itemize}
@@ -8014,7 +8008,7 @@ explicitly expand \texttt{b}:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-2.18 µs ± 37.7 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+2.05 µs ± 4.03 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -8026,7 +8020,7 @@ explicitly expand \texttt{b}:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-6.01 µs ± 128 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+5.73 µs ± 58.8 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
     \end{Verbatim}
 
     As you see, not only is the second operation more complex and difficult
@@ -8090,7 +8084,7 @@ vectorised implementation reveals some striking differences:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-22.2 µs ± 193 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+20.7 µs ± 48.5 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -8102,7 +8096,7 @@ vectorised implementation reveals some striking differences:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-429 ns ± 4.32 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+388 ns ± 1.19 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
     \end{Verbatim}
 
     We see that the vectorised variant is about 100 times faster! What is
@@ -8171,7 +8165,7 @@ the performance advantage of vectorised code:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-131 µs ± 1.41 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+131 µs ± 214 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -8182,7 +8176,7 @@ the performance advantage of vectorised code:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-4.43 µs ± 30.8 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+4.36 µs ± 10.9 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
     \end{Verbatim}
 
     The vectorised version is approximately 25 times faster, despite the
@@ -8288,8 +8282,8 @@ which we can verify using the built-in \texttt{id()} function:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-140397240489648
-140397240496560
+140668112666224
+140668112662000
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -9796,7 +9790,7 @@ against NumPy's.
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-60.2 µs ± 1.13 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+58.5 µs ± 136 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -9807,7 +9801,7 @@ against NumPy's.
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-24 µs ± 1.78 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+21.6 µs ± 841 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     You may be surprised that \texttt{np.nanmean()} is only twice as fast as
@@ -9959,7 +9953,7 @@ the maxima to the \emph{same} plot.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{331}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fb0c7fb2da0>
+<matplotlib.legend.Legend at 0x7fefd93c7010>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -10022,7 +10016,7 @@ NumPy version is approximately 100 times faster!
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-96.8 µs ± 991 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+91.3 µs ± 180 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -10034,7 +10028,7 @@ NumPy version is approximately 100 times faster!
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-1.41 µs ± 2.86 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+1.3 µs ± 5.34 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
     \end{Verbatim}
 
     \hypertarget{random-number-generation-and-statistics}{%
@@ -10133,7 +10127,7 @@ interval \([0.0, 1.0)\).
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{337}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([0.74607635, 0.55404503, 0.17795682, 0.05495578, 0.69487777])
+array([0.47324165, 0.22285132, 0.935563  , 0.89083688, 0.63296249])
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -10531,7 +10525,7 @@ distribution as follows:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{349}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fb0c8246890>
+<matplotlib.legend.Legend at 0x7fefd852ce50>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -11520,7 +11514,7 @@ to plot the histogram and the true PDF.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{362}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fb0c4807310>
+<matplotlib.legend.Legend at 0x7fefd84f7460>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -12894,11 +12888,6 @@ For example, we can easily group our universities by country:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{FileNotFoundError}\textcolor{ansi-red}{:} [Errno 2] No such file or directory: '../data/universities.csv'
-
-    \end{Verbatim}
-
     Here \texttt{groups} is a special pandas objects which can subsequently
 be used to process group-specific data. To compute the group-wise
 averages, we can simply run
@@ -12910,11 +12899,25 @@ averages, we can simply run
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'groups' is not defined
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{394}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                      Founded      Students        Staff        Admin  \textbackslash{}
+Country
+England           1745.923077  27119.846154  4336.692308  4112.000000
+Northern Ireland  1810.000000  18438.000000  2414.000000  1489.000000
+Scotland          1691.428571  19563.142857  2232.800000  2864.571429
+Wales             1901.500000  23259.000000  3330.000000  4514.500000
 
-    \end{Verbatim}
-
+                       Budget   Russell
+Country
+England           1001.700000  1.000000
+Northern Ireland   369.200000  1.000000
+Scotland           410.471429  0.285714
+Wales              644.800000  0.500000
+\end{Verbatim}
+\end{tcolorbox}
+        
     Groups support column indexing: if we want to only compute the total
 number of students for each country in our sample, we can do this as
 follows:
@@ -12926,11 +12929,18 @@ follows:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'groups' is not defined
-
-    \end{Verbatim}
-
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{395}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Country
+England             352558
+Northern Ireland     18438
+Scotland            136942
+Wales                46518
+Name: Students, dtype: int64
+\end{Verbatim}
+\end{tcolorbox}
+        
     There are numerous routines to aggregate grouped data, for example:
 
 \begin{itemize}
@@ -12959,11 +12969,18 @@ follows:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'groups' is not defined
-
-    \end{Verbatim}
-
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{396}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Country
+England             13
+Northern Ireland     1
+Scotland             7
+Wales                2
+dtype: int64
+\end{Verbatim}
+\end{tcolorbox}
+        
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{397}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -12971,11 +12988,25 @@ follows:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'groups' is not defined
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{397}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                                 Institution  Founded  Students   Staff  \textbackslash{}
+Country
+England                                  LSE     1895     11850  1725.0
+Northern Ireland  Queen’s University Belfast     1810     18438  2414.0
+Scotland               University of Glasgow     1451     30805  2942.0
+Wales                     Cardiff University     1883     25898  3330.0
 
-    \end{Verbatim}
-
+                   Admin  Budget  Russell
+Country
+England           2515.0   415.1        1
+Northern Ireland  1489.0   369.2        1
+Scotland          4003.0   626.5        1
+Wales             5739.0   644.8        1
+\end{Verbatim}
+\end{tcolorbox}
+        
     We can create custom aggregation routines by calling \texttt{agg()} or
 \texttt{aggregate()} on the grouped object. To illustrate, we count the
 number of universities in each country that have more than 20,000
@@ -12988,11 +13019,18 @@ students:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'groups' is not defined
-
-    \end{Verbatim}
-
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{398}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Country
+England             10
+Northern Ireland     0
+Scotland             3
+Wales                2
+Name: Students, dtype: int64
+\end{Verbatim}
+\end{tcolorbox}
+        
     Note that we called \texttt{agg()} only on the column \texttt{Students},
 otherwise the function would be applied to every column separately,
 which is not what we want.
@@ -13012,11 +13050,18 @@ pounds), we can do this as follows:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'groups' is not defined
-
-    \end{Verbatim}
-
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{399}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Country
+England             36936.050239
+Northern Ireland    20023.863760
+Scotland            20981.875539
+Wales               13861.301002
+dtype: float64
+\end{Verbatim}
+\end{tcolorbox}
+        
     We couldn't have done this with \texttt{agg()}, since \texttt{agg()}
 never gets to see the entire chunk of data but only one column at a
 time.
@@ -14524,7 +14569,7 @@ To save a NumPy array to a CSV file, there is a logical counterpart to
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Saving CSV file to /tmp/tmpqasgi\_br/data.csv
+Saving CSV file to /tmp/tmpg588wgx\_/data.csv
     \end{Verbatim}
 
     The above code creates a \(10 \times 5\) matrix of random floats and
@@ -15606,7 +15651,7 @@ automatically supported. For example, we can pickle a list containing a
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Pickled data written to /tmp/tmp29oeeldj/data.bin
+Pickled data written to /tmp/tmp430\_pqn5/data.bin
     \end{Verbatim}
 
     We can then read back the data as follows:
@@ -15969,7 +16014,7 @@ variation clearly occurs along the first axis!
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{460}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fb0baaffe20>
+<matplotlib.lines.Line2D at 0x7fefcc6563b0>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -16754,11 +16799,6 @@ purposes.
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{FileNotFoundError}\textcolor{ansi-red}{:} [Errno 2] No such file or directory: '../data/ames\_houses.csv'
-
-    \end{Verbatim}
-
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{482}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -16769,22 +16809,25 @@ purposes.
 
     \begin{Verbatim}[commandchars=\\\{\}]
 <class 'pandas.core.frame.DataFrame'>
-RangeIndex: 100 entries, 0 to 99
-Data columns (total 10 columns):
- \#   Column  Non-Null Count  Dtype
----  ------  --------------  -----
- 0   X0      100 non-null    float64
- 1   X1      100 non-null    float64
- 2   X2      100 non-null    float64
- 3   X3      100 non-null    float64
- 4   X4      100 non-null    float64
- 5   X5      100 non-null    float64
- 6   X6      100 non-null    float64
- 7   X7      100 non-null    float64
- 8   X8      100 non-null    float64
- 9   X9      100 non-null    float64
-dtypes: float64(10)
-memory usage: 7.9 KB
+RangeIndex: 1460 entries, 0 to 1459
+Data columns (total 13 columns):
+ \#   Column            Non-Null Count  Dtype
+---  ------            --------------  -----
+ 0   SalePrice         1460 non-null   float64
+ 1   LotArea           1460 non-null   float64
+ 2   Neighborhood      1460 non-null   object
+ 3   BuildingType      1386 non-null   object
+ 4   OverallQuality    1460 non-null   int64
+ 5   OverallCondition  1460 non-null   int64
+ 6   YearBuilt         1460 non-null   int64
+ 7   CentralAir        1460 non-null   object
+ 8   LivingArea        1460 non-null   float64
+ 9   Bathrooms         1460 non-null   int64
+ 10  Bedrooms          1460 non-null   int64
+ 11  Fireplaces        1460 non-null   int64
+ 12  HasGarage         1460 non-null   int64
+dtypes: float64(3), int64(7), object(3)
+memory usage: 148.4+ KB
     \end{Verbatim}
 
     In this section, we focus on the columns \texttt{SalePice} which
@@ -16799,11 +16842,21 @@ some intuition for the data, we look at some descriptive statistics:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} "None of [Index(['SalePrice', 'LivingArea'], dtype='object')] are in the [columns]"
-
-    \end{Verbatim}
-
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{483}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+        SalePrice  LivingArea
+count    1460.000    1460.000
+mean   180921.196     140.777
+std     79442.503      48.814
+min     34900.000      31.027
+25\%    129975.000     104.924
+50\%    163000.000     135.997
+75\%    214000.000     165.049
+max    755000.000     524.108
+\end{Verbatim}
+\end{tcolorbox}
+        
     For our analysis, we need to convert the \texttt{DataFrame} columns to
 NumPy arrays:
 
@@ -16817,16 +16870,6 @@ NumPy arrays:
 \PY{n}{X} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{features}\PY{p}{]}\PY{o}{.}\PY{n}{to\PYZus{}numpy}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} 'SalePrice'
-
-
-The above exception was the direct cause of the following exception:
-
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} 'SalePrice'
-
-    \end{Verbatim}
 
     \hypertarget{manually-creating-training-and-test-samples}{%
 \subsubsection{Manually creating training and test
@@ -16896,8 +16939,8 @@ sample.
 
     \begin{Verbatim}[commandchars=\\\{\}]
 Regression coefficients
-  Intercept: 1.0
-  Slope: 0.5
+  Intercept: 20675.0
+  Slope: 1133.9
     \end{Verbatim}
 
     The fitted coefficients show that for each additional square meter of
@@ -16936,7 +16979,7 @@ samples and adds the fitted line.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{487}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fb0a4fd17b0>
+<matplotlib.legend.Legend at 0x7fef963bd870>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -16977,7 +17020,7 @@ error for each observations, \[
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{488}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fb0a4e377c0>
+<matplotlib.lines.Line2D at 0x7fef962a1870>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -17031,8 +17074,8 @@ this simpler approach.
 
     \begin{Verbatim}[commandchars=\\\{\}]
 Regression coefficients
-  Intercept: 0.8
-  Slope: 0.6
+  Intercept: 21364.5
+  Slope: 1125.4
     \end{Verbatim}
 
     Note that the estimated coefficients need not be the same we got when
@@ -17094,9 +17137,9 @@ for the \(R^2\).
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Mean squared error: 0.2
-Root mean squared error 0.4
-Coefficient of determination (R\^{}2): 0.93
+Mean squared error: 2821058288.6
+Root mean squared error 53113.6
+Coefficient of determination (R\^{}2): 0.58
     \end{Verbatim}
 
     Since we estimated a model with intercept, the \(R^2 = 0.58\) implies
@@ -17133,9 +17176,27 @@ variables.
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{FileNotFoundError}\textcolor{ansi-red}{:} [Errno 2] No such file or directory: '../data/ames\_houses.csv'
-
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 1460 entries, 0 to 1459
+Data columns (total 13 columns):
+ \#   Column            Non-Null Count  Dtype
+---  ------            --------------  -----
+ 0   SalePrice         1460 non-null   float64
+ 1   LotArea           1460 non-null   float64
+ 2   Neighborhood      1460 non-null   object
+ 3   BuildingType      1386 non-null   object
+ 4   OverallQuality    1460 non-null   int64
+ 5   OverallCondition  1460 non-null   int64
+ 6   YearBuilt         1460 non-null   int64
+ 7   CentralAir        1460 non-null   object
+ 8   LivingArea        1460 non-null   float64
+ 9   Bathrooms         1460 non-null   int64
+ 10  Bedrooms          1460 non-null   int64
+ 11  Fireplaces        1460 non-null   int64
+ 12  HasGarage         1460 non-null   int64
+dtypes: float64(3), int64(7), object(3)
+memory usage: 148.4+ KB
     \end{Verbatim}
 
     Compared to our earlier analysis, we'll now add the lot area (in
@@ -17153,11 +17214,21 @@ explanatory variable to get some idea about its distribution.
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} "None of [Index(['SalePrice', 'LivingArea', 'LotArea'], dtype='object')] are in the [columns]"
-
-    \end{Verbatim}
-
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{492}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+        SalePrice  LivingArea    LotArea
+count    1460.000    1460.000   1460.000
+mean   180921.196     140.777    976.950
+std     79442.503      48.814    927.199
+min     34900.000      31.027    120.762
+25\%    129975.000     104.924    701.675
+50\%    163000.000     135.997    880.496
+75\%    214000.000     165.049   1077.709
+max    755000.000     524.108  19994.963
+\end{Verbatim}
+\end{tcolorbox}
+        
     As before, we convert the \texttt{DataFrame} columns to NumPy arrays,
 split the data into training and test samples and estimate a linear
 model.
@@ -17172,16 +17243,6 @@ model.
 \PY{n}{X} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{features}\PY{p}{]}\PY{o}{.}\PY{n}{to\PYZus{}numpy}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} 'SalePrice'
-
-
-The above exception was the direct cause of the following exception:
-
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} 'SalePrice'
-
-    \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{494}{\boxspacing}
@@ -17201,8 +17262,8 @@ The above exception was the direct cause of the following exception:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Intercept: 0.9587060541525507
-Coefficients: [0.52984081]
+Intercept: 20025.027199480886
+Coefficients: [1085.68252338    7.09932726]
     \end{Verbatim}
 
     The coefficient array \texttt{coef\_} now stores two values, the first
@@ -17311,9 +17372,12 @@ constant terms.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{496}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([[0],
-       [1],
-       [2]])
+array([[0, 0],
+       [1, 0],
+       [0, 1],
+       [2, 0],
+       [1, 1],
+       [0, 2]])
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -17342,7 +17406,8 @@ linear model on the expanded feature matrix as before (adding
 
     \begin{Verbatim}[commandchars=\\\{\}]
 Intercept: 0.0
-Coefficients [1.01886598 0.48454224 0.00500272]
+Coefficients [-2.19724359e+04  1.24027918e+03  5.75108671e+01  3.95841742e-01
+ -2.46346339e-01 -3.77428502e-04]
     \end{Verbatim}
 
     The fitted model has 6 coefficients and the intercept is 0 as the
@@ -17462,7 +17527,8 @@ from above, we run
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Coefficients: [1.01886598 0.48454224 0.00500272]
+Coefficients: [-2.19724359e+04  1.24027918e+03  5.75108671e+01  3.95841742e-01
+ -2.46346339e-01 -3.77428502e-04]
     \end{Verbatim}
 
     The second approach is to construct the pipeline using
@@ -17639,11 +17705,6 @@ We recreate the data set in the same way as before, using
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{FileNotFoundError}\textcolor{ansi-red}{:} [Errno 2] No such file or directory: '../data/ames\_houses.csv'
-
-    \end{Verbatim}
-
     We now iterate over the candidate polynomial degrees \(d = 0,\dots,4\)
 and apply \(k\)-fold cross-validation with 10 folds. There is no need to
 manually split the sample into training and validation/test sub-sets.
@@ -17720,7 +17781,8 @@ data sets and returns the array indices for each.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{504}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([1.73112338, 0.62373844, 0.65384293, 0.77759399, 0.68298266])
+array([ 79020.25214052,  55268.49840787,  55228.58262443,  55885.05012115,
+       437018.57190207])
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -17742,7 +17804,7 @@ function which returns the \emph{index} of the smallest array element.
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Polynomial degree with min. RMSE: 1
+Polynomial degree with min. RMSE: 2
     \end{Verbatim}
 
     Finally, it is often instructive how the RMSE evolves as a function of
@@ -17763,7 +17825,7 @@ the hyperparameter we want to tune.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{506}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fb0bd87f2e0>
+<matplotlib.lines.Line2D at 0x7fefcf37db40>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -17853,7 +17915,8 @@ earlier using \texttt{cross\_val\_score()}:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{507}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([1.73112338, 0.62373844, 0.65384293, 0.77759399, 0.68298266])
+array([ 79020.25214052,  55268.49840787,  55228.58262443,  55885.05012115,
+       437018.57190207])
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -17870,7 +17933,7 @@ array([1.73112338, 0.62373844, 0.65384293, 0.77759399, 0.68298266])
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Polynomial degree with min. RMSE: 1
+Polynomial degree with min. RMSE: 2
     \end{Verbatim}
 
 
@@ -17899,11 +17962,6 @@ categorical and binary variables.
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{FileNotFoundError}\textcolor{ansi-red}{:} [Errno 2] No such file or directory: '../data/ames\_houses.csv'
-
-    \end{Verbatim}
-
     For example, consider the \texttt{BuildingType} variable, which (in this
 simplified version of the data) takes on three values, `Single-family',
 `Townhouse' and `Two-family' and has on top a few missing observations.
@@ -17920,16 +17978,17 @@ missing values in the tabulation.
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} 'BuildingType'
-
-
-The above exception was the direct cause of the following exception:
-
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} 'BuildingType'
-
-    \end{Verbatim}
-
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{510}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Single-family    1220
+Townhouse         114
+Two-family         52
+NaN                74
+Name: BuildingType, dtype: int64
+\end{Verbatim}
+\end{tcolorbox}
+        
     There are several ways to deal with such data (see the official
 \href{https://scikit-learn.org/stable/modules/preprocessing.html\#encoding-categorical-features}{documentation}
 for details). First, since the data are stored as strings, we could use
@@ -17953,9 +18012,9 @@ to map these strings to integers.
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} ['BuildingType']
-
+    \begin{Verbatim}[commandchars=\\\{\}]
+Unique values: [0. 1. 2.]
+Histogram: [1220  114   52]
     \end{Verbatim}
 
     This, however, is still not particularly useful if we want to use these
@@ -17988,11 +18047,6 @@ transformation as illustrated by the following code:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} ['BuildingType']
-
-    \end{Verbatim}
-
     When creating a \texttt{OneHotEncoder}, we can optionally pass the list
 of possible values using the \texttt{categories=...} argument. By
 default, this transformation returns a sparse matrix since each row will
@@ -18011,11 +18065,17 @@ The transformed data now looks as follows:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'bldg\_dummies' is not defined
-
-    \end{Verbatim}
-
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{513}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([[1., 0., 0.],
+       [1., 0., 0.],
+       [1., 0., 0.],
+       [1., 0., 0.],
+       [1., 0., 0.]])
+\end{Verbatim}
+\end{tcolorbox}
+        
     In this particular example, the first five observations fall into the
 first category, hence the first column contains ones while the remaining
 elements are zero.
@@ -18030,11 +18090,13 @@ frequency of each category remains the same:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'bldg\_dummies' is not defined
-
-    \end{Verbatim}
-
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{514}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([1220.,  114.,   52.])
+\end{Verbatim}
+\end{tcolorbox}
+        
     The category labels taken from the original data are stored in the
 \texttt{categories\_} attribute:
 
@@ -18045,11 +18107,13 @@ frequency of each category remains the same:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'enc' is not defined
-
-    \end{Verbatim}
-
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{515}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array(['Single-family', 'Townhouse', 'Two-family'], dtype=object)
+\end{Verbatim}
+\end{tcolorbox}
+        
     Now that we have converted the categories into a dummy matrix, we can
 append it to the continuous explanatory variables and fit the linear
 model as usual:
@@ -18081,16 +18145,18 @@ model as usual:
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} 'SalePrice'
-
-
-The above exception was the direct cause of the following exception:
-
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} 'SalePrice'
-
-    \end{Verbatim}
-
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{516}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                                  Coef
+LivingArea                    1152.606
+LotArea                          8.386
+BuildingType: Single-family  12173.902
+BuildingType: Townhouse      37735.490
+BuildingType: Two-family    -41842.492
+\end{Verbatim}
+\end{tcolorbox}
+        
     Finally, you should be aware that \texttt{pandas} provides the function
 \href{https://pandas.pydata.org/docs/reference/api/pandas.get_dummies.html}{\texttt{get\_dummies()}}
 which accomplishes something very similar to \texttt{OneHotEnconder} but
@@ -18103,16 +18169,18 @@ may not work as well with the \texttt{scikit-learn} API.
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} 'BuildingType'
-
-
-The above exception was the direct cause of the following exception:
-
-\textcolor{ansi-red}{KeyError}\textcolor{ansi-red}{:} 'BuildingType'
-
-    \end{Verbatim}
-
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{517}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+   Single-family  Townhouse  Two-family
+0              1          0           0
+1              1          0           0
+2              1          0           0
+3              1          0           0
+4              1          0           0
+\end{Verbatim}
+\end{tcolorbox}
+        
 
 \hypertarget{optional-exercises}{%
 \section{Optional exercises}\label{optional-exercises}}
@@ -18979,7 +19047,7 @@ calling the \texttt{fit()} method of the pipeline object.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{536}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fb0b91f4040>
+<matplotlib.legend.Legend at 0x7fefca94ca90>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -19227,7 +19295,7 @@ overfitting occurs for high values of \(d\).
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{544}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fb0b91c0e80>
+<matplotlib.lines.Line2D at 0x7fefcaf2eda0>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -19265,7 +19333,7 @@ grid of \(x\)-values.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{545}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fb0b95ca560>
+<matplotlib.legend.Legend at 0x7fefcafb2230>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -19403,7 +19471,7 @@ Polynomial degree with min. MSE: 4
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{549}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fb0b953d150>
+<matplotlib.lines.Line2D at 0x7fefcab8ad70>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -19523,7 +19591,7 @@ Polynomial degree with min. MSE: 4
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{553}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fb0b953fee0>
+<matplotlib.lines.Line2D at 0x7fefcab8b130>
 \end{Verbatim}
 \end{tcolorbox}
         
