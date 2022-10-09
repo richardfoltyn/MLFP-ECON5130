@@ -1,9 +1,8 @@
 \documentclass{scrartcl}
 
-    \input{overrides-pre}
+    \usepackage{jupyterlatex}
 
     \usepackage[breakable]{tcolorbox}
-    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
     
 
     % Basic figure setup, for now with no caption control since it's done
@@ -356,7 +355,7 @@
     \definecolor{incolor}{HTML}{303F9F}
     \definecolor{outcolor}{HTML}{D84315}
     \definecolor{cellborder}{HTML}{CFCFCF}
-    \definecolor{cellbackground}{HTML}{F7F7F7}
+    \definecolor{cellbackground}{HTML}{FCFCFC}
     
     % prompt
     \makeatletter
@@ -488,7 +487,7 @@ interval \([0.0, 1.0)\).
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([0.06647759, 0.23412079, 0.0705988 , 0.91797947, 0.39115549])
+array([0.86353243, 0.20461278, 0.96356395, 0.82972532, 0.41415604])
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -750,7 +749,6 @@ Text(0.5, 1.0, 'Histogram of normal draws')
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_24_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     To draw from the multivariate normal, we need to specify a vector of
 means \(\mu\) and the variance-covariance matrix \(\Sigma\), which we
@@ -808,7 +806,6 @@ Text(0.5, 1.0, 'Draws from bivariate normal distribution')
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_26_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
 
 \hypertarget{more-functions-for-probability-distributions}{%
@@ -888,14 +885,13 @@ distribution as follows:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7f05e0f06260>
+<matplotlib.legend.Legend at 0x7f956f82f6a0>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_29_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     In the above example we pass \texttt{density=True} to Matplotlib's
 \texttt{hist()} plotting function so that the result is rescaled to be
@@ -1151,7 +1147,7 @@ zero skewness and zero excess kurtosis.
 
 
 \hypertarget{exercises}{%
-\subsection{Exercises}\label{exercises}}
+\subsection{Optional exercises}\label{exercises}}
 
 The following exercises are considerably longer than those in previous
 units. The reason is that they incorporate everything we have covered so
@@ -1225,7 +1221,7 @@ illustrated in the following figure:
 
 \begin{figure}
 \centering
-\includegraphics{solutions/unit07/unit07_ex2_PDF.pdf}
+\includegraphics{solutions/unit06/unit06_ex2_PDF.pdf}
 \caption{PDF of truncated normal}
 \end{figure}
 
@@ -1280,7 +1276,7 @@ from scipy.stats import truncnorm
 
   \begin{figure}
   \centering
-  \includegraphics{solutions/unit07/unit07_ex2_MC.pdf}
+  \includegraphics{solutions/unit06/unit06_ex2_MC.pdf}
   \caption{MC integration}
   \end{figure}
 
@@ -1599,7 +1595,6 @@ Text(0.5, 1.05, 'Draws from the standard-t distribution')
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_53_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     A few comments on how we create the \(x\)-values and the plot range for
 these graphs:
@@ -1879,14 +1874,13 @@ to plot the histogram and the true PDF.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{27}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7f05e0497f40>
+<matplotlib.legend.Legend at 0x7f956e904c40>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_67_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     The dashed black line shows the analytically derived expected total
 gross return.
@@ -1966,7 +1960,6 @@ which we then use the generate the plot.
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_70_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \hypertarget{solution-for-exercise-5}{%
 \subsubsection{Solution for exercise 5}\label{solution-for-exercise-5}}
@@ -2076,7 +2069,6 @@ estimate of the variance is in fact identical to the standard approach.
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_72_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \hypertarget{solution-for-exercise-6}{%
 \subsubsection{Solution for exercise 6}\label{solution-for-exercise-6}}
@@ -2208,7 +2200,6 @@ list \texttt{means\_all} which we use below to create the histograms.
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_76_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     Finally, the code below creates the histograms for each sample size.
 Note the different plot limits on the \(x\)-axis: the bootstrapped means
@@ -2244,7 +2235,6 @@ for larger sample sizes are much closer together.
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_78_0.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     As an aside, the use of the bootstrap in this scenario is somewhat
 nonsensical and only serves to practice doing data analysis with Python.

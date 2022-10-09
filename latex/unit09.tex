@@ -390,8 +390,12 @@
     
 
     
+    \hypertarget{introduction-to-unsupervised-learning}{%
+\section{Introduction to unsupervised
+learning}\label{introduction-to-unsupervised-learning}}
+
     \hypertarget{overview-of-machine-learning-ml-algorithms}{%
-\section{Overview of machine learning (ML)
+\subsection{Overview of machine learning (ML)
 algorithms}\label{overview-of-machine-learning-ml-algorithms}}
 
 Broadly speaking, we can categorize machine learning algorithms into
@@ -447,8 +451,9 @@ three groups:
   in this part of the course.
 \end{enumerate}
 
-    \hypertarget{principal-component-analysis}{%
-\section{Principal component
+
+\hypertarget{principal-component-analysis}{%
+\subsection{Principal component
 analysis}\label{principal-component-analysis}}
 
 Principal component analysis (PCA) is one of the most widely used
@@ -461,7 +466,7 @@ and eigenvectors of the data's covariance matrix. We ignore this second
 approach in this unit.
 
     \hypertarget{singular-value-decomposition-and-principal-components}{%
-\subsection{Singular value decomposition and principal
+\subsubsection{Singular value decomposition and principal
 components}\label{singular-value-decomposition-and-principal-components}}
 
 \href{https://en.wikipedia.org/wiki/Singular_value_decomposition}{Singular
@@ -521,7 +526,8 @@ In Python, we compute the SVD using the
 function from \texttt{numpy.linalg}.
 
     \hypertarget{example-bivariate-normal}{%
-\subsection{Example: Bivariate normal}\label{example-bivariate-normal}}
+\subsubsection{Example: Bivariate
+normal}\label{example-bivariate-normal}}
 
 Imagine we construct \(X\) as 200 random draws from a bivariate normal:
 
@@ -565,11 +571,11 @@ Text(0.5, 1.0, 'Draws from bivariate normal distribution')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_4_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_5_1.pdf}
     \end{center}
     
     \hypertarget{performing-pca-manually-using-svd}{%
-\subsubsection{Performing PCA manually using
+\subsubsection*{Performing PCA manually using
 SVD}\label{performing-pca-manually-using-svd}}
 
 In a first step, we compute the principal components manually using SVD.
@@ -662,16 +668,16 @@ variation clearly occurs along the first axis!
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fb6c2af5d50>
+<matplotlib.lines.Line2D at 0x7f7c1bfea530>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_10_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_11_1.pdf}
     \end{center}
     
     \hypertarget{performing-pca-using-scikit-learn}{%
-\subsubsection{Performing PCA using
+\subsubsection*{Performing PCA using
 scikit-learn}\label{performing-pca-using-scikit-learn}}
 
 Of course, in real applications we don't need to manually compute the
@@ -828,11 +834,11 @@ the second column of \(\mathbf{X}\), which can also be seen from the
 previous graph.
 
     \hypertarget{example-higher-dimensional-data}{%
-\subsection{Example: Higher-dimensional
+\subsubsection{Example: Higher-dimensional
 data}\label{example-higher-dimensional-data}}
 
 \hypertarget{creating-highly-correlated-inputs}{%
-\subsubsection{Creating highly correlated
+\subsubsection*{Creating highly correlated
 inputs}\label{creating-highly-correlated-inputs}}
 
 The previous example was meant as an introduction, but did not really
@@ -910,7 +916,7 @@ Text(0, 0.5, 'Z2')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_26_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_27_1.pdf}
     \end{center}
     
     Next, we create the transformation matrix \(\mathbf{A}\). You can do
@@ -966,7 +972,7 @@ can illustrate this using pairwise scatter plots as follows:
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_32_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_33_0.pdf}
     \end{center}
     
     Moreover, we can compute the pairwise correlation coefficients using
@@ -1004,10 +1010,10 @@ X9 -0.997 -0.955 -0.956 -0.858 -0.689  0.004  0.929 -0.857  0.782  1.000
 \end{tcolorbox}
         
     \hypertarget{running-pca}{%
-\subsubsection{Running PCA}\label{running-pca}}
+\subsubsection*{Running PCA}\label{running-pca}}
 
 \hypertarget{manually-selecting-the-number-of-principle-components}{%
-\paragraph{Manually selecting the number of principle
+\subparagraph{Manually selecting the number of principle
 components}\label{manually-selecting-the-number-of-principle-components}}
 
 We now use \texttt{scikit-learn}'s \texttt{PCA} to perform the principal
@@ -1056,7 +1062,7 @@ principal components).
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_38_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_39_0.pdf}
     \end{center}
     
     To see what's going in, we create a graph that plots the share of total
@@ -1087,11 +1093,11 @@ Text(0, 0.5, 'Share of variance')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_40_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_41_1.pdf}
     \end{center}
     
     \hypertarget{automatically-selecting-the-number-of-principal-components}{%
-\paragraph{Automatically selecting the number of principal
+\subparagraph{Automatically selecting the number of principal
 components}\label{automatically-selecting-the-number-of-principal-components}}
 
 Previously, we manually selected the number of principle components when
@@ -1170,7 +1176,7 @@ Text(0.5, 0.98, 'Loadings for principal components')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_46_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_47_1.pdf}
     \end{center}
     
 

@@ -1,9 +1,8 @@
 \documentclass{scrartcl}
 
-  \input{overrides-pre}
+    \usepackage{jupyterlatex}
 
     \usepackage[breakable]{tcolorbox}
-    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
     
 
     % Basic figure setup, for now with no caption control since it's done
@@ -356,7 +355,7 @@
     \definecolor{incolor}{HTML}{303F9F}
     \definecolor{outcolor}{HTML}{D84315}
     \definecolor{cellborder}{HTML}{CFCFCF}
-    \definecolor{cellbackground}{HTML}{F7F7F7}
+    \definecolor{cellbackground}{HTML}{FCFCFC}
     
     % prompt
     \makeatletter
@@ -457,14 +456,13 @@ points.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fd9d9af3ac0>]
+[<matplotlib.lines.Line2D at 0x7f8d6570ab60>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_3_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     We didn't even have to specify the corresponding \(x\)-values, as MPL
 automatically assumes them to be {[}0, 1, 2, \ldots{}{]}. Usually, we
@@ -482,14 +480,13 @@ want to plot for a given set of \(x\)-values like this:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fd9d8ee5030>]
+[<matplotlib.lines.Line2D at 0x7f8d628ba7d0>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_5_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     Similar to Matlab, we can also specify multiple lines to be plotted in a
 single graph:
@@ -505,15 +502,14 @@ single graph:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fd9d8d7c610>,
- <matplotlib.lines.Line2D at 0x7fd9d8d7d7e0>]
+[<matplotlib.lines.Line2D at 0x7f8d62932e60>,
+ <matplotlib.lines.Line2D at 0x7f8d62932f80>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_7_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     The characters following each set of \(y\)-values are style
 specifications that are very similar to the ones used in Matlab. More
@@ -593,14 +589,13 @@ legends
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fd9d8dfac80>]
+[<matplotlib.lines.Line2D at 0x7f8d627a0250>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_10_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     Individual calls to \texttt{plot()} also allow us to specify styles more
 explicitly using keyword arguments:
@@ -617,18 +612,20 @@ explicitly using keyword arguments:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fd9d8c60250>]
+[<matplotlib.lines.Line2D at 0x7f8d62819a50>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_12_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     Note that in the example above, we use named colours such as
-\texttt{red} or \texttt{blue}. Alternatively, we can use RGB color codes
-of the form \texttt{\#dddddd} where \texttt{d} are hexadecimal digits.
+\texttt{red} or \texttt{blue} (see
+\href{https://matplotlib.org/stable/gallery/color/named_colors.html}{here}
+for the complete list of named colors). Alternatively, we can use RGB
+color codes of the form \texttt{\#dddddd} where \texttt{d} are
+hexadecimal digits.
 
     Matplotlib accepts abbreviations for the most common style definitions
 using the following shortcuts:
@@ -657,14 +654,13 @@ We can write thus rewrite the above code as follows:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fd9d8ce9780>]
+[<matplotlib.lines.Line2D at 0x7f8d626b2f80>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_15_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     There is a third way to plot multiple lines in the same plot by passing
 the \(y\)-values as a 2-dimensional array. We explore this alternative
@@ -694,14 +690,13 @@ similar fashion to line plots:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{8}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.collections.PathCollection at 0x7fd9d8b72b90>
+<matplotlib.collections.PathCollection at 0x7f8d62727340>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_18_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     We could in principle create scatter plots using \texttt{plot()} by
 turning off the connecting lines. However, \texttt{scatter()} allows us
@@ -723,14 +718,13 @@ same style on all points plotted in that particular function call.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{9}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.collections.PathCollection at 0x7fd9d8bc1ff0>
+<matplotlib.collections.PathCollection at 0x7f8d62777670>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_20_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
 
 \hypertarget{plotting-categorical-data}{%
@@ -764,7 +758,6 @@ Text(0.5, 1.0, 'Population')
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_22_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     We use \texttt{barh()} to create \emph{horizontal} bars:
 
@@ -786,7 +779,6 @@ Text(0.5, 0, 'Population')
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_24_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
 
 \hypertarget{adding-labels-and-annotations}{%
@@ -857,7 +849,6 @@ Text(20, -20, 'Point 2')
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_26_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
 
 \hypertarget{plot-limits-ticks-and-tick-labels}{%
@@ -907,7 +898,6 @@ We adjust the plot limits, ticks and tick labels as follows:
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_28_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
 
 \hypertarget{object-oriented-interface}{%
@@ -975,7 +965,6 @@ Text(20, -20, 'Point 2')
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_30_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     The code is quite similar, except that attributes are set using the
 \texttt{set\_xxx()} methods of the \texttt{ax} object. For example,
@@ -1005,7 +994,6 @@ For example, to create a row with two plots, we use:
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_33_0.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     With multiple axes objects in a single figure (as in the above example),
 the \texttt{ax} returned by \texttt{subplots()} is a NumPy array. Its
@@ -1032,7 +1020,6 @@ columns as follows:
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_35_0.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     Don't worry about the details of how this graph is generated, the only
 take-away here is how axes objects are mapped to the panels in the
@@ -1061,7 +1048,6 @@ like this instead:
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_37_0.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     Returning to our initial example, we can use the elements of \texttt{ax}
 to plot into individual panels:
@@ -1086,14 +1072,13 @@ to plot into individual panels:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{18}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7fd9d8624370>]
+[<matplotlib.lines.Line2D at 0x7f8d61fb9a80>]
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_39_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     The next example illustrates how to create a figure with four panels:
 
@@ -1116,7 +1101,6 @@ to plot into individual panels:
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_41_0.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     Note the use of \texttt{sharex=True} and \texttt{sharey=True}. This
 tells matplotlib that all axes share the same plot limits, so the tick
@@ -1157,11 +1141,10 @@ Text(0.5, 1.02, 'Figure title')
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_44_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
 
 \hypertarget{exercises}{%
-\subsection{Exercises}\label{exercises}}
+\subsection{Optional exercises}\label{exercises}}
 
     \hypertarget{exercise-1-trigonometric-functions}{%
 \subsubsection{Exercise 1: Trigonometric
@@ -1298,7 +1281,6 @@ Text(0.5, 0.98, 'Trigonometric functions')
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_50_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \hypertarget{solution-for-exercise-2}{%
 \subsubsection{Solution for exercise 2}\label{solution-for-exercise-2}}
@@ -1331,7 +1313,6 @@ Text(0.5, 1.0, 'Log scale')
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_52_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \hypertarget{solution-for-exercise-3}{%
 \subsubsection{Solution for exercise 3}\label{solution-for-exercise-3}}
@@ -1374,14 +1355,13 @@ column corresponds to a different line.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{23}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fd9d895be80>
+<matplotlib.legend.Legend at 0x7f8d62492980>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_54_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     We now call \texttt{plot()} for each polynomial separately. This allows
 us to specify detailed style settings for each line.
@@ -1421,7 +1401,6 @@ Text(0.5, 1.0, 'Polynomials')
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit04_files/unit04_56_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
 
     % Add a bibliography block to the postdoc

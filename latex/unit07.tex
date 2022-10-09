@@ -1,9 +1,7 @@
 \documentclass{scrartcl}
 
-  \input{overrides-pre}
-
+    \usepackage{jupyterlatex}
     \usepackage[breakable]{tcolorbox}
-    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
     
 
     % Basic figure setup, for now with no caption control since it's done
@@ -356,7 +354,7 @@
     \definecolor{incolor}{HTML}{303F9F}
     \definecolor{outcolor}{HTML}{D84315}
     \definecolor{cellborder}{HTML}{CFCFCF}
-    \definecolor{cellbackground}{HTML}{F7F7F7}
+    \definecolor{cellbackground}{HTML}{FCFCFC}
     
     % prompt
     \makeatletter
@@ -1616,7 +1614,6 @@ pandas:
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_69_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     Alternatively, we can construct the graph using Matplotlib ourselves:
 
@@ -1635,7 +1632,6 @@ pandas:
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_71_0.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     Sometimes Matplotlib's routines directly work with pandas's data
 structures, sometimes they don't. In cases where they don't, we can
@@ -1675,7 +1671,6 @@ used for the \(x\)-axis and which for the \(y\)-axis:
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_73_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     To quickly generate some descriptive statistics, we can use the built-in
 box plot:
@@ -1707,7 +1702,6 @@ box plot:
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_75_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     Similarly, we can generate scatter plots, plotting one column against
 another:
@@ -1733,7 +1727,6 @@ another:
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_77_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{38}{\boxspacing}
@@ -1753,7 +1746,6 @@ another:
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_78_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     In general, the wrappers implemented in pandas are useful to get an idea
 how the data looks like. For reusable code or more complex graphs, we'll
@@ -1762,7 +1754,7 @@ NumPy arrays.
 
 
 \hypertarget{exercises}{%
-\subsection{Exercises}\label{exercises}}
+\subsection{Optional exercises}\label{exercises}}
 
 The following exercises use data files from the \texttt{data/} folder.
 
@@ -2079,7 +2071,6 @@ array([[<AxesSubplot:xlabel='Year'>, <AxesSubplot:xlabel='Year'>],
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_88_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     A few comments:
 
@@ -2274,7 +2265,6 @@ as follows:
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_93_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \hypertarget{solution-for-exercise-3}{%
 \subsubsection{Solution for exercise 3}\label{solution-for-exercise-3}}
@@ -2428,7 +2418,6 @@ array([[<AxesSubplot:title=\{'center':'Staff/Student'\}, xlabel='Russell'>,
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_101_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \hypertarget{solution-for-exercise-4}{%
 \subsubsection{Solution for exercise 4}\label{solution-for-exercise-4}}
@@ -2557,7 +2546,6 @@ xlabel='Country'>
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_108_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     Note how the legend title is automatically set to the column index name
 and the legend labels use the column index labels.
@@ -2613,7 +2601,6 @@ xlabel='Founding year'>
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_111_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \hypertarget{solution-for-exercise-5}{%
 \subsubsection{Solution for exercise 5}\label{solution-for-exercise-5}}
@@ -2822,7 +2809,6 @@ Text(0.5, 0.98, "Okun's law")
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_117_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
 
     % Add a bibliography block to the postdoc

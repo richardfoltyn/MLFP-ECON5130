@@ -1,10 +1,7 @@
 \documentclass{scrartcl}
 
-    \input{overrides-pre}
-
-
+    \usepackage{jupyterlatex}
     \usepackage[breakable]{tcolorbox}
-    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
     
 
     % Basic figure setup, for now with no caption control since it's done
@@ -1167,7 +1164,7 @@ func2 called with argument foo
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-func1 called with argument <function func2 at 0x7f6f0cd15d80>
+func1 called with argument <function func2 at 0x7fc342370c10>
     \end{Verbatim}
 
     \hypertarget{lambda-expressions}{%
@@ -1498,7 +1495,7 @@ packages.
 
 
 \hypertarget{exercises}{%
-\subsection{Exercises}\label{exercises}}
+\subsection{Optional exercises}\label{exercises}}
 
     \hypertarget{exercise-1-sign-function}{%
 \subsubsection{Exercise 1: Sign

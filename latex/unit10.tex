@@ -390,8 +390,9 @@
     
 
     
-    \hypertarget{linear-regression-models}{%
-\section{Linear regression models}\label{linear-regression-models}}
+    \hypertarget{introduction-to-unsupervised-learning}{%
+\section{Introduction to unsupervised
+learning}\label{introduction-to-unsupervised-learning}}
 
     \hypertarget{simple-univariate-linear-regression}{%
 \subsection{Simple (univariate) linear
@@ -399,11 +400,12 @@ regression}\label{simple-univariate-linear-regression}}
 
 Imagine the simplest linear model where the dependent variable \(y\) is
 assumed to be an affine function of the explanatory variable \(x\) and
-an error term \(\epsilon\), \[
+an error term \(\epsilon\), given by \[
 y_i = \alpha + \beta x_i + \epsilon_i
-\] The parameter \(\alpha\) and \(\beta\) are called the intercept and
-slope parameters in econometrics. In machine learning, the terminology
-often differs and you might see a simple linear model written like \[
+\] for each observation \(i\). In econometrics, the parameters
+\(\alpha\) and \(\beta\) are called the intercept and slope parameters,
+respectively. In machine learning, the terminology often differs and you
+might see a simple linear model written like \[
 y_i = b + w x_i + \epsilon_i
 \] where \(b\) is called the \emph{bias} and \(w\) is called a
 \emph{weight}.
@@ -415,13 +417,14 @@ the estimator that finds the estimates
 errors is minimized, \[
 L(\alpha, \beta) = \frac{1}{N}
     \sum_i^N \Bigl(y_i - \alpha - \beta x_i \Bigr)^2
-\] where \(L\) is the loss function that depends on the choice
+\] where \(L\) is the loss function that depends on the choice of
 parameters. Note that we use the ``hat'' notation \(\widehat{\alpha}\)
 to distinguish the OLS estimate from the (usually unknown) true
-parameter \(\alpha\). The exact value of \(\widehat{\alpha}\) will vary
-based on the estimator used as we will see later in this unit.
+parameter \(\alpha\). The exact values of \(\widehat{\alpha}\) and
+\(\widehat{\beta}\) will vary depending the sample size and estimator
+used as we will see later in this unit.
 
-For this simple model, the estimates are given by \[
+For this simple model, the estimates are given by the expressions \[
 \begin{aligned}
 \widehat{\beta} &= \frac{\widehat{Cov}(y,x)}{\widehat{Var}(x)} \\
 \widehat{\alpha} &= \overline{y} - \widehat{\beta} \overline{x}
@@ -432,7 +435,7 @@ variance, respectively, and \(\overline{y}\) and \(\overline{x}\) are
 the sample means of \(y\) and \(x\).
 
 There is a straightforward generalization to the multivariate setting
-where we have a vector of explanatory variables \(\mathbf{x}_i\) (which
+where we have a vector \(\mathbf{x}_i\) of explanatory variables (which
 usually include the intercept) and a parameter vector \(\bm\beta\) so
 that the model is given by \[
 y_i = \mathbf{x}_i'\bm\beta + \epsilon_i
@@ -448,9 +451,9 @@ matrix operations can lead to numerical problems. Instead, always use
 pre-packaged least-squares solvers such as those implemented in NumPy's
 \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html}{\texttt{lstsq()}}
 or SciPy's
-\href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html}{\texttt{lstsq()}}.
-For econometrics and machine learning, it usually makes sense to use
-linear regression models such as those implemented in
+\href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html}{\texttt{lstsq()}}
+functions. For econometrics and machine learning, it usually makes sense
+to use linear regression models such as those implemented in
 \href{https://www.statsmodels.org/stable/regression.html}{\texttt{statsmodels}}
 or
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html}{\texttt{scikit-learn}},
@@ -484,17 +487,18 @@ We generate a sample of \(N=30\) observations as follows:
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k+kn}{import} \PY{n}{default\PYZus{}rng}
 
-
 \PY{n}{rng} \PY{o}{=} \PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{l+m+mi}{123}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Number of observations}
 \PY{n}{N} \PY{o}{=} \PY{l+m+mi}{30}
 
+\PY{c+c1}{\PYZsh{} True parameters}
 \PY{n}{alpha} \PY{o}{=} \PY{l+m+mf}{1.0}
 \PY{n}{beta} \PY{o}{=} \PY{l+m+mf}{0.5}
 
 \PY{c+c1}{\PYZsh{} Use x that are uniformly spaced on [0, 10]}
 \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{n}{N}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Normally distributed errors}
 \PY{n}{epsilon} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{scale}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{n}{N}\PY{p}{)}
 \PY{n}{y} \PY{o}{=} \PY{n}{alpha} \PY{o}{+} \PY{n}{beta} \PY{o}{*} \PY{n}{x} \PY{o}{+} \PY{n}{epsilon}
 \end{Verbatim}
@@ -528,14 +532,14 @@ to insert an artificial axis to create the matrix
 \end{Verbatim}
 \end{tcolorbox}
 
-    The following code visualised the sample as a scatter plot of
+    The following code visualises the sample as a scatter plot of
 \((x_i, y_i)\) and adds the fitted line (in solid orange). Intuitively,
 for \(x=0\) the fitted line has the value \(\widehat{\alpha}\) (the
 intercept) and its slope is equal to \(\widehat{\beta}\). Note that
 \texttt{scikit-learn} models usually store the fitted model parameters
-in the \texttt{coef\_} attribute (which is an array even if there is a
-single explanatory variable). If the model includes an intercept, its
-fitted value is stored in the attribute \texttt{intercept\_}.
+in the \texttt{coef\_} attribute (which is an array even if there is
+only a single explanatory variable). If the model includes an intercept,
+its fitted value is stored in the attribute \texttt{intercept\_}.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{3}{\boxspacing}
@@ -548,7 +552,7 @@ fitted value is stored in the attribute \texttt{intercept\_}.
 
 \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mf}{3.5}\PY{p}{)}\PY{p}{)}
 
-\PY{c+c1}{\PYZsh{} Plot true model}
+\PY{c+c1}{\PYZsh{} Plot true relationship}
 \PY{n}{ax}\PY{o}{.}\PY{n}{axline}\PY{p}{(}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{alpha}\PY{p}{)}\PY{p}{,} \PY{n}{slope}\PY{o}{=}\PY{n}{beta}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{ls}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
     \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}y = }\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{alpha + }\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{beta x\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 
@@ -591,11 +595,11 @@ Text(0.5, 0.98, 'Univariate linear regression')
     \end{center}
     
     The dashed black line shows the true relationship which is known in this
-synthetic sample, but in general unknown for real data. For small sample
-sizes, the true and estimated parameters need not be close, as the graph
-illustrates. The graph also shows the prediction errors as the dotted
-lines between the sample points \(y_i\) and the black fitted model. OLS
-minimizes the sum of the squares of these distances.
+synthetic sample, but in general is unknown for real data. For small
+sample sizes, the true and estimated parameters need not be close as the
+graph illustrates. The graph also shows the prediction errors as the
+dotted lines between the sample points \(y_i\) and the black fitted
+model. OLS minimizes the sum of the squares of these distances.
 
     \hypertarget{training-and-test-samples}{%
 \subsubsection{Training and test
@@ -610,18 +614,18 @@ predictions for new data. Usually, we use a \emph{test} sample that is
 different from the training data to assess how well our model is able to
 predict outcomes for new data which has not been used for estimation.
 
-    To demonstrate the use of training and test data sets, we will use as
+    To demonstrate the use of training and test data sets, we use as
 simplified variant of the \href{https://www.openml.org/d/42165}{Ames
 house price data set} which can be obtained from
 \href{https://www.openml.org}{openml.org}, a repository for free-to-use
-data sets suitable for machine learning tasks.
+data suitable for machine learning tasks.
 
 The original data set has 80 features (explanatory variables) which are
-house characteristics of houses in Ames, a city of about 60 thousand
+characteristics of houses in Ames, a city of about 60 thousand
 inhabitants in the middle of Iowa, USA. The goal is to use these
-features to predict the house prices (or ``target'' in ML terminology).
-The above website provides details on all 80 features, but we will
-restrict ourselves to a small subset.
+features to predict the house price (or ``target'' in ML terminology).
+The above website provides details on all 80 features, but we restrict
+ourselves to a small subset.
 
 We could download the data set directly from
 \href{https://www.openml.org}{openml.org} using \texttt{scikit-learn} as
@@ -740,7 +744,7 @@ We next want to split the data set intro training and test sub-samples.
 We do this by randomly selecting a desired fraction of the data to be
 part of the training sample and assign the rest to the test sample. For
 this example, we assign 10\% of observations to the test sample and the
-remaining to the training data set. Once we have randomly allocated 90\%
+remainder to the training data set. Once we have randomly allocated 90\%
 of observations to the training data set, we use the function
 \href{https://numpy.org/doc/stable/reference/generated/numpy.setdiff1d.html}{\texttt{setdiff1()}}
 to find the complementary test sample. This function returns the set
@@ -765,9 +769,9 @@ the first argument that are \emph{not} present in the second array.
 \PY{n}{N\PYZus{}test} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{N} \PY{o}{*} \PY{n}{test\PYZus{}size}\PY{p}{)}
 \PY{n}{N\PYZus{}train} \PY{o}{=} \PY{n}{N} \PY{o}{\PYZhy{}} \PY{n}{N\PYZus{}test}
 
-\PY{c+c1}{\PYZsh{} Randomly assign observations to training or test samples}
+\PY{c+c1}{\PYZsh{} Randomly assign observations to training samples}
 \PY{n}{itrain} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{N}\PY{p}{)}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{n}{N\PYZus{}train}\PY{p}{,} \PY{n}{replace}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
-\PY{c+c1}{\PYZsh{} Test sample is complement to training sample}
+\PY{c+c1}{\PYZsh{} Test sample is complement of training sample}
 \PY{n}{itest} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{setdiff1d}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{N}\PY{p}{)}\PY{p}{,} \PY{n}{itrain}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Select training sample}
@@ -824,7 +828,7 @@ samples and adds the fitted line.
 
 \PY{c+c1}{\PYZsh{} Plot training data}
 \PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
-    \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}y\PYZus{}}\PY{l+s+si}{\PYZob{}train\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.8}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}y\PYZus{}}\PY{l+s+si}{\PYZob{}train\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Plot test data}
 \PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
@@ -840,7 +844,7 @@ samples and adds the fitted line.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{10}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fa67c3369b0>
+<matplotlib.legend.Legend at 0x7fd0e2796950>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -881,7 +885,7 @@ error for each observations, \[
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{11}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fa67c208a00>
+<matplotlib.lines.Line2D at 0x7fd0e261c310>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -892,7 +896,7 @@ error for each observations, \[
     As the graph shows, the errors are reasonably centred around \(0\) as we
 would expect from a model that contains an intercept. However, the error
 variance seems to be increasing in \(x\) which indicates that our model
-is missing some explanatory variables.
+might be missing some explanatory variables.
 
     \hypertarget{automatically-creating-training-and-test-samples}{%
 \subsubsection*{Automatically creating training and test
@@ -969,7 +973,7 @@ response for each observation perfectly (which is unlikely), whereas an
 relative to a model that includes only the sample mean. Note that in a
 test sample, the \(R^2\) could even be negative.
 
-    While these measures are easily to implement ourselves, we can just as
+    While these measures are easy to implement ourselves, we can just as
 well use the functions provided in \texttt{scikit-learn.metrics} to do
 the work for us:
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_squared_error.html\#sklearn.metrics.mean_squared_error}{\texttt{mean\_squared\_error()}}
@@ -1003,10 +1007,11 @@ Root mean squared error 53113.6
 Coefficient of determination (R\^{}2): 0.58
     \end{Verbatim}
 
-    Since we estimated a model with intercept, the \(R^2 = 0.47\) implies
-that the model explains 47\% of the variance in the test sample.
+    Since we estimated a model with intercept, the \(R^2 = 0.58\) implies
+that the model explains 58\% of the variance in the test sample.
 
-    \hypertarget{multivariate-linear-regression}{%
+
+\hypertarget{multivariate-linear-regression}{%
 \subsection{Multivariate linear
 regression}\label{multivariate-linear-regression}}
 
@@ -1016,7 +1021,7 @@ variables}\label{data-with-several-explanatory-variables}}
 
 Multivariate (or multiple) linear regression extends the simple model to
 multiple explanatory variables or regressors. To illustrate, we'll load
-the Ames housing data set again but use several (continuous) explanatory
+the Ames housing data again but use several (continuous) explanatory
 variables.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -1060,11 +1065,11 @@ memory usage: 148.4+ KB
     \end{Verbatim}
 
     Compared to our earlier analysis, we'll now add the lot area (in
-\(m^2\)) as a feature to the model, which is therefore given by \[
+\(m^2\)) as a feature to the model, which is thus given by \[
 SalePrice_i = \alpha + \beta_0 LivingArea_i + \beta_1 LotArea_i + \epsilon_i
 \]
 
-As usually, we inspect the descriptive statistics of the newly added
+We first inspect the descriptive statistics of the newly added
 explanatory variable to get some idea about its distribution.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -1132,11 +1137,11 @@ These coefficients are in the same order as the features in the feature
 matrix \(X\) passed when fitting the model.
 
 Since we now have multiple explanatory variables, we can no longer
-easily plot prediction errors against one feature, unless we fix the
-values of the remaining features at some value or use 3D scatter plots.
-The latter of course does not help if we have more than two explanatory
-variables. Instead, we can plot the prediction errors against \(y\)
-which we do below.
+easily plot prediction errors against one feature unless we fix the
+remaining features at some value or use 3D scatter plots. The latter of
+course does not help if we have more than two explanatory variables.
+Instead, we can plot the prediction errors against \(y\) which we do
+below.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{18}{\boxspacing}
@@ -1182,7 +1187,7 @@ Instead of including additional explanatory variables, we can also
 create additional terms that are functions of variables. The most common
 way to do this is to include a polynomial in \(x\) (or polynomials in
 multiple explanatory variables). Thus a simple model could be turned
-into a model with several terms such as, \[
+into a model with several terms such as \[
 y_i = \alpha + \beta_0 x_i + \beta_1 x_i^2 + \beta_2 x_i^3 + \epsilon_i
 \] where \(y\) is modelled as a cubic polynomial in \(x\). Note that
 this model is still called \emph{linear} despite the fact that the
@@ -1192,7 +1197,7 @@ parameters \((\alpha, \beta_0, \beta_1, \beta_2)\). Linear models are
 thus quite flexible since they can include almost arbitrary non-linear
 transformations of explanatory and response variables.
 
-    To illustrate, we now extend the previous model which included
+    To illustrate, we extend the previous model which included
 \texttt{LivingArea} and \texttt{LotArea} to now include a polynomial of
 degree 2 in both variables (often the terms ``degree'' and ``order'' are
 used interchangeably, so this might be called a 2nd-order polynomial).
@@ -1270,12 +1275,12 @@ Coefficients [-2.19724359e+04  1.24027918e+03  5.75108671e+01  3.95841742e-01
  -2.46346339e-01 -3.77428502e-04]
     \end{Verbatim}
 
-    The fitted model now has 6 coefficients and the intercept is 0 as the
+    The fitted model has 6 coefficients and the intercept is 0 as the
 \texttt{LinearRegression} model did not explicitly included one.
 
 As earlier, we can plot the prediction errors as a function of the
-response variable. However, it is not important to also transform the
-original explanatory variables in the test data set using the same
+response variable. Before doing this, it is crucial to also transform
+the original explanatory variables in the test data set using the same
 polynomial transformation. We can achieve this by using the
 \texttt{transform()} method of the \texttt{poly} object we stored from
 earlier.
@@ -1287,7 +1292,8 @@ earlier.
 
 \PY{c+c1}{\PYZsh{} Predict values in test sample, applying the same polynomial to }
 \PY{c+c1}{\PYZsh{} explanatory variables in test sample.}
-\PY{n}{y\PYZus{}test\PYZus{}hat} \PY{o}{=} \PY{n}{lr}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{poly}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}\PY{p}{)}
+\PY{n}{Xpoly\PYZus{}test} \PY{o}{=} \PY{n}{poly}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+\PY{n}{y\PYZus{}test\PYZus{}hat} \PY{o}{=} \PY{n}{lr}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{Xpoly\PYZus{}test}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Compute prediction errors}
 \PY{n}{errors} \PY{o}{=} \PY{n}{y\PYZus{}test} \PY{o}{\PYZhy{}} \PY{n}{y\PYZus{}test\PYZus{}hat}
@@ -1342,9 +1348,9 @@ There are two ways to construct a pipeline:
 \end{enumerate}
 
 The first approach requires a list of tuples, where each tuple contains
-an (arbitrary) name and the class that will be created for that step. To
-create a pipeline that creates polynomial features and fits a linear
-model to them, we would therefore proceed as follows:
+an (arbitrary) name and an object that implements the actions taken at
+this step. To compose a pipeline that creates polynomial features and
+fits a linear model to them, we would therefore proceed as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{22}{\boxspacing}
@@ -1373,7 +1379,7 @@ Pipeline(steps=[('poly', PolynomialFeatures()),
 generate a nice unfoldable visualisation which contains details for each
 step. To transform and fit the model in a single call, we simply need to
 invoke the \texttt{fit()} method. For example, using the training data
-from above, we have
+from above, we run
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{23}{\boxspacing}
@@ -1403,7 +1409,7 @@ individual steps of a pipeline as follows:
 \PY{n}{pipe} \PY{o}{=} \PY{n}{make\PYZus{}pipeline}\PY{p}{(}
     \PY{n}{PolynomialFeatures}\PY{p}{(}\PY{n}{degree}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} 
     \PY{n}{LinearRegression}\PY{p}{(}\PY{n}{fit\PYZus{}intercept}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
-    \PY{p}{)}
+\PY{p}{)}
     
 \PY{c+c1}{\PYZsh{} transform and fit model in single step}
 \PY{n}{pipe}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
@@ -1423,10 +1429,10 @@ individual steps of a pipeline as follows:
         
     The function assigns default names to each step which are printed above
 (basically, these are just lowercase versions of the class defining a
-step). These names are occasionally required to retrieve information
-from a specific step. To demonstrate that the pipeline generates results
-that are equivalent to our manual implementation, we conclude this
-section by recreating the error plot from above.
+step). These names are occasionally required to retrieve information for
+a specific step. To demonstrate that the pipeline generates results that
+are equivalent to our manual implementation, we conclude this section by
+recreating the error plot from above.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{25}{\boxspacing}
@@ -1457,12 +1463,13 @@ Text(0, 0.5, '\$y\_\{test\} - \textbackslash{}\textbackslash{}widehat\{y\}\_\{te
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_57_1.pdf}
     \end{center}
     
-    \hypertarget{optimising-hyperparameters-with-cross-validation}{%
-\section{Optimising hyperparameters with
+
+\hypertarget{optimising-hyperparameters-with-cross-validation}{%
+\subsection{Optimising hyperparameters with
 cross-validation}\label{optimising-hyperparameters-with-cross-validation}}
 
 \hypertarget{outline-of-hyperparameter-tuning}{%
-\subsection{Outline of hyperparameter
+\subsubsection{Outline of hyperparameter
 tuning}\label{outline-of-hyperparameter-tuning}}
 
 Previously, we discussed some ways to evaluate the model fit (MSE and
@@ -1525,10 +1532,10 @@ illustrated in the figure below:
 \caption{CV split}
 \end{figure}
 
-    Note that in this unit we will skip the final step of assessing
-generalisability on the test data set. Consequently, when running
-cross-validation, we will only use training/validation data sets and we
-will use the terms ``validation'' and ``test'' interchangeably.
+    In this unit we will skip the final step of assessing generalisability
+on the test data set. Consequently, when running cross-validation, we
+will only use training/validation data sets and we will use the terms
+``validation'' and ``test'' interchangeably.
 
 The \texttt{scikit-learn}
 \href{https://scikit-learn.org/stable/modules/cross_validation.html}{documentation}
@@ -1538,12 +1545,12 @@ method to perform hyperparameter tuning is
 search} which we won't cover in this unit.
 
     \hypertarget{examle-tuning-of-the-polynomial-degree}{%
-\subsection{Examle: Tuning of the polynomial
+\subsubsection{Examle: Tuning of the polynomial
 degree}\label{examle-tuning-of-the-polynomial-degree}}
 
-To illustrate the concept, we will demonstrate the procedure outlined
-above by tuning the polynomial degree for the example covered in the
-previous section.
+To illustrate the concept, we demonstrate the procedure outlined above
+by tuning the polynomial degree for the example covered in the previous
+section by minimising the root mean squared error (RMSE).
 
 We recreate the data set in the same way as before, using
 \texttt{LivingArea} and \texttt{LotArea} as explanatory variables.
@@ -1564,7 +1571,7 @@ We recreate the data set in the same way as before, using
 \end{tcolorbox}
 
     We now iterate over the candidate polynomial degrees \(d = 0,\dots,4\)
-and apply k-fold cross-validation with 10 folds. There is no need to
+and apply \(k\)-fold cross-validation with 10 folds. There is no need to
 manually split the sample into training and validation/test sub-sets.
 Instead, we use the
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html\#sklearn.model_selection.KFold}{\texttt{KFold}}
@@ -1585,7 +1592,7 @@ data sets and returns the array indices for each.
 
 \PY{n}{degrees} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
 
-\PY{n}{mse\PYZus{}mean} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{rmse\PYZus{}mean} \PY{o}{=} \PY{p}{[}\PY{p}{]}
 
 \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{degrees}\PY{p}{:}
 
@@ -1596,7 +1603,7 @@ data sets and returns the array indices for each.
         \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{LinearRegression}\PY{p}{(}\PY{n}{fit\PYZus{}intercept}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{)}
     \PY{p}{]}\PY{p}{)}
 
-    \PY{n}{mse\PYZus{}fold} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{n}{rmse\PYZus{}fold} \PY{o}{=} \PY{p}{[}\PY{p}{]}
 
     \PY{c+c1}{\PYZsh{} Create 10 folds}
     \PY{n}{folds} \PY{o}{=} \PY{n}{KFold}\PY{p}{(}\PY{n}{n\PYZus{}splits}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
@@ -1618,20 +1625,21 @@ data sets and returns the array indices for each.
         \PY{c+c1}{\PYZsh{} Predict response on test data}
         \PY{n}{y\PYZus{}test\PYZus{}hat} \PY{o}{=} \PY{n}{pipe}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
 
-        \PY{c+c1}{\PYZsh{} Compute MSE as model fit measure}
-        \PY{n}{mse} \PY{o}{=} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test\PYZus{}hat}\PY{p}{,} \PY{n}{squared}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Compute RMSE as model fit measure: function returns RMSE }
+        \PY{c+c1}{\PYZsh{} if squared=False is passed!}
+        \PY{n}{rmse} \PY{o}{=} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test\PYZus{}hat}\PY{p}{,} \PY{n}{squared}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
 
-        \PY{c+c1}{\PYZsh{} Store MSE for current split}
-        \PY{n}{mse\PYZus{}fold}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{mse}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Store RMSE for current split}
+        \PY{n}{rmse\PYZus{}fold}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{rmse}\PY{p}{)}
 
     \PY{c+c1}{\PYZsh{} Store average MSE for current degree}
-    \PY{n}{mse\PYZus{}mean}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{mse\PYZus{}fold}\PY{p}{)}\PY{p}{)}
+    \PY{n}{rmse\PYZus{}mean}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{rmse\PYZus{}fold}\PY{p}{)}\PY{p}{)}
     
 \PY{c+c1}{\PYZsh{} Convert to NumPy array}
-\PY{n}{mse\PYZus{}mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{mse\PYZus{}mean}\PY{p}{)}
+\PY{n}{rmse\PYZus{}mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{rmse\PYZus{}mean}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Print average RMSE for all polynomial degrees}
-\PY{n}{mse\PYZus{}mean}
+\PY{n}{rmse\PYZus{}mean}
 \end{Verbatim}
 \end{tcolorbox}
 
@@ -1643,7 +1651,7 @@ array([ 79020.25214052,  55268.49840787,  55228.58262443,  55885.05012115,
 \end{Verbatim}
 \end{tcolorbox}
         
-    This code returns an array of 5 averaged MSEs, one for each
+    This code returns an array of 5 averaged RMSEs, one for each
 \(d = 0, \dots, 4\). We can now find the optimal \(d\) by picking the
 one which has the lowest mean squared error in the test samples using
 the
@@ -1653,7 +1661,7 @@ function which returns the \emph{index} of the smallest array element.
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{28}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{imin} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmin}\PY{p}{(}\PY{n}{mse\PYZus{}mean}\PY{p}{)}
+\PY{n}{imin} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmin}\PY{p}{(}\PY{n}{rmse\PYZus{}mean}\PY{p}{)}
 \PY{n}{dmin} \PY{o}{=} \PY{n}{degrees}\PY{p}{[}\PY{n}{imin}\PY{p}{]}
 
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Polynomial degree with min. RMSE: }\PY{l+s+si}{\PYZob{}}\PY{n}{dmin}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -1664,16 +1672,16 @@ function which returns the \emph{index} of the smallest array element.
 Polynomial degree with min. RMSE: 2
     \end{Verbatim}
 
-    Finally, it is often instructive how the MSE evolves as a function of
+    Finally, it is often instructive how the RMSE evolves as a function of
 the hyperparameter we want to tune.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{29}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{degrees}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{degrees}\PY{p}{,} \PY{n}{rmse\PYZus{}mean}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Polynomial degree}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cross\PYZhy{}validated RMSE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{degrees}\PY{p}{[}\PY{n}{imin}\PY{p}{]}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{p}{[}\PY{n}{imin}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{degrees}\PY{p}{[}\PY{n}{imin}\PY{p}{]}\PY{p}{,} \PY{n}{rmse\PYZus{}mean}\PY{p}{[}\PY{n}{imin}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{degrees}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{n}{imin}\PY{p}{,} \PY{n}{ls}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
@@ -1682,7 +1690,7 @@ the hyperparameter we want to tune.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{29}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fa6503307c0>
+<matplotlib.lines.Line2D at 0x7fd0cc1d8130>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -1694,31 +1702,31 @@ the hyperparameter we want to tune.
 underfits the data leading to a high prediction error. However, higher
 \(d\)'s do not always translate into a better fit. For \(d = 4\), the
 model vastly overfits the data, resulting in poor performance in the
-test sample and a very large MSE.
+test sample and a very large RMSE.
 
     \hypertarget{automating-cross-validation}{%
-\subsubsection{Automating
+\subsubsection*{Automating
 cross-validation}\label{automating-cross-validation}}
 
 The code implemented above to run cross-validation was needlessly
 complex even though we leveraged the \texttt{KFold} class to do the
-sample splitting for us. However, \texttt{scikit-learn} provides us with
-even more convenience functions that further simplify this process. For
-example, if we want to perform tuning based on a single score (such as
-the mean squared error), we can instead use
+sample splitting for us. Fortunately, \texttt{scikit-learn} provides us
+with even more convenience functions that further simplify this process.
+For example, if we want to perform tuning based on a single score (such
+as the root mean squared error), we can instead use
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html}{\texttt{cross\_val\_score()}}.
 This function requires us to specify an estimator (or a pipeline), the
 number of folds to use for cross-validation (\texttt{cv=10}) and the
-metric to evaluate. For example, if we want to compute root mean squared
-error (RMSE), we would pass the argument
+metric to evaluate. For example, if we want to compute the RMSE, we
+would pass the argument
 \texttt{scoring=\textquotesingle{}neg\_root\_mean\_squared\_error\textquotesingle{}}.
 Note that the function returns the \emph{negative} RMSE which we need to
 correct manually.
 
 See the
 \href{https://scikit-learn.org/stable/modules/model_evaluation.html\#scoring-parameter}{documentation}
-for a completely list of valid metrics that can be passed to
-\texttt{scoring=...}. Alternatively, \texttt{scikit-learn} lists
+for a complete list of valid metrics that can be passed as
+\texttt{scoring} arguments. Alternatively, \texttt{scikit-learn} lists
 available metrics by running
 
 \begin{Shaded}
@@ -1729,7 +1737,7 @@ available metrics by running
 \end{Shaded}
 
 The following code re-implements the k-fold cross-validation from
-earlier:
+earlier using \texttt{cross\_val\_score()}:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{30}{\boxspacing}
@@ -1738,8 +1746,8 @@ earlier:
 
 \PY{n}{degrees} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
 
-\PY{n}{mse\PYZus{}mean} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-\PY{n}{mse\PYZus{}std} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{rmse\PYZus{}mean} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{rmse\PYZus{}std} \PY{o}{=} \PY{p}{[}\PY{p}{]}
 
 \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{degrees}\PY{p}{:}
 
@@ -1756,16 +1764,16 @@ earlier:
     \PY{p}{)}
 
     \PY{c+c1}{\PYZsh{} Function returns NEGATIVE RMSE, correct this here!}
-    \PY{n}{mse\PYZus{}mean}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{score}\PY{p}{)}\PY{p}{)}
+    \PY{n}{rmse\PYZus{}mean}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{score}\PY{p}{)}\PY{p}{)}
     \PY{c+c1}{\PYZsh{} Compute std. dev. of RMSE across splits}
-    \PY{n}{mse\PYZus{}std}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{score}\PY{p}{)}\PY{p}{)}
+    \PY{n}{rmse\PYZus{}std}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{score}\PY{p}{)}\PY{p}{)}
     
 \PY{c+c1}{\PYZsh{} Convert to NumPy array}
-\PY{n}{mse\PYZus{}mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{mse\PYZus{}mean}\PY{p}{)}
-\PY{n}{mse\PYZus{}std} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{mse\PYZus{}std}\PY{p}{)}
+\PY{n}{rmse\PYZus{}mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{rmse\PYZus{}mean}\PY{p}{)}
+\PY{n}{rmse\PYZus{}std} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{rmse\PYZus{}std}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Print average RMSE for all polynomial degrees}
-\PY{n}{mse\PYZus{}mean}
+\PY{n}{rmse\PYZus{}mean}
 \end{Verbatim}
 \end{tcolorbox}
 
@@ -1782,7 +1790,7 @@ array([ 79020.25214052,  55268.49840787,  55228.58262443,  55885.05012115,
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{31}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{imin} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmin}\PY{p}{(}\PY{n}{mse\PYZus{}mean}\PY{p}{)}
+\PY{n}{imin} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmin}\PY{p}{(}\PY{n}{rmse\PYZus{}mean}\PY{p}{)}
 \PY{n}{dmin} \PY{o}{=} \PY{n}{degrees}\PY{p}{[}\PY{n}{imin}\PY{p}{]}
 
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Polynomial degree with min. RMSE: }\PY{l+s+si}{\PYZob{}}\PY{n}{dmin}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -1793,8 +1801,9 @@ array([ 79020.25214052,  55268.49840787,  55228.58262443,  55885.05012115,
 Polynomial degree with min. RMSE: 2
     \end{Verbatim}
 
-    \hypertarget{dealing-with-categorical-data}{%
-\section{Dealing with categorical
+
+\hypertarget{dealing-with-categorical-data}{%
+\subsection{Dealing with categorical
 data}\label{dealing-with-categorical-data}}
 
 So far in this unit, we only dealt with continuous data, \ie data that
@@ -1804,7 +1813,7 @@ or even binary variables (often called dummy or indicator variables)
 which can be either 0 or 1. Dealing with such data in
 \texttt{scikit-learn} is less straightforward than in most other
 software packages, so in this section we illustrate how to work with
-such data.
+categorical variables.
 
 To do this, we again load the Ames house data which contains several
 categorical and binary variables.
@@ -1845,8 +1854,9 @@ Name: BuildingType, dtype: int64
 \end{Verbatim}
 \end{tcolorbox}
         
-    There are several ways to deal with such data. First, since the data is
-stored as strings, we could use
+    There are several ways to deal with such data (see the official
+\href{https://scikit-learn.org/stable/modules/preprocessing.html\#encoding-categorical-features}{documentation}
+for details). First, since the data are stored as strings, we could use
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html}{\texttt{OrdinalEncoder}}
 to map these strings to integers.
 
@@ -1906,9 +1916,9 @@ transformation as illustrated by the following code:
 of possible values using the \texttt{categories=...} argument. By
 default, this transformation returns a sparse matrix since each row will
 have exactly one element that is 1 while the remaining elements are 0.
-Using a sparse matrix consequently saves memory, but makes interacting
-with the resulting array more cumbersome. For small data sets, there is
-no need to use sparse matrices.
+Using a sparse matrix saves memory but makes interacting with the
+resulting array more cumbersome. For small data sets, there is no need
+to use sparse matrices.
 
 The transformed data now looks as follows:
 
@@ -1933,7 +1943,7 @@ array([[1., 0., 0.],
         
     In this particular example, the first five observations fall into the
 first category, hence the first column contains ones while the remaining
-elements are 0.
+elements are zero.
 
 We can sum the number of ones in each column to verify that the
 frequency of each category remains the same:
@@ -1971,7 +1981,7 @@ array(['Single-family', 'Townhouse', 'Two-family'], dtype=object)
         
     Now that we have converted the categories into a dummy matrix, we can
 append it to the continuous explanatory variables and fit the linear
-model as normal:
+model as usual:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{39}{\boxspacing}
@@ -2014,8 +2024,8 @@ BuildingType: Two-family    -41842.492374
         
     Finally, you should be aware that \texttt{pandas} provides the function
 \href{https://pandas.pydata.org/docs/reference/api/pandas.get_dummies.html}{\texttt{get\_dummies()}}
-which accomplishes something very similar to \texttt{OneHotEnconder},
-but may not work as well with the \texttt{scikit-learn} API.
+which accomplishes something very similar to \texttt{OneHotEnconder} but
+may not work as well with the \texttt{scikit-learn} API.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{40}{\boxspacing}
@@ -2036,17 +2046,18 @@ but may not work as well with the \texttt{scikit-learn} API.
 \end{Verbatim}
 \end{tcolorbox}
         
-    \hypertarget{optional-exercises}{%
-\section{Optional exercises}\label{optional-exercises}}
+
+\hypertarget{optional-exercises}{%
+\subsection{Optional exercises}\label{optional-exercises}}
 
     \hypertarget{exercise-1-interactions-of-explanatory-variables}{%
-\subsection{Exercise 1: Interactions of explanatory
+\subsubsection{Exercise 1: Interactions of explanatory
 variables}\label{exercise-1-interactions-of-explanatory-variables}}
 
-In applied work, we frequently encounter interactions of explanatory
-variables, \ie an explanatory variable is formed as the product of two
-other variable. For example, if our data contains the variables \(x\)
-and \(z\), we might add \(x \cdot z\) as an independent variable to the
+In applied work, we frequently encounter interactions of variables,
+\ie an explanatory variable is formed as the product of two other
+variables. For example, if our data contains the variables \(x\) and
+\(z\), we might add \(x \cdot z\) as an independent variable to the
 model.
 
 To illustrate, consider the following linear model which contains the
@@ -2117,7 +2128,7 @@ assuming for the following model parameters:
 \end{enumerate}
 
     \hypertarget{exercise-2-polynomial-under--and-overfitting}{%
-\subsection{Exercise 2: Polynomial under- and
+\subsubsection{Exercise 2: Polynomial under- and
 overfitting}\label{exercise-2-polynomial-under--and-overfitting}}
 
 Consider the following non-linear model, \[
@@ -2130,7 +2141,7 @@ approximate \(y_i\) using polynomials in \(x_i\) of varying degrees:
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Create a sample of size \(N=50\) where the \(x_i\) are randomly draw
+  Create a sample of size \(N=50\) where the \(x_i\) are randomly drawn
   from a uniform distribution on the interval \([0, 1]\) and
   \(\epsilon_i \stackrel{\text{iid}}{\sim} N(0, 0.2^2)\). Then generate
   \(y_i\) according to the equation given above.
@@ -2156,36 +2167,36 @@ approximate \(y_i\) using polynomials in \(x_i\) of varying degrees:
 
 \emph{Hint:} When creating polynomials with
 \texttt{PolynomialFeatures(...,\ include\_bias=True)}, you need to fit
-the model without and additional intercept as the intercept is already
+the model without an additional intercept as the intercept is already
 included in the polynomial.
 
 \emph{Hint:} The cosine function and the constant \(\pi\) are part of
 NumPy and can be referenced as \texttt{np.cos()} and \texttt{np.pi}.
 
     \hypertarget{exercise-3-polynomial-fitting-with-scikit-learn-pipelines}{%
-\subsection{Exercise 3: Polynomial fitting with scikit-learn
+\subsubsection{Exercise 3: Polynomial fitting with scikit-learn
 pipelines}\label{exercise-3-polynomial-fitting-with-scikit-learn-pipelines}}
 
 In this exercise, we explore how to simplify fitting models to
 polynomials using a feature of \texttt{scikit-learn} called pipelines.
-These allow us to fuse several transformation and ultimate estimation
-steps into a single model.
+These allow us to fuse several transformations and an estimation step
+into a single model.
 
-Continuing with the setup in the previous exercise, we now focus on the
-model with polynomial degree \(d=5\). Use either
+Continuing with the setup from the previous exercise, we now focus on
+the model with polynomial degree \(d=5\). Use either
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html}{\texttt{make\_pipeline()}}
 or the
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html}{\texttt{Pipeline}}
 class to create a model that combines the
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html}{\texttt{PolynomialFeatures}}
-transformation and fitting a linear model in a single step.
+transformation and the fitting of a linear model in a single step.
 
 Fit the model using this pipeline. Plot the sample, the true
 relationship and the predicted value for \(d=5\) on a grid of 101
 \(x\)-values that are uniformly spaced on \([0, 1]\).
 
     \hypertarget{exercise-4-optimal-polynomial-degree-with-cross-validation}{%
-\subsection{Exercise 4: Optimal polynomial degree with
+\subsubsection{Exercise 4: Optimal polynomial degree with
 cross-validation}\label{exercise-4-optimal-polynomial-degree-with-cross-validation}}
 
 In the previous exercises, we fitted polynomials of varying degrees but
@@ -2197,7 +2208,7 @@ way.
 
 Consider the following model where \(y\) is a non-linear trigonometric
 function of \(x\) and includes an additive error term \(\epsilon\), \[
-y_i = \sin\bigl(2 \pi (x + 0.1) \bigr) + \epsilon_i
+y_i = \sin\bigl(2 \pi (x_i + 0.1) \bigr) + \epsilon_i
 \] and \(x\) and \(\epsilon\) are assumed to be independent.
 
 Proceed as follows:
@@ -2210,9 +2221,8 @@ Proceed as follows:
   \(\epsilon \stackrel{\text{iid}}{\sim} N(0, 0.25)\). Compute \(y_i\)
   according to the equation above.
 
-  \emph{Hint:} The \(\sin(\bullet)\) function and the constant \(\pi\)
-  are part of NumPy and can be accessed as \texttt{np.sin()} and
-  \texttt{np.pi}.
+  \emph{Hint:} The sine function and the constant \(\pi\) are part of
+  NumPy and can be accessed as \texttt{np.sin()} and \texttt{np.pi}.
 \item
   Create a sample scatter plot of \((x_i, y_i)\) and add a line showing
   the true relationship between \(x\) and \(y\) (without measurement
@@ -2251,7 +2261,7 @@ Proceed as follows:
 \end{enumerate}
 
     \hypertarget{exercise-5-automating-cross-validation-with-scikit-learn}{%
-\subsection{Exercise 5: Automating cross-validation with
+\subsubsection{Exercise 5: Automating cross-validation with
 scikit-learn}\label{exercise-5-automating-cross-validation-with-scikit-learn}}
 
 In the previous exercise, we performed fitting and cross-validation
@@ -2291,7 +2301,7 @@ previous exercise, perform the following tasks:
 \end{enumerate}
 
     \hypertarget{exercise-6-optimising-hyperparameters-with-validation-curves}{%
-\subsection{Exercise 6: Optimising hyperparameters with validation
+\subsubsection{Exercise 6: Optimising hyperparameters with validation
 curves}\label{exercise-6-optimising-hyperparameters-with-validation-curves}}
 
 This exercise asks you implemented an even faster way to find the
@@ -2344,11 +2354,12 @@ The \texttt{scikit-learn}
 provides additional information on validation curves which you might
 want to consult.
 
-    \hypertarget{solutions}{%
-\section{Solutions}\label{solutions}}
+
+\hypertarget{solutions}{%
+\subsection{Solutions}\label{solutions}}
 
     \hypertarget{exercise-1-interactions-of-explanatory-variables}{%
-\subsection{Exercise 1: Interactions of explanatory
+\subsubsection{Exercise 1: Interactions of explanatory
 variables}\label{exercise-1-interactions-of-explanatory-variables}}
 
     \hypertarget{creating-the-data-set}{%
@@ -2437,8 +2448,8 @@ The quadratic terms are not part of our model, so we pass
 \end{Verbatim}
 \end{tcolorbox}
 
-    It is again convenient to use a \texttt{DataFrame} to print a few
-observations of the interaction terms that were created.
+    It is convenient to use a \texttt{DataFrame} to print a few observations
+of the interaction terms that were created.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{45}{\boxspacing}
@@ -2687,7 +2698,7 @@ true values are dashed.
     \end{center}
     
     \hypertarget{exercise-2-polynomial-under--and-overfitting}{%
-\subsection{Exercise 2: Polynomial under- and
+\subsubsection{Exercise 2: Polynomial under- and
 overfitting}\label{exercise-2-polynomial-under--and-overfitting}}
 
 \hypertarget{creating-and-plotting-the-sample}{%
@@ -2794,7 +2805,7 @@ create a polynomial in \(x\).
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_128_0.pdf}
     \end{center}
     
-    As the figure shows, degree-0 polynomial is just a constant, while a
+    As the figure shows, a degree-0 polynomial is just a constant, while a
 polynomial of degree 1 is linear in \(x\). Neither fits the true
 relationship very well (``underfitting''), but the fit initially
 improves as we increase \(d\). For high \(d\), on the other hand, the
@@ -2802,7 +2813,7 @@ polynomial becomes too flexible and responds strongly to local ``noise''
 introduced by measurement error (``overfitting'').
 
     \hypertarget{exercise-3-polynomial-fitting-with-scikit-learn-pipelines}{%
-\subsection{Exercise 3: Polynomial fitting with scikit-learn
+\subsubsection{Exercise 3: Polynomial fitting with scikit-learn
 pipelines}\label{exercise-3-polynomial-fitting-with-scikit-learn-pipelines}}
 
 We create the sample in the same way as in exercise 2.
@@ -2901,7 +2912,7 @@ calling the \texttt{fit()} method of the pipeline object.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{59}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fa65d549390>
+<matplotlib.legend.Legend at 0x7fd0db4000d0>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -2910,7 +2921,7 @@ calling the \texttt{fit()} method of the pipeline object.
     \end{center}
     
     \hypertarget{exercise-4-optimal-polynomial-degree-with-cross-validation}{%
-\subsection{Exercise 4: Optimal polynomial degree with
+\subsubsection{Exercise 4: Optimal polynomial degree with
 cross-validation}\label{exercise-4-optimal-polynomial-degree-with-cross-validation}}
 
 \hypertarget{creating-and-plotting-the-sample}{%
@@ -2979,7 +2990,7 @@ The following implementation uses two distinct functions:
 \item
   \texttt{compute\_splits\_mse()} splits the sample into
   \texttt{n\_splits} folds, fits the model on the training subset of
-  each split and computes the MSE on test (or validation) sample.
+  each split and computes the MSE on the test (or validation) sample.
 \end{enumerate}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -3042,8 +3053,8 @@ The following implementation uses two distinct functions:
 \end{tcolorbox}
 
     We can test this function for a degree-0 polynomial (\ie a constant
-function) on your sample data. The functions returns 10 different MSE
-values, one for each test sample of each split.
+function) on our sample data. The functions returns 10 different MSE
+values, one for the test sample of each split.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{64}{\boxspacing}
@@ -3135,6 +3146,7 @@ overfitting occurs for high values of \(d\).
 \prompt{In}{incolor}{67}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{degrees}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Plot \PYZdq{}confidence interval\PYZdq{}}
 \PY{n}{plt}\PY{o}{.}\PY{n}{fill\PYZus{}between}\PY{p}{(}\PY{n}{degrees}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{o}{\PYZhy{}}\PY{l+m+mf}{2.0}\PY{o}{*}\PY{n}{mse\PYZus{}std}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{o}{+}\PY{l+m+mf}{2.0}\PY{o}{*}\PY{n}{mse\PYZus{}std}\PY{p}{,} 
     \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{0.25}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.2}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Polynomial degree}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -3148,7 +3160,7 @@ overfitting occurs for high values of \(d\).
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{67}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fa6486194b0>
+<matplotlib.lines.Line2D at 0x7fd0b5cea9e0>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -3186,7 +3198,7 @@ grid of \(x\)-values.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{68}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fa648570b80>
+<matplotlib.legend.Legend at 0x7fd0b5bb8c10>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -3195,7 +3207,7 @@ grid of \(x\)-values.
     \end{center}
     
     \hypertarget{exercise-5-automating-cross-validation-with-scikit-learn}{%
-\subsection{Exercise 5: Automating cross-validation with
+\subsubsection{Exercise 5: Automating cross-validation with
 scikit-learn}\label{exercise-5-automating-cross-validation-with-scikit-learn}}
 
 \hypertarget{creating-the-sample}{%
@@ -3264,7 +3276,7 @@ implemented in the previous exercise with much shorter code.
         \PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{,} 
         \PY{n}{scoring}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{neg\PYZus{}mean\PYZus{}squared\PYZus{}error}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
         \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{10}
-        \PY{p}{)}
+    \PY{p}{)}
 
     \PY{c+c1}{\PYZsh{} Stores contain NEGATIVE MSE}
     \PY{n}{mse\PYZus{}mean}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{scores}\PY{p}{)}\PY{p}{)}
@@ -3324,7 +3336,7 @@ Polynomial degree with min. MSE: 4
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{72}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fa648433970>
+<matplotlib.lines.Line2D at 0x7fd0b5afbdc0>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -3333,7 +3345,7 @@ Polynomial degree with min. MSE: 4
     \end{center}
     
     \hypertarget{exercise-6-optimising-hyperparameters-with-validation-curves}{%
-\subsection{Exercise 6: Optimising hyperparameters with validation
+\subsubsection{Exercise 6: Optimising hyperparameters with validation
 curves}\label{exercise-6-optimising-hyperparameters-with-validation-curves}}
 
 \hypertarget{creating-the-sample}{%
@@ -3444,7 +3456,7 @@ Polynomial degree with min. MSE: 4
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{76}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fa6485e88b0>
+<matplotlib.lines.Line2D at 0x7fd0b5a63fa0>
 \end{Verbatim}
 \end{tcolorbox}
         

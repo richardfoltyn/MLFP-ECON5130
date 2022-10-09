@@ -1,9 +1,8 @@
 \documentclass{scrartcl}
 
-    \input{overrides-pre}
+    \usepackage{jupyterlatex}
 
     \usepackage[breakable]{tcolorbox}
-    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
     
 
     % Basic figure setup, for now with no caption control since it's done
@@ -357,7 +356,7 @@
     \definecolor{incolor}{HTML}{303F9F}
     \definecolor{outcolor}{HTML}{D84315}
     \definecolor{cellborder}{HTML}{CFCFCF}
-    \definecolor{cellbackground}{HTML}{F7F7F7}
+    \definecolor{cellbackground}{HTML}{FCFCFC}
     
     % prompt
     \makeatletter
@@ -480,7 +479,7 @@ simple example:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-163 µs ± 570 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+162 µs ± 1.01 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -495,7 +494,7 @@ simple example:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-952 ns ± 7.79 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+900 ns ± 1.62 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
     \end{Verbatim}
 
     \begin{itemize}
@@ -751,7 +750,7 @@ built-in type \texttt{float} has neither a \texttt{shape}, nor an
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{11}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([4.67572031e-310, 0.00000000e+000, 4.67572023e-310, 4.67572023e-310,
+array([4.66099943e-310, 0.00000000e+000, 4.66099910e-310, 4.66099911e-310,
        2.37151510e-322])
 \end{Verbatim}
 \end{tcolorbox}
@@ -1794,7 +1793,7 @@ explicitly expand \texttt{b}:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-1.99 µs ± 19.7 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+2.04 µs ± 5.17 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -1806,7 +1805,7 @@ explicitly expand \texttt{b}:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-5.66 µs ± 63.2 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+5.42 µs ± 75.7 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
     \end{Verbatim}
 
     As you see, not only is the second operation more complex and difficult
@@ -1870,7 +1869,7 @@ vectorised implementation reveals some striking differences:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-21.5 µs ± 63.1 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+20.8 µs ± 27.8 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -1882,7 +1881,7 @@ vectorised implementation reveals some striking differences:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-369 ns ± 1.88 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+380 ns ± 1.07 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
     \end{Verbatim}
 
     We see that the vectorised variant is about 100 times faster! What is
@@ -1951,7 +1950,7 @@ the performance advantage of vectorised code:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-129 µs ± 922 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+130 µs ± 599 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -1962,7 +1961,7 @@ the performance advantage of vectorised code:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-4.35 µs ± 34.7 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+4.27 µs ± 9.45 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
     \end{Verbatim}
 
     The vectorised version is approximately 25 times faster, despite the
@@ -2068,8 +2067,8 @@ which we can verify using the built-in \texttt{id()} function:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-140668501381584
-140668501377648
+140084919321008
+140084919321392
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -2636,7 +2635,7 @@ array([3, 4, 5])
         
 
 \hypertarget{exercises}{%
-\subsection{Exercises}\label{exercises}}
+\subsection{Optional exercises}\label{exercises}}
 
     \hypertarget{exercise-1-broadcasting}{%
 \subsubsection{Exercise 1: Broadcasting}\label{exercise-1-broadcasting}}
@@ -3576,7 +3575,7 @@ against NumPy's.
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-58 µs ± 229 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+59.2 µs ± 309 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -3587,7 +3586,7 @@ against NumPy's.
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-24.6 µs ± 1.9 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+23.2 µs ± 1.94 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     You may be surprised that \texttt{np.nanmean()} is only twice as fast as
@@ -3666,7 +3665,6 @@ of copy-pasting it again and again!
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_201_0.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \hypertarget{locating-maxima-using-loops}{%
 \subsubsection{Locating maxima using
@@ -3740,14 +3738,13 @@ the maxima to the \emph{same} plot.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{117}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fefcccd6800>
+<matplotlib.legend.Legend at 0x7f67fe761450>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_206_1.pdf}
     \end{center}
-    { \hspace*{\fill} \\}
     
     \hypertarget{vectorised-version}{%
 \subsubsection{Vectorised version}\label{vectorised-version}}
@@ -3804,7 +3801,7 @@ NumPy version is approximately 100 times faster!
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-96.3 µs ± 551 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+92 µs ± 177 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -3816,7 +3813,7 @@ NumPy version is approximately 100 times faster!
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-1.36 µs ± 9.21 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+1.3 µs ± 17.5 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
     \end{Verbatim}
 
 
