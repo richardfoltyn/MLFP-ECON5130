@@ -19,6 +19,9 @@ s/\\definecolor\{cellbackground\}\{HTML\}\{[A-F0-9]+\}/\\definecolor{cellbackgro
 # Remove white space after figures
 /\{ \\hspace\*\{\\fill\} \\\\\}/d
 
+# Replace paragraphs with subsubsections
+s/\\paragraph\{/\\subsubsection*{/
+
 s/i\.e\.,?~/\\ie /g
 s/i\.e\.,?/\\ie/g
 s/e\.g\.,?~/\\eg /g
