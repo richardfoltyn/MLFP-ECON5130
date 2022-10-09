@@ -7,6 +7,7 @@ s/\\documentclass\[11pt\]\{article\}/\\documentclass{scrbook}/
 s/\\section\b/\\chapter/
 s/\\subsection\b/\\section/
 s/\\subsubsection\b/\\subsection/
+s/\\paragraph\b/\\subsubsection/
 
 # Remove preface chapter from TOC
 s/\\chapter\{Preface\}/\\chapter*{Preface}/

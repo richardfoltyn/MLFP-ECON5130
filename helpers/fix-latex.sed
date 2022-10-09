@@ -22,6 +22,9 @@ s/\\definecolor\{cellbackground\}\{HTML\}\{[A-F0-9]+\}/\\definecolor{cellbackgro
 # Replace paragraphs with subsubsections
 s/\\paragraph\{/\\subsubsection*{/
 
+# Replace subparagraphs with paragraphs
+s/\\subparagraph/\\paragraph/
+
 s/i\.e\.,?~/\\ie /g
 s/i\.e\.,?/\\ie/g
 s/e\.g\.,?~/\\eg /g
