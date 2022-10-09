@@ -89,13 +89,13 @@ of a new profile via
 2.  Merge individual notebooks using `nbmerge`:
 
         cd lectures    
-        nbmerge preface.ipynb unit*.ipynb -o python-course.ipynb
+        nbmerge preface.ipynb unit*.ipynb -o MLFP-part1.ipynb
  
 3.  Generate the preliminary LaTeX document:
 
-        jupyter nbconvert --to=latex --output-dir=latex lectures/python-course.ipynb 
+        jupyter nbconvert --to=latex --output-dir=latex lectures/MLFP-part1.ipynb 
 
 4.  Fix most issues with the generated LaTeX file by running:
     
         cd latex
-        ../helpers/fix-book.sh python-course.tex
+        ../helpers/fix-book.sh MLFP-part1.tex
