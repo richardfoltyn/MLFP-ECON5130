@@ -668,7 +668,7 @@ variation clearly occurs along the first axis!
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7f7c1bfea530>
+<matplotlib.lines.Line2D at 0x7fdb1deb34f0>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -853,7 +853,7 @@ For this purpose, we create highly correlated data as follows:
 \item
   We draw \(N\) independent samples from a bivariate normal
   distribution, \[
-   \mathbf{z}_i \stackrel{\text{iid}}{\sim} N\left( \bm{0},
+   \mathbf{z}_i \stackrel{\text{iid}}{\sim} N\left( \mathbf{0},
        \begin{bmatrix} \sigma_1^2 & 0 \\ 0 & \sigma_2^2 \end{bmatrix}
    \right)
    \] and stack them in the matrix
@@ -1009,12 +1009,9 @@ X9 -0.997 -0.955 -0.956 -0.858 -0.689  0.004  0.929 -0.857  0.782  1.000
 \end{Verbatim}
 \end{tcolorbox}
         
-    \hypertarget{running-pca}{%
-\subsubsection*{Running PCA}\label{running-pca}}
-
-\hypertarget{manually-selecting-the-number-of-principle-components}{%
-\subparagraph{Manually selecting the number of principle
-components}\label{manually-selecting-the-number-of-principle-components}}
+    \hypertarget{pca-with-manually-selected-number-of-principle-components}{%
+\subsubsection*{PCA with manually selected number of principle
+components}\label{pca-with-manually-selected-number-of-principle-components}}
 
 We now use \texttt{scikit-learn}'s \texttt{PCA} to perform the principal
 component analysis just as we did in the bivariate case.
@@ -1096,9 +1093,9 @@ Text(0, 0.5, 'Share of variance')
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_41_1.pdf}
     \end{center}
     
-    \hypertarget{automatically-selecting-the-number-of-principal-components}{%
-\subparagraph{Automatically selecting the number of principal
-components}\label{automatically-selecting-the-number-of-principal-components}}
+    \hypertarget{pca-with-automatically-selected-number-of-principal-components}{%
+\subsubsection*{PCA with automatically selected number of principal
+components}\label{pca-with-automatically-selected-number-of-principal-components}}
 
 Previously, we manually selected the number of principle components when
 constructing an instance of \texttt{PCA} (or we used the default, which
