@@ -25,6 +25,11 @@ s/\\paragraph\{/\\subsubsection*{/
 # Replace subparagraphs with paragraphs
 s/\\subparagraph/\\paragraph/
 
+# Fix bold math for Greek letters
+s/\\mathbf\{\\beta\}/\\bm\\beta/g
+s/\\mathbf\{\\gamma\}/\\bm\\gamma/g
+s/\\mathbf\{\\Sigma\}/\\bm\\Sigma/g
+
 s/i\.e\.,?~/\\ie /g
 s/i\.e\.,?/\\ie/g
 s/e\.g\.,?~/\\eg /g

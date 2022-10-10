@@ -30,6 +30,11 @@ s/\\definecolor\{cellbackground\}\{HTML\}\{[A-F0-9]+\}/\\definecolor{cellbackgro
 # Remove white space after figures
 /\{ \\hspace\*\{\\fill\} \\\\\}/d
 
+# Fix bold math for Greek letters
+s/\\mathbf\{\\beta\}/\\bm\\beta/g
+s/\\mathbf\{\\gamma\}/\\bm\\gamma/g
+s/\\mathbf\{\\Sigma\}/\\bm\\Sigma/g
+
 s/i\.e\.,?~/\\ie /g
 s/i\.e\.,?/\\ie/g
 s/e\.g\.,?~/\\eg /g
