@@ -390,9 +390,9 @@
     
 
     
-    \hypertarget{introduction-to-unsupervised-learning}{%
-\section{Introduction to unsupervised
-learning}\label{introduction-to-unsupervised-learning}}
+    \hypertarget{introduction-to-supervised-learning}{%
+\section{Introduction to supervised
+learning}\label{introduction-to-supervised-learning}}
 
     \hypertarget{simple-univariate-linear-regression}{%
 \subsection{Simple (univariate) linear
@@ -436,12 +436,12 @@ the sample means of \(y\) and \(x\).
 
 There is a straightforward generalization to the multivariate setting
 where we have a vector \(\mathbf{x}_i\) of explanatory variables (which
-usually include the intercept) and a parameter vector \(\bm\beta\) so
-that the model is given by \[
+usually include the intercept) and a parameter vector \(\bm\beta\)
+so that the model is given by \[
 y_i = \mathbf{x}_i'\bm\beta + \epsilon_i
 \] If we stack all \(\mathbf{x}_i\) in the matrix \(\mathbf{X}\) and all
-\(y_i\) in the vector \(\mathbf{y}\), the OLS estimate of \(\bm\beta\)
-is given by the well-known formula \[
+\(y_i\) in the vector \(\mathbf{y}\), the OLS estimate of
+\(\bm\beta\) is given by the well-known formula \[
 \widehat{\bm\beta} = \left(\mathbf{X}'\mathbf{X}\right)^{-1} \mathbf{X}'\mathbf{y}
 \]
 
@@ -695,7 +695,7 @@ dtypes: float64(3), int64(7), object(3)
 memory usage: 148.4+ KB
     \end{Verbatim}
 
-    In this section, we focus on the columns \texttt{SalePice} which
+    In this section, we focus on the columns \texttt{SalePrice} which
 contains the house price in US dollars and \texttt{LivingArea} which
 contains the living area in \(m^2\) for each house in the sample. To get
 some intuition for the data, we look at some descriptive statistics:
@@ -844,7 +844,7 @@ samples and adds the fitted line.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{10}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fd0e2796950>
+<matplotlib.legend.Legend at 0x7fa734f4e920>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -885,7 +885,7 @@ error for each observations, \[
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{11}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fd0e261c310>
+<matplotlib.lines.Line2D at 0x7fa70c3be8f0>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -1690,7 +1690,7 @@ the hyperparameter we want to tune.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{29}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fd0cc1d8130>
+<matplotlib.lines.Line2D at 0x7fa7350b5780>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -1802,6 +1802,495 @@ Polynomial degree with min. RMSE: 2
     \end{Verbatim}
 
 
+\hypertarget{linear-models-with-regularisation-ridge-regression}{%
+\subsection{Linear models with regularisation: Ridge
+regression}\label{linear-models-with-regularisation-ridge-regression}}
+
+The linear models we encountered so far are part of the standard
+econometrics toolbox. In this section, we look at extensions that make
+these models more useful for machine learning applications.
+
+The first model we study is Ridge regression, which estimates a linear
+model but adds a penalty term to the loss function which is now given by
+\[
+L(\mu, \bm\beta) = 
+    \underbrace{\sum_{i=1}^N \Bigl(
+    y_i - \mu - \mathbf{x}_i'\bm\beta\Bigr)^2}_{\text{Sum of squared errors}}
+    + 
+    \underbrace{\alpha \sum_{k=1}^K\beta_k^2}_{\text{L2 penalty}}
+\] Compared to ordinary least squares (OLS) we discussed initially, the
+penalty term increases the loss function if the estimated coefficients
+\(\bm\beta\) are large. This term is called an L2 penalty because
+it corresponds to the (squared) L2 vector norm. In many textbooks, you
+will see the penalty term written as \(\alpha \|\bm\beta\|_2^2\)
+which is equivalent to the formula used above.
+
+For any \(\alpha > 0\), the loss function is increasing in the
+(absolute) coefficient values, thus the minimum \(L\) might be one where
+the elements of \(\bm\beta\) are smaller than what they would have
+been with OLS. We therefore say that that Ridge regression applies
+\emph{regularisation} or \emph{shrinkage}. Note, however, that the
+intercept which we now denote by \(\mu\) is not included in the penalty
+term, and thus no regularisation is applied to it.
+
+Clearly, the regularisation strength depends on the value of \(\alpha\).
+For tiny (or zero) \(\alpha\), the estimated
+\(\widehat{\bm\beta}\) will be close (or identical) to OLS, while
+for large \(\alpha\) the estimated coefficients will be compressed
+towards zero. In this setting, \(\alpha\) is a hyperparameter and we can
+accordingly use cross-validation to find an ``optimal'' value.
+
+Why would we ever want to use Ridge regression given that OLS is the
+best linear unbiased estimator? It turns out that regularisation can
+help in scenarios where we have a large number of (potentially
+multicollinear) regressors in which case OLS is prone to overfitting.
+
+    \hypertarget{example-polynomial-approximation}{%
+\subsubsection{Example: Polynomial
+approximation}\label{example-polynomial-approximation}}
+
+We illustrate such problems and the benefits of Ridge regression using a
+highly stylised example. Imagine we want to approximate a non-linear
+function using a high-order polynomial, a setting which is notoriously
+susceptible to overfitting (also see the optional exercises for more
+illustrations). Assume that our model is given by \[
+\begin{aligned}
+y_i &= \cos\left( \frac{3}{2}\pi x_i \right) + \epsilon_i \\
+    \epsilon &\stackrel{\text{iid}}{\sim} N(0, 0.25)
+\end{aligned}
+\] where \(\epsilon_i\) as an additive, normally-distributed measurement
+error term with mean \(0\) and variance \(\frac{1}{4}\).
+
+The following code creates and plots a demo sample with \(N=100\)
+observations. The true values of \(y\) (without measurement error) are
+computed using the function \texttt{compute\_true\_y()} which returns
+\(y\) for a given \(x\).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{32}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k+kn}{import} \PY{n}{default\PYZus{}rng}
+
+\PY{c+c1}{\PYZsh{} Initialise random number generator}
+\PY{n}{rng} \PY{o}{=} \PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{l+m+mi}{1234}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Sample size}
+\PY{n}{N} \PY{o}{=} \PY{l+m+mi}{100}
+
+\PY{c+c1}{\PYZsh{} True function (w/o errors)}
+\PY{k}{def} \PY{n+nf}{compute\PYZus{}true\PYZus{}y}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{l+m+mf}{1.5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{pi} \PY{o}{*} \PY{n}{x}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Randomly draw explanatory variable x uniformly distributed on [0, 1]}
+\PY{n}{x} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{n}{N}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Draw errors from normal distribution}
+\PY{n}{epsilon} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{scale}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{n}{N}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Compute y, add measurement error}
+\PY{n}{y} \PY{o}{=} \PY{n}{compute\PYZus{}true\PYZus{}y}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{+} \PY{n}{epsilon}
+\end{Verbatim}
+\end{tcolorbox}
+
+    The next graph visualises the true relationship and the sample points
+\((x_i, y_i)\).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{33}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+
+
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mi}{101}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{compute\PYZus{}true\PYZus{}y}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} 
+    \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True function}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sample}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}y\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{33}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0, 0.5, '\$y\$')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_78_1.pdf}
+    \end{center}
+    
+    \hypertarget{estimating-the-ridge-and-linear-regression-models}{%
+\subsubsection*{Estimating the Ridge and linear regression
+models}\label{estimating-the-ridge-and-linear-regression-models}}
+
+We now estimate a polynomial approximation where we assume that \(y\) is
+a degree-\(K\) polynomial in \(x\), \ie \[
+y_i \approx \mu + \beta_1 x_i + \beta_2 x_i^2 + \cdots + \beta_K x_i^K 
+\] For this example, we choose an unconventionally high \(K=15\) since
+we anticipate that this leads to problems with OLS.
+
+A few more steps are required before we can run the Ridge regression:
+
+\begin{itemize}
+\tightlist
+\item
+  We need to create the polynomial in \(x\) which we do with the
+  \href{https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html}{\texttt{PolynomialFeatures}}
+  transformation we already encountered.
+\item
+  Moreover, regularisation methods can be susceptible to scaling issues,
+  so we need to demean and normalise all input variables, \ie we make
+  sure that each feature has mean \(0\) and a variance of \(1\). We can
+  automate this step using the
+  \href{https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html}{\texttt{StandardScaler}}
+  transformation.
+\item
+  Finally, we build a
+  \href{https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html}{\texttt{Pipeline}}
+  that combines these transformation together with the final estimation
+  step. We use the function
+  \href{https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html}{\texttt{make\_pipeline()}}
+  to simplify this step.
+\end{itemize}
+
+To run the Ridge regression, we moreover need to specify the
+regularisation strength \(\alpha\) which we set to \(\alpha = 3\) for
+illustration.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{34}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k+kn}{import} \PY{n}{Ridge}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{PolynomialFeatures}\PY{p}{,} \PY{n}{StandardScaler}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{pipeline} \PY{k+kn}{import} \PY{n}{make\PYZus{}pipeline}
+
+\PY{c+c1}{\PYZsh{} Polynomial degree}
+\PY{n}{degree} \PY{o}{=} \PY{l+m+mi}{15}
+
+\PY{c+c1}{\PYZsh{} Build pipeline of transformations and Ridge estimation.}
+\PY{c+c1}{\PYZsh{} We create the polynomial transformation w/o the intercept so we }
+\PY{c+c1}{\PYZsh{} need to include an intercept in the fitting step.}
+\PY{n}{pipe\PYZus{}ridge} \PY{o}{=} \PY{n}{make\PYZus{}pipeline}\PY{p}{(}
+    \PY{n}{PolynomialFeatures}\PY{p}{(}\PY{n}{degree}\PY{o}{=}\PY{n}{degree}\PY{p}{,} \PY{n}{include\PYZus{}bias}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{,}
+    \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+    \PY{n}{Ridge}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{3.0}\PY{p}{,} \PY{n}{fit\PYZus{}intercept}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{p}{)}
+
+\PY{n}{pipe\PYZus{}ridge}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{34}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Pipeline(steps=[('polynomialfeatures',
+                 PolynomialFeatures(degree=15, include\_bias=False)),
+                ('standardscaler', StandardScaler()),
+                ('ridge', Ridge(alpha=3.0))])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    It is instructive to estimate the same model using linear regression and
+compare the results:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{35}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k+kn}{import} \PY{n}{LinearRegression}
+
+\PY{c+c1}{\PYZsh{} Create pipeline for linear model (linear regression does not require}
+\PY{c+c1}{\PYZsh{} standardisation!)}
+\PY{n}{pipe\PYZus{}lr} \PY{o}{=} \PY{n}{make\PYZus{}pipeline}\PY{p}{(}
+    \PY{n}{PolynomialFeatures}\PY{p}{(}\PY{n}{degree}\PY{o}{=}\PY{n}{degree}\PY{p}{,} \PY{n}{include\PYZus{}bias}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{,}
+    \PY{n}{LinearRegression}\PY{p}{(}\PY{n}{fit\PYZus{}intercept}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{p}{)}
+
+\PY{n}{pipe\PYZus{}lr}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{35}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Pipeline(steps=[('polynomialfeatures',
+                 PolynomialFeatures(degree=15, include\_bias=False)),
+                ('linearregression', LinearRegression())])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    To illustrate the difference for this artificial example, we add the
+model predictions from the Ridge and linear regressions to the sample
+scatter plot we created earlier.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{36}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Grid on which to evaluate true model and predictions}
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{amin}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{amax}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Sample points scatter plot}
+\PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sample}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} True model}
+\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{compute\PYZus{}true\PYZus{}y}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{,} 
+    \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True function}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} LR prediction}
+\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{pipe\PYZus{}lr}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{xvalues}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{purple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Linear regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Ridge prediction}
+\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{pipe\PYZus{}ridge}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{xvalues}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{darkorange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{2.0}\PY{p}{,} 
+    \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ridge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}y\PYZdl{}, \PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{widehat}\PY{l+s+si}{\PYZob{}y\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{36}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0, 0.5, '\$y\$, \$\textbackslash{}\textbackslash{}widehat\{y\}\$')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_84_1.pdf}
+    \end{center}
+    
+    As the graph shows, the OLS model vastly overfits the data which is what
+we would expect in this settings. Conversely, the prediction of the
+Ridge regression is reasonably close to the true function and much
+better behaved despite the high polynomial degree used here.
+
+To gain some intuition for what is going on, it is instructive to plot
+the estimated Ridge coefficients for a whole range of \(\alpha\) values
+which we do in the code below. Note that we choose the grid of
+\(\alpha\) to be uniformly spaced in logs since we want to zoom in on
+what happens when \(\alpha\) is small.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{37}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create grid of alphas spaced uniformly in logs}
+\PY{n}{alphas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{logspace}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log10}\PY{p}{(}\PY{l+m+mf}{5.0e\PYZhy{}3}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{log10}\PY{p}{(}\PY{l+m+mf}{1000.0}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Re\PYZhy{}create pipeline w/o Ridge estimator, estimation step differs for each alpha}
+\PY{n}{transform} \PY{o}{=} \PY{n}{make\PYZus{}pipeline}\PY{p}{(}
+    \PY{n}{PolynomialFeatures}\PY{p}{(}\PY{n}{degree}\PY{o}{=}\PY{n}{degree}\PY{p}{,} \PY{n}{include\PYZus{}bias}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{,}
+    \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}
+\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create polynomial features}
+\PY{n}{Xtrans} \PY{o}{=} \PY{n}{transform}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Array to store coefficients for all alphas}
+\PY{n}{coefs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{alphas}\PY{p}{)}\PY{p}{,} \PY{n}{Xtrans}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Estimate Ridge for each alpha, store fitted coefficients}
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{alpha} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{alphas}\PY{p}{)}\PY{p}{:}
+    \PY{n}{ridge} \PY{o}{=} \PY{n}{Ridge}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{n}{alpha}\PY{p}{,} \PY{n}{fit\PYZus{}intercept}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{Xtrans}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+    \PY{n}{coefs}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{ridge}\PY{o}{.}\PY{n}{coef\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    The following plots shows each coefficients (one color corresponds to
+one coefficients) for different values of \(\alpha\) on the \(x\)-axis.
+Note that the \(x\)-axis is plotted on a \(\log_{10}\) scale which
+allows us to zoom in on smaller values of \(\alpha\).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{38}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{alphas}\PY{p}{,} \PY{n}{coefs}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{base}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{ls}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Regularisation strength \PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{alpha\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Coefficient value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{38}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0, 0.5, 'Coefficient value')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_88_1.pdf}
+    \end{center}
+    
+    For small \(\alpha\) (on the left) the estimated coefficients are close
+to the (standardised) OLS coefficients, but their values shrink towards
+zero as \(\alpha\) increases. For very large \(\alpha = 10^3\) the
+estimated coefficients are basically zero since the penalty dominates
+the sum of squared errors in the loss function.
+
+    \hypertarget{tuning-the-regularisation-parameter-via-cross-validation}{%
+\subsubsection{Tuning the regularisation parameter via
+cross-validation}\label{tuning-the-regularisation-parameter-via-cross-validation}}
+
+In the previous example, we picked an arbitrary regularisation strength
+\(\alpha\) when fitting the Ridge regression. In applied work, we would
+want to tune \(\alpha\) (which is a hyperparameter) using
+cross-validation instead. To this end, we could use the generic
+cross-validation functionality we studied earlier in this unit since
+that one works for all types of estimators. However,
+\texttt{scikit-learn} implements a cross-validation class specifically
+for Ridge regression called
+\href{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html}{\texttt{RidgeCV}}
+which we use in the code below to find an optimal \(\alpha\).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{39}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k+kn}{import} \PY{n}{RidgeCV}
+
+\PY{c+c1}{\PYZsh{} RidgeCV does not support pipelines, so we need to transform x before}
+\PY{c+c1}{\PYZsh{} cross\PYZhy{}validation.}
+\PY{n}{transform} \PY{o}{=} \PY{n}{make\PYZus{}pipeline}\PY{p}{(}
+    \PY{n}{PolynomialFeatures}\PY{p}{(}\PY{n}{degree}\PY{o}{=}\PY{n}{degree}\PY{p}{,} \PY{n}{include\PYZus{}bias}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{,}
+    \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}
+\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create standardised polynomial features}
+\PY{n}{Xtrans} \PY{o}{=} \PY{n}{transform}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Set of candidate alphas on [1.0e\PYZhy{}5, 5] to cross\PYZhy{}validate. }
+\PY{c+c1}{\PYZsh{} Spaced uniformly in logs to get denser grid for small alphas.}
+\PY{n}{alphas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{logspace}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log10}\PY{p}{(}\PY{l+m+mf}{1.0e\PYZhy{}5}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{log10}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create and run Ridge cross\PYZhy{}validation}
+\PY{n}{rcv} \PY{o}{=} \PY{n}{RidgeCV}\PY{p}{(}\PY{n}{alphas}\PY{o}{=}\PY{n}{alphas}\PY{p}{,} \PY{n}{store\PYZus{}cv\PYZus{}values}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{Xtrans}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    By default, RidgeCV uses the (negative) mean squared error (MSE) to find
+the best \(\alpha\) which we can then recover from the \texttt{alpha\_}
+attribute.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{40}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Recover best alpha that minimizes MSE}
+\PY{n}{alpha\PYZus{}best} \PY{o}{=} \PY{n}{rcv}\PY{o}{.}\PY{n}{alpha\PYZus{}}
+
+\PY{c+c1}{\PYZsh{} Best MSE is stored as negative score!}
+\PY{n}{MSE\PYZus{}best} \PY{o}{=} \PY{o}{\PYZhy{}} \PY{n}{rcv}\PY{o}{.}\PY{n}{best\PYZus{}score\PYZus{}}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Best alpha: }\PY{l+s+si}{\PYZob{}}\PY{n}{alpha\PYZus{}best}\PY{l+s+si}{:}\PY{l+s+s1}{.3g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ (MSE: }\PY{l+s+si}{\PYZob{}}\PY{n}{MSE\PYZus{}best}\PY{l+s+si}{:}\PY{l+s+s1}{.3g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Best alpha: 0.6 (MSE: 0.267)
+    \end{Verbatim}
+
+    Because we fitted \texttt{RidgeCV} with the argument
+\texttt{store\_cv\_values=True}, the fitted object stores the MSE for
+each CV split in the attribute \texttt{cv\_values\_} which we can use to
+plot the MSE as a function of \(\alpha\).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{41}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+
+\PY{c+c1}{\PYZsh{} Compute average MSE for each alpha value across all folds}
+\PY{n}{mse\PYZus{}mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{rcv}\PY{o}{.}\PY{n}{cv\PYZus{}values\PYZus{}}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Index of MSE\PYZhy{}minimising alpha}
+\PY{n}{imin} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmin}\PY{p}{(}\PY{n}{mse\PYZus{}mean}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Plot MSE against alphas, highlight minimum MSE}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{alphas}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Regularisation strength \PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{alpha\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cross\PYZhy{}validated MSE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{alphas}\PY{p}{[}\PY{n}{imin}\PY{p}{]}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{p}{[}\PY{n}{imin}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{n}{alphas}\PY{p}{[}\PY{n}{imin}\PY{p}{]}\PY{p}{,} \PY{n}{ls}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_95_0.pdf}
+    \end{center}
+    
+    Now that we have identified the optimal \(\alpha\), we can re-fit the
+Ridge regression and plot the prediction from this model.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{42}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create pipeline with Ridge estimator using optimal alpha}
+\PY{n}{pipe\PYZus{}ridge} \PY{o}{=} \PY{n}{make\PYZus{}pipeline}\PY{p}{(}
+    \PY{n}{PolynomialFeatures}\PY{p}{(}\PY{n}{degree}\PY{o}{=}\PY{n}{degree}\PY{p}{,} \PY{n}{include\PYZus{}bias}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{,}
+    \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+    \PY{n}{Ridge}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{n}{alpha\PYZus{}best}\PY{p}{,} \PY{n}{fit\PYZus{}intercept}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{p}{)}
+
+\PY{n}{pipe\PYZus{}ridge}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{42}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Pipeline(steps=[('polynomialfeatures',
+                 PolynomialFeatures(degree=15, include\_bias=False)),
+                ('standardscaler', StandardScaler()),
+                ('ridge', Ridge(alpha=0.599686603363296))])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{43}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Plot sample scatter, true model and Ridge prediction using optimal alpha}
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{amin}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{amax}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sample}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{compute\PYZus{}true\PYZus{}y}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{,} 
+    \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True function}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{pipe\PYZus{}ridge}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{xvalues}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{darkorange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{2.0}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ridge (optimal \PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{alpha\PYZdl{})}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}y\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{43}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0, 0.5, '\$y\$')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_98_1.pdf}
+    \end{center}
+    
+
+\hypertarget{linear-models-with-regularisation-lasso}{%
+\subsection{Linear models with regularisation:
+Lasso}\label{linear-models-with-regularisation-lasso}}
+
+
 \hypertarget{dealing-with-categorical-data}{%
 \subsection{Dealing with categorical
 data}\label{dealing-with-categorical-data}}
@@ -1819,7 +2308,7 @@ To do this, we again load the Ames house data which contains several
 categorical and binary variables.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{32}{\boxspacing}
+\prompt{In}{incolor}{44}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
 
@@ -1837,14 +2326,14 @@ category. The argument \texttt{dropna=False} also includes the number of
 missing values in the tabulation.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{33}{\boxspacing}
+\prompt{In}{incolor}{45}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BuildingType}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{n}{dropna}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}index}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{33}{\boxspacing}
+\prompt{Out}{outcolor}{45}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Single-family    1220
 Townhouse         114
@@ -1861,7 +2350,7 @@ for details). First, since the data are stored as strings, we could use
 to map these strings to integers.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{34}{\boxspacing}
+\prompt{In}{incolor}{46}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{OrdinalEncoder}
 
@@ -1895,7 +2384,7 @@ using the
 transformation as illustrated by the following code:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{35}{\boxspacing}
+\prompt{In}{incolor}{47}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{OneHotEncoder}
 
@@ -1923,7 +2412,7 @@ to use sparse matrices.
 The transformed data now looks as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{36}{\boxspacing}
+\prompt{In}{incolor}{48}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Print first 5 rows}
 \PY{n}{bldg\PYZus{}dummies}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}
@@ -1931,7 +2420,7 @@ The transformed data now looks as follows:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{36}{\boxspacing}
+\prompt{Out}{outcolor}{48}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 array([[1., 0., 0.],
        [1., 0., 0.],
@@ -1949,14 +2438,14 @@ We can sum the number of ones in each column to verify that the
 frequency of each category remains the same:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{37}{\boxspacing}
+\prompt{In}{incolor}{49}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{bldg\PYZus{}dummies}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{37}{\boxspacing}
+\prompt{Out}{outcolor}{49}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 array([1220.,  114.,   52.])
 \end{Verbatim}
@@ -1966,14 +2455,14 @@ array([1220.,  114.,   52.])
 \texttt{categories\_} attribute:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{38}{\boxspacing}
+\prompt{In}{incolor}{50}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{enc}\PY{o}{.}\PY{n}{categories\PYZus{}}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{38}{\boxspacing}
+\prompt{Out}{outcolor}{50}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 array(['Single-family', 'Townhouse', 'Two-family'], dtype=object)
 \end{Verbatim}
@@ -1984,7 +2473,7 @@ append it to the continuous explanatory variables and fit the linear
 model as usual:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{39}{\boxspacing}
+\prompt{In}{incolor}{51}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k+kn}{import} \PY{n}{LinearRegression}
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
@@ -2011,7 +2500,7 @@ model as usual:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{39}{\boxspacing}
+\prompt{Out}{outcolor}{51}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
                                      Coef
 LivingArea                    1152.605777
@@ -2028,14 +2517,14 @@ which accomplishes something very similar to \texttt{OneHotEnconder} but
 may not work as well with the \texttt{scikit-learn} API.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{40}{\boxspacing}
+\prompt{In}{incolor}{52}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{pd}\PY{o}{.}\PY{n}{get\PYZus{}dummies}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BuildingType}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{40}{\boxspacing}
+\prompt{Out}{outcolor}{52}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
    Single-family  Townhouse  Two-family
 0              1          0           0
@@ -2086,7 +2575,7 @@ Create an artificial data set of size \(N = 200\) and compute \(y\)
 assuming for the following model parameters:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{41}{\boxspacing}
+\prompt{In}{incolor}{53}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Intercept}
 \PY{n}{alpha} \PY{o}{=} \PY{l+m+mf}{0.1}
@@ -2366,7 +2855,7 @@ variables}\label{exercise-1-interactions-of-explanatory-variables}}
 \subsubsection*{Creating the data set}\label{creating-the-data-set}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{42}{\boxspacing}
+\prompt{In}{incolor}{54}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
@@ -2399,7 +2888,7 @@ variables}\label{exercise-1-interactions-of-explanatory-variables}}
 \texttt{DataFrame} and print the first few rows.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{43}{\boxspacing}
+\prompt{In}{incolor}{55}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{y}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{d}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{x}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{z}\PY{p}{\PYZcb{}}\PY{p}{)}
 \PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
@@ -2407,7 +2896,7 @@ variables}\label{exercise-1-interactions-of-explanatory-variables}}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{43}{\boxspacing}
+\prompt{Out}{outcolor}{55}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
           y  d         x         z
 0  2.611021  0  0.747273  1.030816
@@ -2429,7 +2918,7 @@ The quadratic terms are not part of our model, so we pass
 \texttt{interactions\_only=True} to keep only the interaction terms.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{44}{\boxspacing}
+\prompt{In}{incolor}{56}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{PolynomialFeatures}
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k+kn}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
@@ -2452,14 +2941,14 @@ The quadratic terms are not part of our model, so we pass
 of the interaction terms that were created.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{45}{\boxspacing}
+\prompt{In}{incolor}{57}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}interactions}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{d*x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{d*z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x*z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{45}{\boxspacing}
+\prompt{Out}{outcolor}{57}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
         d*x       d*z       x*z
 0  0.000000  0.000000  0.770301
@@ -2475,7 +2964,7 @@ non-interacted variables as well as the interactions, so we stack the
 two matrices horizontally.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{46}{\boxspacing}
+\prompt{In}{incolor}{58}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{X\PYZus{}train\PYZus{}all} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{hstack}\PY{p}{(}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}train\PYZus{}interactions}\PY{p}{)}\PY{p}{)}
 \PY{n}{X\PYZus{}test\PYZus{}all} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{hstack}\PY{p}{(}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{poly}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}\PY{p}{)}\PY{p}{)}
@@ -2490,7 +2979,7 @@ We fit the model in the usual way and use \texttt{predict()} to obtain
 the predicted values \(\widehat{y}_i\) for the test data set.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{47}{\boxspacing}
+\prompt{In}{incolor}{59}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k+kn}{import} \PY{n}{LinearRegression}
 
@@ -2504,7 +2993,7 @@ the predicted values \(\widehat{y}_i\) for the test data set.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{48}{\boxspacing}
+\prompt{In}{incolor}{60}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 
@@ -2517,14 +3006,14 @@ the predicted values \(\widehat{y}_i\) for the test data set.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{48}{\boxspacing}
+\prompt{Out}{outcolor}{60}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Text(0, 0.5, 'Prediction error')
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_115_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_141_1.pdf}
     \end{center}
     
     \hypertarget{alternative-way-to-construct-interactions}{%
@@ -2544,7 +3033,7 @@ second component of the \texttt{FeatureUnion} is the
 term in the same way as before.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{49}{\boxspacing}
+\prompt{In}{incolor}{61}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{pipeline} \PY{k+kn}{import} \PY{n}{FeatureUnion}
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{FunctionTransformer}
@@ -2569,7 +3058,7 @@ term in the same way as before.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{49}{\boxspacing}
+\prompt{Out}{outcolor}{61}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 True
 \end{Verbatim}
@@ -2580,7 +3069,7 @@ into a pipeline to get an object which directly fits the linear model
 for \(y\).
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{50}{\boxspacing}
+\prompt{In}{incolor}{62}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{pipeline} \PY{k+kn}{import} \PY{n}{make\PYZus{}pipeline}
 
@@ -2605,14 +3094,14 @@ for \(y\).
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{50}{\boxspacing}
+\prompt{Out}{outcolor}{62}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Text(0, 0.5, 'Prediction error')
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_119_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_145_1.pdf}
     \end{center}
     
     \hypertarget{plotting-predicted-vs.-true-values}{%
@@ -2627,7 +3116,7 @@ product using
 which creates the cross-product of two \texttt{DataFrame} objects.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{51}{\boxspacing}
+\prompt{In}{incolor}{63}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{dgrid} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
 \PY{n}{xgrid} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mi}{101}\PY{p}{)}
@@ -2643,7 +3132,7 @@ which creates the cross-product of two \texttt{DataFrame} objects.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{51}{\boxspacing}
+\prompt{Out}{outcolor}{63}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
    d     x         z
 0  0  0.00 -0.183693
@@ -2661,7 +3150,7 @@ on the right. Each plot contains three lines, one for each value of
 true values are dashed.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{52}{\boxspacing}
+\prompt{In}{incolor}{64}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mf}{2.75}\PY{p}{)}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
     \PY{n}{constrained\PYZus{}layout}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
@@ -2694,7 +3183,7 @@ true values are dashed.
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_123_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_149_0.pdf}
     \end{center}
     
     \hypertarget{exercise-2-polynomial-under--and-overfitting}{%
@@ -2710,7 +3199,7 @@ observation. We define a function \texttt{fcn(x)} which returns the true
 value for \(y\) without measurement error.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{53}{\boxspacing}
+\prompt{In}{incolor}{65}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k+kn}{import} \PY{n}{default\PYZus{}rng}
@@ -2733,7 +3222,7 @@ value for \(y\) without measurement error.
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{54}{\boxspacing}
+\prompt{In}{incolor}{66}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 
@@ -2748,14 +3237,14 @@ value for \(y\) without measurement error.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{54}{\boxspacing}
+\prompt{Out}{outcolor}{66}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Text(0, 0.5, '\$y\$')
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_126_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_152_1.pdf}
     \end{center}
     
     \hypertarget{polynomial-approximations}{%
@@ -2768,7 +3257,7 @@ each panel and corresponding \(d\), we create a transformation as
 create a polynomial in \(x\).
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{55}{\boxspacing}
+\prompt{In}{incolor}{67}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{PolynomialFeatures}
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k+kn}{import} \PY{n}{LinearRegression}
@@ -2802,7 +3291,7 @@ create a polynomial in \(x\).
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_128_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_154_0.pdf}
     \end{center}
     
     As the figure shows, a degree-0 polynomial is just a constant, while a
@@ -2819,7 +3308,7 @@ pipelines}\label{exercise-3-polynomial-fitting-with-scikit-learn-pipelines}}
 We create the sample in the same way as in exercise 2.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{56}{\boxspacing}
+\prompt{In}{incolor}{68}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k+kn}{import} \PY{n}{default\PYZus{}rng}
@@ -2845,7 +3334,7 @@ We create the sample in the same way as in exercise 2.
 a pipepline using \texttt{make\_pipeline()} as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{57}{\boxspacing}
+\prompt{In}{incolor}{69}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{PolynomialFeatures}
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{pipeline} \PY{k+kn}{import} \PY{n}{make\PYZus{}pipeline}
@@ -2868,7 +3357,7 @@ each step of the pipeline (this will not be visible in the PDF version
 of this notebook).
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{58}{\boxspacing}
+\prompt{In}{incolor}{70}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Show graphical representation of pipeline (only in Jupyter notebook)}
 \PY{n}{pipe\PYZus{}lr}
@@ -2876,7 +3365,7 @@ of this notebook).
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{58}{\boxspacing}
+\prompt{Out}{outcolor}{70}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Pipeline(steps=[('polynomialfeatures', PolynomialFeatures(degree=5)),
                 ('linearregression', LinearRegression())])
@@ -2887,7 +3376,7 @@ Pipeline(steps=[('polynomialfeatures', PolynomialFeatures(degree=5)),
 calling the \texttt{fit()} method of the pipeline object.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{59}{\boxspacing}
+\prompt{In}{incolor}{71}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Use pipeline to fit model}
 \PY{n}{pipe\PYZus{}lr}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{)}
@@ -2910,14 +3399,14 @@ calling the \texttt{fit()} method of the pipeline object.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{59}{\boxspacing}
+\prompt{Out}{outcolor}{71}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fd0db4000d0>
+<matplotlib.legend.Legend at 0x7fa6f8f339a0>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_137_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_163_1.pdf}
     \end{center}
     
     \hypertarget{exercise-4-optimal-polynomial-degree-with-cross-validation}{%
@@ -2929,7 +3418,7 @@ cross-validation}\label{exercise-4-optimal-polynomial-degree-with-cross-validati
 sample}\label{creating-and-plotting-the-sample}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{60}{\boxspacing}
+\prompt{In}{incolor}{72}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k+kn}{import} \PY{n}{default\PYZus{}rng}
@@ -2952,7 +3441,7 @@ sample}\label{creating-and-plotting-the-sample}}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{61}{\boxspacing}
+\prompt{In}{incolor}{73}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 
@@ -2965,14 +3454,14 @@ sample}\label{creating-and-plotting-the-sample}}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{61}{\boxspacing}
+\prompt{Out}{outcolor}{73}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Text(0, 0.5, '\$y\$')
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_140_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_166_1.pdf}
     \end{center}
     
     \hypertarget{function-to-perform-fitting-and-mse-computation}{%
@@ -2994,7 +3483,7 @@ The following implementation uses two distinct functions:
 \end{enumerate}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{62}{\boxspacing}
+\prompt{In}{incolor}{74}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{PolynomialFeatures}
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k+kn}{import} \PY{n}{LinearRegression}
@@ -3014,7 +3503,7 @@ The following implementation uses two distinct functions:
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{63}{\boxspacing}
+\prompt{In}{incolor}{75}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k+kn}{import} \PY{n}{KFold}
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k+kn}{import} \PY{n}{mean\PYZus{}squared\PYZus{}error}
@@ -3057,14 +3546,14 @@ function) on our sample data. The functions returns 10 different MSE
 values, one for the test sample of each split.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{64}{\boxspacing}
+\prompt{In}{incolor}{76}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{compute\PYZus{}splits\PYZus{}mse}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{n\PYZus{}splits}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{64}{\boxspacing}
+\prompt{Out}{outcolor}{76}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 array([1.05594738, 1.19357336, 0.68425812, 0.21465842, 0.64290297,
        0.89604156, 0.44140114, 0.51936866, 0.83432109, 0.59097661])
@@ -3081,7 +3570,7 @@ polynomial degree \texttt{d}. For each \texttt{d},
 average MSE and its standard deviation.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{65}{\boxspacing}
+\prompt{In}{incolor}{77}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{degrees} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{)}
 
@@ -3105,7 +3594,7 @@ average MSE and its standard deviation.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{65}{\boxspacing}
+\prompt{Out}{outcolor}{77}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 array([0.70734493, 0.42671672, 0.33501395, 0.23900256, 0.21559544,
        0.22029082, 0.22568436, 0.22577954, 0.22433218, 0.23387504,
@@ -3123,7 +3612,7 @@ We use
 to find the \emph{index} of the smallest average MSE.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{66}{\boxspacing}
+\prompt{In}{incolor}{78}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Min degree that minimises MSE}
 \PY{n}{imin} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmin}\PY{p}{(}\PY{n}{mse\PYZus{}mean}\PY{p}{)}
@@ -3143,7 +3632,7 @@ Intuitively, for low \(d\) the model underfits the data, whereas
 overfitting occurs for high values of \(d\).
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{67}{\boxspacing}
+\prompt{In}{incolor}{79}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{degrees}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
 \PY{c+c1}{\PYZsh{} Plot \PYZdq{}confidence interval\PYZdq{}}
@@ -3158,14 +3647,14 @@ overfitting occurs for high values of \(d\).
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{67}{\boxspacing}
+\prompt{Out}{outcolor}{79}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fd0b5cea9e0>
+<matplotlib.lines.Line2D at 0x7fa6f8462c20>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_151_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_177_1.pdf}
     \end{center}
     
     \hypertarget{plotting-the-fitted-model}{%
@@ -3176,7 +3665,7 @@ optimal \(d\) and we plot the predicted values on a uniformly spaced
 grid of \(x\)-values.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{68}{\boxspacing}
+\prompt{In}{incolor}{80}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{poly}\PY{p}{,} \PY{n}{lr} \PY{o}{=} \PY{n}{fit\PYZus{}poly}\PY{p}{(}\PY{n}{dmin}\PY{p}{,} \PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{)}
 
@@ -3196,14 +3685,14 @@ grid of \(x\)-values.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{68}{\boxspacing}
+\prompt{Out}{outcolor}{80}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7fd0b5bb8c10>
+<matplotlib.legend.Legend at 0x7fa6f82f70d0>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_153_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_179_1.pdf}
     \end{center}
     
     \hypertarget{exercise-5-automating-cross-validation-with-scikit-learn}{%
@@ -3216,7 +3705,7 @@ scikit-learn}\label{exercise-5-automating-cross-validation-with-scikit-learn}}
 We create the sample exactly as in the previous exercise.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{69}{\boxspacing}
+\prompt{In}{incolor}{81}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k+kn}{import} \PY{n}{default\PYZus{}rng}
@@ -3252,7 +3741,7 @@ to compute the MSEs for each split. This replaces the function we
 implemented in the previous exercise with much shorter code.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{70}{\boxspacing}
+\prompt{In}{incolor}{82}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k+kn}{import} \PY{n}{cross\PYZus{}val\PYZus{}score}
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{pipeline} \PY{k+kn}{import} \PY{n}{make\PYZus{}pipeline}
@@ -3293,7 +3782,7 @@ implemented in the previous exercise with much shorter code.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{70}{\boxspacing}
+\prompt{Out}{outcolor}{82}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 array([0.70734493, 0.42671672, 0.33501395, 0.23900256, 0.21559544,
        0.22029082, 0.22568436, 0.22577954, 0.22433218, 0.23387504,
@@ -3306,7 +3795,7 @@ array([0.70734493, 0.42671672, 0.33501395, 0.23900256, 0.21559544,
 Assuringly, we also find the same results.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{71}{\boxspacing}
+\prompt{In}{incolor}{83}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{imin} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmin}\PY{p}{(}\PY{n}{mse\PYZus{}mean}\PY{p}{)}
 \PY{n}{dmin} \PY{o}{=} \PY{n}{degrees}\PY{p}{[}\PY{n}{imin}\PY{p}{]}
@@ -3320,7 +3809,7 @@ Polynomial degree with min. MSE: 4
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{72}{\boxspacing}
+\prompt{In}{incolor}{84}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{degrees}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{fill\PYZus{}between}\PY{p}{(}\PY{n}{degrees}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{o}{\PYZhy{}}\PY{l+m+mf}{2.0}\PY{o}{*}\PY{n}{mse\PYZus{}std}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{o}{+}\PY{l+m+mf}{2.0}\PY{o}{*}\PY{n}{mse\PYZus{}std}\PY{p}{,} 
@@ -3334,14 +3823,14 @@ Polynomial degree with min. MSE: 4
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{72}{\boxspacing}
+\prompt{Out}{outcolor}{84}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fd0b5afbdc0>
+<matplotlib.lines.Line2D at 0x7fa6f83283d0>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_160_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_186_1.pdf}
     \end{center}
     
     \hypertarget{exercise-6-optimising-hyperparameters-with-validation-curves}{%
@@ -3354,7 +3843,7 @@ curves}\label{exercise-6-optimising-hyperparameters-with-validation-curves}}
 We create the sample in the same way we did in exercises 4 and 5.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{73}{\boxspacing}
+\prompt{In}{incolor}{85}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k+kn}{import} \PY{n}{default\PYZus{}rng}
@@ -3391,7 +3880,7 @@ the pipeline step called \texttt{polynomialfeatures}. Note that the
 the argument name.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{74}{\boxspacing}
+\prompt{In}{incolor}{86}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k+kn}{import} \PY{n}{validation\PYZus{}curve}
 
@@ -3426,7 +3915,7 @@ the argument name.
     The remainder of this exercise proceeds as before.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{75}{\boxspacing}
+\prompt{In}{incolor}{87}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{imin} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmin}\PY{p}{(}\PY{n}{mse\PYZus{}mean}\PY{p}{)}
 \PY{n}{dmin} \PY{o}{=} \PY{n}{degrees}\PY{p}{[}\PY{n}{imin}\PY{p}{]}
@@ -3440,7 +3929,7 @@ Polynomial degree with min. MSE: 4
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{76}{\boxspacing}
+\prompt{In}{incolor}{88}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{degrees}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{fill\PYZus{}between}\PY{p}{(}\PY{n}{degrees}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{o}{\PYZhy{}}\PY{l+m+mf}{2.0}\PY{o}{*}\PY{n}{mse\PYZus{}std}\PY{p}{,} \PY{n}{mse\PYZus{}mean}\PY{o}{+}\PY{l+m+mf}{2.0}\PY{o}{*}\PY{n}{mse\PYZus{}std}\PY{p}{,} 
@@ -3454,14 +3943,14 @@ Polynomial degree with min. MSE: 4
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{76}{\boxspacing}
+\prompt{Out}{outcolor}{88}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fd0b5a63fa0>
+<matplotlib.lines.Line2D at 0x7fa6f83c9540>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_167_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit10_files/unit10_193_1.pdf}
     \end{center}
     
 
