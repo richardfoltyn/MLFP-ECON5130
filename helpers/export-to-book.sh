@@ -14,6 +14,8 @@ OLDDIR="$(pwd)"
 
 OUTFILE="MLFP-part1"
 
+# Needs to be run from lectures/, otherwise module imports and data loading
+# will not work!
 cd "${BASEDIR}/lectures"
 
 nbmerge preface.ipynb unit*.ipynb -o "${OUTFILE}.ipynb"
@@ -21,6 +23,8 @@ nbmerge preface.ipynb unit*.ipynb -o "${OUTFILE}.ipynb"
 jupyter nbconvert \
     --execute \
     --to=latex \
+    --config="${BASEDIR}/jupyter_nbconvert_config.py" \
+    --allow-errors \
     --output-dir=${BASEDIR}/latex \
     ${OUTFILE}.ipynb
 
