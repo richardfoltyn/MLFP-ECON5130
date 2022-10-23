@@ -1,6 +1,7 @@
 name: MLFP
 channels:
   - defaults
+  - conda-forge
 dependencies:
   - python=3.10
   - numpy=1.21.*
@@ -12,8 +13,8 @@ dependencies:
   - notebook
   - scikit-learn
   - statsmodels
-  - yfinance
-  - nasdaq-data-link
+  - conda-forge:yfinance
+  - conda-forge:nasdaq-data-link
   - pandas-datareader
   - pip
   - pip:
