@@ -398,7 +398,7 @@
 We already encountered NumPy arrays and their basic usage throughout
 this course. In this unit, we will take a more in-depth look at NumPy.
 
-\hypertarget{why-numpy-arrays}{%
+    \hypertarget{why-numpy-arrays}{%
 \subsection{Why NumPy arrays?}\label{why-numpy-arrays}}
 
 Why don't we just stick with built-in types such as Python lists to
@@ -411,10 +411,12 @@ performance:
   \texttt{list} objects can store arbitrary data types, and the data
   type of any item can change:
 
-\begin{verbatim}
-items = ['foo']
-items[0] = 1.0      # item was a string, now it's a float!
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{items }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}foo\textquotesingle{}}\NormalTok{]}
+\NormalTok{items[}\DecValTok{0}\NormalTok{] }\OperatorTok{=} \FloatTok{1.0}      \CommentTok{\# item was a string, now it\textquotesingle{}s a float!}
+\end{Highlighting}
+\end{Shaded}
 \item
   There is no guarantee where in memory the data will be stored. In
   fact, two consecutive items could be very ``far'' from each other in
@@ -448,17 +450,21 @@ This means that
   NumPy arrays support numerous operations used in scientific computing.
   For example, with a NumPy array we can write
 
-\begin{verbatim}
-x = np.array([1, 2, 3])
-y = x + 1       # We would expect this to work
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ np.array([}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{])}
+\NormalTok{y }\OperatorTok{=}\NormalTok{ x }\OperatorTok{+} \DecValTok{1}       \CommentTok{\# We would expect this to work}
+\end{Highlighting}
+\end{Shaded}
 
   With lists, however, we cannot:
 
-\begin{verbatim}
-x = [1, 2, 3]
-y = x + 1       # Does not work!
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\NormalTok{y }\OperatorTok{=}\NormalTok{ x }\OperatorTok{+} \DecValTok{1}       \CommentTok{\# Does not work!}
+\end{Highlighting}
+\end{Shaded}
 
   Lists don't implement an addition operator that accepts integer
   arguments, so this code triggers an error.
@@ -479,7 +485,7 @@ simple example:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-162 µs ± 1.01 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+159 µs ± 445 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -494,7 +500,7 @@ simple example:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-900 ns ± 1.62 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+928 ns ± 18.8 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
     \end{Verbatim}
 
     \begin{itemize}
@@ -524,8 +530,8 @@ creation routines:
 \begin{itemize}
 \tightlist
 \item
-  \texttt{np.array()} creates an array from a given argument, which can
-  be
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.array.html}{\texttt{np.array()}}
+  creates an array from a given argument, which can be
 
   \begin{itemize}
   \tightlist
@@ -538,17 +544,19 @@ creation routines:
     \texttt{range()}.
   \end{itemize}
 \item
-  \texttt{np.empty()} allocates memory for a given array shape, but does
-  not overwrite it with initial values.
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.empty.html}{\texttt{np.empty()}}
+  allocates memory for a given array shape, but does not overwrite it
+  with initial values.
 \item
-  \texttt{np.zeros()} creates an array of a given shape and initializes
-  it to zeros.
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.zeros.html}{\texttt{np.zeros()}}
+  creates an array of a given shape and initializes it to zeros.
 \item
-  \texttt{np.ones()} creates an array of a given shape and initializes
-  it to ones.
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.ones.html}{\texttt{np.ones()}}
+  creates an array of a given shape and initializes it to ones.
 \item
-  \texttt{np.arange(start,stop,step)} creates an array with evenly
-  spaced elements over the range \([start,stop)\).
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.arange.html}{\texttt{np.arange(start,stop,step)}}
+  creates an array with evenly spaced elements over the range
+  \([start,stop)\).
 
   \begin{itemize}
   \tightlist
@@ -560,14 +568,16 @@ creation routines:
     resulting array!
   \end{itemize}
 \item
-  \texttt{np.linspace(start,stop,num)} returns a vector of \texttt{num}
-  elements which are evenly spaced over the interval \([start,stop]\).
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.linspace.html}{\texttt{np.linspace(start,stop,num)}}
+  returns a vector of \texttt{num} elements which are evenly spaced over
+  the interval \([start,stop]\).
 \item
-  \texttt{np.identity(n)} returns the identity matrix of a size
-  \(n \times n\).
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.identity.html}{\texttt{np.identity(n)}}
+  returns the identity matrix of a size \(n \times n\).
 \item
-  \texttt{np.eye()} is a more flexible variant of \texttt{identity()}
-  that can, for example, also create non-squared matrices.
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.eye.html}{\texttt{np.eye()}}
+  is a more flexible variant of \texttt{identity()} that can, for
+  example, also create non-squared matrices.
 \end{itemize}
 
 There are many more array creation functions for more exotic use-cases,
@@ -750,8 +760,8 @@ built-in type \texttt{float} has neither a \texttt{shape}, nor an
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{11}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([4.66099943e-310, 0.00000000e+000, 4.66099910e-310, 4.66099911e-310,
-       2.37151510e-322])
+array([4.66962811e-310, 0.00000000e+000, 4.66850624e-310, 4.66850624e-310,
+       6.94586692e-310])
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -789,8 +799,9 @@ array([[[1., 1., 1.],
 \end{Verbatim}
 \end{tcolorbox}
         
-    Recall from unit 2 that we can use the \texttt{reshape()} method to
-convert arrays to a different shape:
+    Recall from unit 2 that we can use the
+\href{https://numpy.org/doc/stable/reference/generated/numpy.ndarray.reshape.html}{\texttt{reshape()}}
+method to convert arrays to a different shape:
 
 \begin{itemize}
 \tightlist
@@ -1216,12 +1227,17 @@ numerous functions defined in NumPy, such as
 \begin{itemize}
 \tightlist
 \item
-  \texttt{np.sqrt}: square root
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.sqrt.html}{\texttt{np.sqrt()}}:
+  square root
 \item
-  \texttt{np.exp}, \texttt{np.log}, \texttt{np.log10}: exponential and
-  logarithmic functions
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.exp.html}{\texttt{np.exp()}},
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.log.html}{\texttt{np.log()}},
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.log10.html}{\texttt{np.log10()}}:
+  exponential and logarithmic functions
 \item
-  \texttt{np.sin}, \texttt{np.cos}, \etc: trigonometric functions
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.sin.html}{\texttt{np.sin()}},
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.cos.html}{\texttt{np.cos()}},
+  \etc: trigonometric functions
 \end{itemize}
 
     You can find a complete list of mathematical functions in the NumPy
@@ -1277,15 +1293,18 @@ array([[0, 3],
 \end{Verbatim}
 \end{tcolorbox}
         
-    For higher-dimensional arrays, the \texttt{np.transpose()} function can
-be used to permute the axes of an array. For two-dimensional arrays,
-\texttt{np.transpose(mat)} and \texttt{mat.T} are equivalent.
+    For higher-dimensional arrays, the
+\href{https://numpy.org/doc/stable/reference/generated/numpy.transpose.html}{\texttt{np.transpose()}}
+function can be used to permute the axes of an array. For
+two-dimensional arrays, \texttt{np.transpose(mat)} and \texttt{mat.T}
+are equivalent.
 
 \textbf{Matrix multiplication}
 
-Matrix multiplication is performed using the \texttt{np.dot()} function
-(``dot product''). The operands need not be matrices but can be vectors
-as well, or even high-dimensional arrays (the result is then not
+Matrix multiplication is performed using the
+\href{https://numpy.org/doc/stable/reference/generated/numpy.dot.html}{\texttt{np.dot()}}
+function (``dot product''). The operands need not be matrices but can be
+vectors as well, or even high-dimensional arrays (the result is then not
 entirely obvious and one should check the
 \href{https://numpy.org/doc/stable/reference/generated/numpy.dot.html}{documentation}).
 
@@ -1403,23 +1422,33 @@ Basic reduction operations include:
 \begin{itemize}
 \tightlist
 \item
-  \texttt{np.sum()}: sum of array elements
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.sum.html}{\texttt{np.sum()}}:
+  sum of array elements
 \item
-  \texttt{np.prod()}: product of array elements
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.prod.html}{\texttt{np.prod()}}:
+  product of array elements
 \item
-  \texttt{np.amin()}, \texttt{np.amax()}: minimum and maximum element
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.amin.html}{\texttt{np.amin()}},
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.amax.html}{\texttt{np.amax()}}:
+  minimum and maximum element
 \item
-  \texttt{np.argmin()}, \texttt{np.argmax()}: location of minimum and
-  maximum element
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.argmin.html}{\texttt{np.argmin()}},
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.argmax.html}{\texttt{np.argmax()}}:
+  location of minimum and maximum element
 \item
-  \texttt{np.mean()}, \texttt{np.average()}: mean of array elements
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.mean.html}{\texttt{np.mean()}},
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.average.html}{\texttt{np.average()}}:
+  mean of array elements
 \item
-  \texttt{np.median()}: median of array elements
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.median.html}{\texttt{np.median()}}:
+  median of array elements
 \item
-  \texttt{np.std()}, \texttt{np.var()}: standard deviation and variance
-  of array elements
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.std.html}{\texttt{np.std()}},
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.var.html}{\texttt{np.var()}}:
+  standard deviation and variance of array elements
 \item
-  \texttt{np.percentile()}: percentiles of array elements
+  \href{https://numpy.org/doc/stable/reference/generated/numpy.percentile.html}{\texttt{np.percentile()}}:
+  percentiles of array elements
 \end{itemize}
 
 Most if not all reductions accept an \texttt{axis} argument which
@@ -1490,15 +1519,16 @@ array([0.15, 0.5 , 0.85])
 \end{Verbatim}
 \end{tcolorbox}
         
-    \hypertarget{broadcasting}{%
-\subsubsection{Broadcasting}\label{broadcasting}}
+
+\hypertarget{broadcasting}{%
+\subsection{Broadcasting}\label{broadcasting}}
 
 Element-wise operations in most programming languages require input
 arrays to have identical shapes. NumPy relaxes this constraint and
 allows us to use arrays with different shapes that can be ``broadcast''
 to identical shapes.
 
-\textbf{Simple example}
+    \textbf{Simple example}
 
 What do we mean by ``broadcasting''? We introduce the concept using a
 specific example, and will discuss the technical details below.
@@ -1624,7 +1654,7 @@ For more examples, see the official NumPy
 \href{https://numpy.org/doc/stable/user/basics.broadcasting.html}{tutorial}
 on broadcasting.
 
-    \textbf{Technical details}
+    \textbf{Technical details (advanced)}
 
 We are now ready to look at the technical details underlying
 broadcasting. The NumPy
@@ -1793,7 +1823,7 @@ explicitly expand \texttt{b}:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-2.04 µs ± 5.17 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+2.02 µs ± 22.8 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -1805,7 +1835,7 @@ explicitly expand \texttt{b}:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-5.42 µs ± 75.7 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+5.72 µs ± 53.9 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
     \end{Verbatim}
 
     As you see, not only is the second operation more complex and difficult
@@ -1869,7 +1899,7 @@ vectorised implementation reveals some striking differences:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-20.8 µs ± 27.8 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+21.7 µs ± 368 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -1881,7 +1911,7 @@ vectorised implementation reveals some striking differences:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-380 ns ± 1.07 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+370 ns ± 5.65 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
     \end{Verbatim}
 
     We see that the vectorised variant is about 100 times faster! What is
@@ -1906,7 +1936,9 @@ be implemented in NumPy but which can use vectorised building blocks to
 speed up computations.
 
 As an example, consider the following function which computes the sum of
-finite of elements of an array, ignoring infinity and NaNs.
+finite of elements of an array, ignoring infinity and NaNs which we
+detect using the function
+\href{https://numpy.org/doc/stable/reference/generated/numpy.isfinite.html}{\texttt{np.isfinite()}}.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{58}{\boxspacing}
@@ -1950,7 +1982,7 @@ the performance advantage of vectorised code:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-130 µs ± 599 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+126 µs ± 1.35 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -1961,7 +1993,7 @@ the performance advantage of vectorised code:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-4.27 µs ± 9.45 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+4.31 µs ± 25.4 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
     \end{Verbatim}
 
     The vectorised version is approximately 25 times faster, despite the
@@ -1987,7 +2019,8 @@ fact that
 This illustrates that creating vectorised code by combining several
 vectorised functions also yields considerable speed-ups.
 
-As an aside, note that NumPy actually implements \texttt{np.nansum()}
+As an aside, note that NumPy actually implements
+\href{https://numpy.org/doc/stable/reference/generated/numpy.nansum.html}{\texttt{np.nansum()}}
 which drops NaNs, but it does not discard infinite values.
 
 
@@ -2067,8 +2100,8 @@ which we can verify using the built-in \texttt{id()} function:
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-140084919321008
-140084919321392
+140585273511248
+140585273508656
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -2162,7 +2195,7 @@ Conversely, a \emph{copy} is created whenever
 \end{itemize}
 
 Moreover, you can always force NumPy to create a copy by calling
-\texttt{np.copy()}!
+\href{https://numpy.org/doc/stable/reference/generated/numpy.copy.html}{\texttt{np.copy()}}!
 
 \emph{Examples:}
 
@@ -2634,8 +2667,8 @@ array([3, 4, 5])
 \end{tcolorbox}
         
 
-\hypertarget{exercises}{%
-\subsection{Optional exercises}\label{exercises}}
+\hypertarget{optional-exercises}{%
+\subsection{Optional exercises}\label{optional-exercises}}
 
     \hypertarget{exercise-1-broadcasting}{%
 \subsubsection{Exercise 1: Broadcasting}\label{exercise-1-broadcasting}}
@@ -2715,13 +2748,9 @@ indexing.
 \item
   Create a square matrix of zeros with shape \texttt{(n,n)} for
   \texttt{n\ =\ 5} and \texttt{dtype\ =\ int} as its data type:
-
-\begin{verbatim}
-a = np.zeros((n,n), dtype=int)
-\end{verbatim}
-
-  Use integer array indexing to modify its diagonal to construct the
-  following matrix, where omitted elements are zero: \[
+  \texttt{a\ =\ np.zeros((n,n),\ dtype=int)} Use integer array indexing
+  to modify its diagonal to construct the following matrix, where
+  omitted elements are zero: \[
   \begin{bmatrix}
   1 &   &   &   & \\
     & 2 &   &   & \\
@@ -3575,7 +3604,7 @@ against NumPy's.
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-59.2 µs ± 309 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+57.3 µs ± 518 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -3586,7 +3615,7 @@ against NumPy's.
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-23.2 µs ± 1.94 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+22.7 µs ± 1.56 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     You may be surprised that \texttt{np.nanmean()} is only twice as fast as
@@ -3663,7 +3692,7 @@ of copy-pasting it again and again!
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_201_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_203_0.pdf}
     \end{center}
     
     \hypertarget{locating-maxima-using-loops}{%
@@ -3738,12 +3767,12 @@ the maxima to the \emph{same} plot.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{117}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7f67fe761450>
+<matplotlib.legend.Legend at 0x7fdc7a01e080>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_206_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit05_files/unit05_208_1.pdf}
     \end{center}
     
     \hypertarget{vectorised-version}{%
@@ -3801,7 +3830,7 @@ NumPy version is approximately 100 times faster!
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-92 µs ± 177 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+91.9 µs ± 1.09 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -3813,7 +3842,7 @@ NumPy version is approximately 100 times faster!
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-1.3 µs ± 17.5 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+1.3 µs ± 11.9 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
     \end{Verbatim}
 
 
