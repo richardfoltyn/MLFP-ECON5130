@@ -164,7 +164,10 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \newcommand*{\mytitle}{Unit 5: Advanced NumPy}
+    \newcommand*{\unitcounter}{5}
+    \addtocounter{section}{\unitcounter}
+    \addtocounter{section}{-1}
+    \newcommand*{\mytitle}{Unit \unitcounter: Advanced NumPy}
 
     \input{overrides-post}
 
