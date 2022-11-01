@@ -163,7 +163,10 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \newcommand*{\mytitle}{Unit 3: Reusing code -- Functions, modules and packages}
+    \newcommand*{\unitcounter}{3}
+    \addtocounter{section}{\unitcounter}
+    \addtocounter{section}{-1}
+    \newcommand*{\mytitle}{Unit \unitcounter: Reusing code -- Functions, modules and packages}
 
     \input{overrides-post}
     
@@ -813,8 +816,7 @@ scope, even though this should usually be avoided:
 \item
   Conversely, if a function starts modifying values in the caller's
   environment, there is no way to be sure what the function is changing
-  in the outer scope\\
-  other than examining its source code.
+  in the outer scope other than by examining its source code.
 \end{itemize}
 
 Consider first the following attempt to modify a value defined outside
@@ -1164,7 +1166,7 @@ func2 called with argument foo
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-func1 called with argument <function func2 at 0x7fc342370c10>
+func1 called with argument <function func2 at 0x7f40a16f1240>
     \end{Verbatim}
 
     \hypertarget{lambda-expressions}{%
@@ -1173,9 +1175,11 @@ func1 called with argument <function func2 at 0x7fc342370c10>
 You can think of lambda expressions as light-weight functions. The
 syntax is
 
-\begin{verbatim}
-lambda x: <do something with x>
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{lambda}\NormalTok{ x: }\OperatorTok{\textless{}}\NormalTok{do something }\ControlFlowTok{with}\NormalTok{ x}\OperatorTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
 
 The return value of a lambda expression is whatever its body evaluates
 to. There is no need (or possibility) to explicitly add a
@@ -1279,16 +1283,18 @@ lectures/
 
 The module \texttt{unit03\_mod.py} contains the following definitions:
 
-\begin{verbatim}
-# Contents of unit03_mod.py
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Contents of unit03\_mod.py}
 
-# global variable in this module
-var = 'Variable defined in unit03_mod'
+\CommentTok{\# global variable in this module}
+\NormalTok{var }\OperatorTok{=} \StringTok{\textquotesingle{}Variable defined in unit03\_mod\textquotesingle{}}
 
-# global function in this module
-def func():
-    print(f'func in module unit03_mod called')
-\end{verbatim}
+\CommentTok{\# global function in this module}
+\KeywordTok{def}\NormalTok{ func():}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}func in module unit03\_mod called\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
     \textbf{Module search path}
 
@@ -1323,12 +1329,12 @@ To fix this, check the module search path as follows:
 \prompt{Out}{outcolor}{33}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 ['/home/richard/repos/teaching/MLFP-ECON5130/lectures',
- '/home/richard/.conda/envs/py3-default/lib/python310.zip',
- '/home/richard/.conda/envs/py3-default/lib/python3.10',
- '/home/richard/.conda/envs/py3-default/lib/python3.10/lib-dynload',
+ '/home/richard/.conda/envs/MLFP/lib/python310.zip',
+ '/home/richard/.conda/envs/MLFP/lib/python3.10',
+ '/home/richard/.conda/envs/MLFP/lib/python3.10/lib-dynload',
  '',
- '/home/richard/.conda/envs/py3-default/lib/python3.10/site-packages',
- '/home/richard/.conda/envs/py3-default/lib/python3.10/site-
+ '/home/richard/.conda/envs/MLFP/lib/python3.10/site-packages',
+ '/home/richard/.conda/envs/MLFP/lib/python3.10/site-
 packages/PyQt5\_sip-12.11.0-py3.10-linux-x86\_64.egg']
 \end{Verbatim}
 \end{tcolorbox}
@@ -1466,9 +1472,9 @@ widely used modules such as \texttt{numpy}:
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{39}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{unit03\PYZus{}mod} \PY{k}{as} \PY{n+nn}{u4m}
+\PY{k+kn}{import} \PY{n+nn}{unit03\PYZus{}mod} \PY{k}{as} \PY{n+nn}{u3m}
 
-\PY{n}{u4m}\PY{o}{.}\PY{n}{func}\PY{p}{(}\PY{p}{)}    \PY{c+c1}{\PYZsh{} call function from module unit03\PYZus{}mod}
+\PY{n}{u3m}\PY{o}{.}\PY{n}{func}\PY{p}{(}\PY{p}{)}    \PY{c+c1}{\PYZsh{} call function from module unit03\PYZus{}mod}
 \end{Verbatim}
 \end{tcolorbox}
 
@@ -1494,8 +1500,8 @@ some package. For example, the NumPy library is a collection of
 packages.
 
 
-\hypertarget{exercises}{%
-\subsection{Optional exercises}\label{exercises}}
+\hypertarget{optional-exercises}{%
+\subsection{Optional exercises}\label{optional-exercises}}
 
     \hypertarget{exercise-1-sign-function}{%
 \subsubsection{Exercise 1: Sign
@@ -1521,11 +1527,13 @@ all arguments are numeric.
 
 Test your function with the following arguments:
 
-\begin{verbatim}
-my_sum(10.0)    # one argument
-my_sum(1,2,3)   # multiple arguments
-my_sum()        # no arguments
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_sum(}\FloatTok{10.0}\NormalTok{)    }\CommentTok{\# one argument}
+\NormalTok{my\_sum(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)   }\CommentTok{\# multiple arguments}
+\NormalTok{my\_sum()        }\CommentTok{\# no arguments}
+\end{Highlighting}
+\end{Shaded}
 
 Make sure that in the last case your function returns zero, which is the
 sum over an empty set.
@@ -1711,23 +1719,17 @@ function
 \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html}{\texttt{minimize\_scalar()}}
 to perform the minimization as follows:
 
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{43}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k+kn}{import} \PY{n}{minimize\PYZus{}scalar}
+    \begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ scipy.optimize }\ImportTok{import}\NormalTok{ minimize\_scalar}
 
-\PY{c+c1}{\PYZsh{} Call minimizer with custom function fcn}
-\PY{n}{result} \PY{o}{=} \PY{n}{minimize\PYZus{}scalar}\PY{p}{(}\PY{n}{fcn}\PY{p}{)}
+\CommentTok{\# Call minimizer with custom function fcn}
+\NormalTok{result }\OperatorTok{=}\NormalTok{ minimize\_scalar(fcn)}
 
-\PY{c+c1}{\PYZsh{} Print minimisation result}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Minimum found at }\PY{l+s+si}{\PYZob{}}\PY{n}{result}\PY{o}{.}\PY{n}{x}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'fx' is not defined
-
-    \end{Verbatim}
+\CommentTok{\# Print minimisation result}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Minimum found at }\SpecialCharTok{\{}\NormalTok{result}\SpecialCharTok{.x\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
     For this to work, we first need to define the objective function
 \texttt{fcn} or pass a lambda expression. Importantly,
@@ -1778,24 +1780,18 @@ function, we proceed as follows:
 
 The code fragment below illustrates all of these points.
 
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{44}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k+kn}{import} \PY{n}{minimize}
+    \begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ scipy.optimize }\ImportTok{import}\NormalTok{ minimize}
 
-\PY{k}{def} \PY{n+nf}{fcn}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{:}
-    \PY{c+c1}{\PYZsh{} Compute function value f(x, a, b)}
-    \PY{c+c1}{\PYZsh{} Return NEGATIVE function value for minimiser}
-    \PY{k}{return} \PY{o}{\PYZhy{}} \PY{n}{fx}
+\KeywordTok{def}\NormalTok{ fcn(x, a, b):}
+    \CommentTok{\# Compute function value f(x, a, b)}
+    \CommentTok{\# Return NEGATIVE function value for minimiser}
+    \ControlFlowTok{return} \OperatorTok{{-}}\NormalTok{ fx}
 
-\PY{n}{result} \PY{o}{=} \PY{n}{minimize}\PY{p}{(}\PY{n}{fcn}\PY{p}{,} \PY{n}{x0}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{args}\PY{o}{=}\PY{p}{(}\PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{NameError}\textcolor{ansi-red}{:} name 'b' is not defined
-
-    \end{Verbatim}
+\NormalTok{result }\OperatorTok{=}\NormalTok{ minimize(fcn, x0}\OperatorTok{=}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{), args}\OperatorTok{=}\NormalTok{(a, b))}
+\end{Highlighting}
+\end{Shaded}
 
     Now consider the function
 \(f(x_1, x_2; a,b) = - \Bigl[(x_1 - a)^2 + (x_2 - b)^2 \Bigr]\) where
@@ -1814,7 +1810,7 @@ as additional arguments.
 \subsubsection{Solution for exercise 1}\label{solution-for-exercise-1}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{45}{\boxspacing}
+\prompt{In}{incolor}{43}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 
@@ -1856,7 +1852,7 @@ declare an \texttt{*args} argument.
 One possible implementation of \texttt{my\_sum()} looks as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{46}{\boxspacing}
+\prompt{In}{incolor}{44}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{my\PYZus{}sum}\PY{p}{(}\PY{o}{*}\PY{n}{args}\PY{p}{)}\PY{p}{:}
     \PY{c+c1}{\PYZsh{} Initialise sum to 0}
@@ -1883,7 +1879,7 @@ One possible implementation of \texttt{my\_sum()} looks as follows:
 \texttt{sum()}, or preferably the NumPy variant \texttt{np.sum()}:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{47}{\boxspacing}
+\prompt{In}{incolor}{45}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 
@@ -1904,7 +1900,7 @@ One possible implementation of \texttt{my\_sum()} looks as follows:
     \end{Verbatim}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{47}{\boxspacing}
+\prompt{Out}{outcolor}{45}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 0.0
 \end{Verbatim}
@@ -1916,7 +1912,7 @@ One possible implementation of \texttt{my\_sum()} looks as follows:
 The recursive definition of \texttt{fibonacci(i)} could look like this:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{48}{\boxspacing}
+\prompt{In}{incolor}{46}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{fibonacci}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{:}
     \PY{k}{if} \PY{n}{i} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
@@ -1940,7 +1936,7 @@ The recursive definition of \texttt{fibonacci(i)} could look like this:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{48}{\boxspacing}
+\prompt{Out}{outcolor}{46}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 \end{Verbatim}
@@ -1955,7 +1951,7 @@ function recursively arbitrarily many times. You can find out what this
 limit is as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{49}{\boxspacing}
+\prompt{In}{incolor}{47}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{sys}
 \PY{n+nb}{print}\PY{p}{(}\PY{n}{sys}\PY{o}{.}\PY{n}{getrecursionlimit}\PY{p}{(}\PY{p}{)}\PY{p}{)}
@@ -1973,7 +1969,7 @@ The following code shows a function computing the factorial \(n!\) using
 recursion:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{50}{\boxspacing}
+\prompt{In}{incolor}{48}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
     \PY{k}{if} \PY{n}{n} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
@@ -1988,7 +1984,7 @@ recursion:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{50}{\boxspacing}
+\prompt{Out}{outcolor}{48}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
 \end{Verbatim}
@@ -1999,7 +1995,7 @@ recursion:
 numbers:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{51}{\boxspacing}
+\prompt{In}{incolor}{49}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{n}{fact10} \PY{o}{=}  \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{prod}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{n}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
@@ -2008,7 +2004,7 @@ numbers:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{51}{\boxspacing}
+\prompt{Out}{outcolor}{49}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 (1.0, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
 \end{Verbatim}
@@ -2019,7 +2015,7 @@ numbers:
 argument passed to \texttt{np.prod()} for \texttt{n=0}:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{52}{\boxspacing}
+\prompt{In}{incolor}{50}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{n} \PY{o}{=} \PY{l+m+mi}{0}
 \PY{c+c1}{\PYZsh{} We have to embed range() in an expression that forces the Python}
@@ -2029,7 +2025,7 @@ argument passed to \texttt{np.prod()} for \texttt{n=0}:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{52}{\boxspacing}
+\prompt{Out}{outcolor}{50}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 ()
 \end{Verbatim}
@@ -2045,7 +2041,7 @@ You can get around this by explicitly specifying the data type using the
 \texttt{dtype} argument, which is accepted by many NumPy functions.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{53}{\boxspacing}
+\prompt{In}{incolor}{51}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{c+c1}{\PYZsh{} Force result to be of integer type}
@@ -2055,7 +2051,7 @@ You can get around this by explicitly specifying the data type using the
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{53}{\boxspacing}
+\prompt{Out}{outcolor}{51}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
 \end{Verbatim}
@@ -2066,7 +2062,7 @@ You can get around this by explicitly specifying the data type using the
 if they are empty:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{54}{\boxspacing}
+\prompt{In}{incolor}{52}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{c+c1}{\PYZsh{} Force result to be of integer type}
@@ -2076,7 +2072,7 @@ if they are empty:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{54}{\boxspacing}
+\prompt{Out}{outcolor}{52}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
 \end{Verbatim}
@@ -2087,7 +2083,7 @@ function yourself, as there is one in the \texttt{math} module shipped
 with Python:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{55}{\boxspacing}
+\prompt{In}{incolor}{53}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{math}
 \PY{n}{fact10} \PY{o}{=} \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
@@ -2096,7 +2092,7 @@ with Python:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{55}{\boxspacing}
+\prompt{Out}{outcolor}{53}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880)
 \end{Verbatim}
@@ -2134,7 +2130,7 @@ permissible number of iterations as an optional argument
 \texttt{maxiter}.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{56}{\boxspacing}
+\prompt{In}{incolor}{54}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{bisect}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{tol}\PY{o}{=}\PY{l+m+mf}{1.0e\PYZhy{}6}\PY{p}{,} \PY{n}{xtol}\PY{o}{=}\PY{l+m+mf}{1.0e\PYZhy{}6}\PY{p}{,} \PY{n}{maxiter}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{:}
 
@@ -2220,7 +2216,7 @@ Iteration 20: f(mid) = -1.9073e-06
     \end{Verbatim}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{56}{\boxspacing}
+\prompt{Out}{outcolor}{54}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 -2.000000238418579
 \end{Verbatim}
@@ -2234,7 +2230,7 @@ interval boundaries \texttt{a} and \texttt{b} which we then pass to
 SciPy's \texttt{bisect()}.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{57}{\boxspacing}
+\prompt{In}{incolor}{55}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k+kn}{import} \PY{n}{bisect}
 
@@ -2267,7 +2263,7 @@ simply pass a lambda expression to \texttt{minimize\_scalar()} as
 follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{58}{\boxspacing}
+\prompt{In}{incolor}{56}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k+kn}{import} \PY{n}{minimize\PYZus{}scalar}
 
@@ -2290,7 +2286,7 @@ It is straightforward to show that the maximum of this function is
 located at \((1, -2)\) which is what \texttt{minimize()} returns:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{59}{\boxspacing}
+\prompt{In}{incolor}{57}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k+kn}{import} \PY{n}{minimize}
 
