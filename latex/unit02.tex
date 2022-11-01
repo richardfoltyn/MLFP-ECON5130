@@ -164,7 +164,10 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \newcommand*{\mytitle}{Unit 2: Control flow and list comprehensions}
+    \newcommand*{\unitcounter}{2}
+    \addtocounter{section}{\unitcounter}
+    \addtocounter{section}{-1}
+    \newcommand*{\mytitle}{Unit \unitcounter: Control flow and list comprehensions}
 
     \input{overrides-post}
     
