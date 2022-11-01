@@ -164,7 +164,10 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \newcommand*{\mytitle}{Unit 4: Plotting}
+    \newcommand*{\unitcounter}{4}
+    \addtocounter{section}{\unitcounter}
+    \addtocounter{section}{-1}
+    \newcommand*{\mytitle}{Unit \unitcounter: Plotting}
 
     \input{overrides-post}
     
@@ -427,9 +430,11 @@ When using matplotlib in interactive Jupyter notebooks, we can enable a
 more fancy plotting backend that allows us to dynamically adjust the
 zoom, \etc This is done by adding the line
 
-\begin{verbatim}
-%matplotlib widget
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\OperatorTok{\%}\NormalTok{matplotlib widget}
+\end{Highlighting}
+\end{Shaded}
 
 For this to work, the \texttt{ipympl} package needs to be installed, see
 \href{https://github.com/matplotlib/ipympl}{here} for details. Note that
@@ -459,7 +464,7 @@ function is a line defined by a list of \(y\)-values.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f04ffc1aec0>]
+[<matplotlib.lines.Line2D at 0x7f5820e53220>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -483,7 +488,7 @@ to plot for a given set of \(x\)-values like this:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f04fce46f20>]
+[<matplotlib.lines.Line2D at 0x7f5819f7f0d0>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -505,8 +510,8 @@ single graph:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f04fccde260>,
- <matplotlib.lines.Line2D at 0x7f04fccdf310>]
+[<matplotlib.lines.Line2D at 0x7f5819fff2e0>,
+ <matplotlib.lines.Line2D at 0x7f5819fff400>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -592,7 +597,7 @@ legends
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f04fcb5c850>]
+[<matplotlib.lines.Line2D at 0x7f5819e6c790>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -615,7 +620,7 @@ explicitly using keyword arguments:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f04fcbcdf90>]
+[<matplotlib.lines.Line2D at 0x7f5819ee1fc0>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -657,7 +662,7 @@ We can write thus rewrite the above code as follows:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f04fcc533d0>]
+[<matplotlib.lines.Line2D at 0x7f5819f534c0>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -695,7 +700,7 @@ function to create scatter plots in a similar fashion to line plots:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{8}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.collections.PathCollection at 0x7f04fcacb790>
+<matplotlib.collections.PathCollection at 0x7f5819de3940>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -723,7 +728,7 @@ same style on all points plotted in that particular function call.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{9}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.collections.PathCollection at 0x7f04fcb3bb50>
+<matplotlib.collections.PathCollection at 0x7f5819e47c40>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -821,11 +826,11 @@ Matplotlib has numerous functions to add labels and annotations:
   same order as the plotted data.
 \item
   Use
-  \href{(https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.text.html)}{\texttt{text()}}
+  \href{https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.text.html}{\texttt{text()}}
   to add additional text at arbitrary locations.
 \item
   Use
-  \href{(https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.annotate.html)}{\texttt{annotate()}}
+  \href{https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.annotate.html}{\texttt{annotate()}}
   to display text next to some data point; it's easier to position
   correctly than \texttt{text()} and you can add arrows!
 \end{itemize}
@@ -973,7 +978,7 @@ minimum and maximum as follows:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7f04fc82e5c0>
+<matplotlib.lines.Line2D at 0x7f5819b4d930>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -1005,9 +1010,11 @@ objects. The easiest way to accomplish this is using the
 \href{https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html}{\texttt{subplots()}}
 function, like this:
 
-\begin{verbatim}
-fig, ax = plt.subplots()
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()}
+\end{Highlighting}
+\end{Shaded}
 
 As an example, we recreate the graph from the section on labels and
 annotations using the object-oriented interface:
@@ -1159,7 +1166,7 @@ to plot into individual panels:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{19}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-[<matplotlib.lines.Line2D at 0x7f04fc3a7d30>]
+[<matplotlib.lines.Line2D at 0x7f58196e0130>]
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -1293,9 +1300,11 @@ identical for all columns of \(y\)-values.
 
   Assume there are 5 such polynomials with \(a\)'s given by the values
 
-\begin{verbatim}
-a = np.linspace(0.4, 4.0, 5)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OperatorTok{=}\NormalTok{ np.linspace(}\FloatTok{0.4}\NormalTok{, }\FloatTok{4.0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
   \begin{itemize}
   \tightlist
@@ -1314,11 +1323,13 @@ a = np.linspace(0.4, 4.0, 5)
   elements of the following arrays as plot styles for the \texttt{i}-th
   polynomial:
 
-\begin{verbatim}
-colors = ['red', 'blue', 'black', 'green', 'purple']
-linewidths = [1.0, 1.5, 2.0, 1.5, 1.0]
-linestyles = ['-', '--', '-.', ':', '-']
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{colors }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}black\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}purple\textquotesingle{}}\NormalTok{]}
+\NormalTok{linewidths }\OperatorTok{=}\NormalTok{ [}\FloatTok{1.0}\NormalTok{, }\FloatTok{1.5}\NormalTok{, }\FloatTok{2.0}\NormalTok{, }\FloatTok{1.5}\NormalTok{, }\FloatTok{1.0}\NormalTok{]}
+\NormalTok{linestyles }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}{-}\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}{-}{-}\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}{-}.\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}:\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}{-}\textquotesingle{}}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
 
   Add a legend that maps a value of \(a\) to the corresponding line in
   the plot.
@@ -1450,7 +1461,7 @@ column corresponds to a different line.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{24}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7f04fc1dff40>
+<matplotlib.legend.Legend at 0x7f58194fbf70>
 \end{Verbatim}
 \end{tcolorbox}
         
