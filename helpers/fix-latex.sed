@@ -25,6 +25,9 @@ s/\\paragraph\{/\\subsubsection*{/
 # Replace subparagraphs with paragraphs
 s/\\subparagraph/\\paragraph/
 
+# Add extra indent before examples
+s/^[[:space:]]*\\([a-z]+)\{(Examples?):/\\vspace{1em}\\\1{\2:/
+
 # Fix bold math for Greek letters
 s/\\mathbf\{\\beta\}/\\bm\\beta/g
 s/\\mathbf\{\\gamma\}/\\bm\\gamma/g

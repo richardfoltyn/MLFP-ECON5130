@@ -30,6 +30,9 @@ s/\\definecolor\{cellbackground\}\{HTML\}\{[A-F0-9]+\}/\\definecolor{cellbackgro
 # Remove white space after figures
 /\{ \\hspace\*\{\\fill\} \\\\\}/d
 
+# Add extra indent before examples
+s/^[[:space:]]*\\([a-z]+)\{(Examples?):/\\vspace{1em}\\\1{\2:/
+
 # Fix bold math for Greek letters
 s/\\mathbf\{\\beta\}/\\bm\\beta/g
 s/\\mathbf\{\\gamma\}/\\bm\\gamma/g
