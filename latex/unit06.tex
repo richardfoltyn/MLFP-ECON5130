@@ -164,7 +164,10 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \newcommand*{\mytitle}{Unit 6: Random number generation and statistics}
+    \newcommand*{\unitcounter}{6}
+    \addtocounter{section}{\unitcounter}
+    \addtocounter{section}{-1}
+    \newcommand*{\mytitle}{Unit \unitcounter: Random number generation and statistics}
 
     \input{overrides-post}
     
@@ -487,7 +490,7 @@ interval \([0.0, 1.0)\).
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([0.86353243, 0.20461278, 0.96356395, 0.82972532, 0.41415604])
+array([0.12525986, 0.69195367, 0.32518172, 0.33900095, 0.79623733])
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -515,7 +518,7 @@ array([0.68235186, 0.05382102, 0.22035987, 0.18437181, 0.1759059 ])
 \end{tcolorbox}
         
     The \texttt{seed} argument needs to be an integer or an array of
-integers. This way, each call gives the same numbers, as can easily be
+integers. This way, each call gives the same numbers as can easily be
 illustrated with a loop:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -692,27 +695,27 @@ as the normal or log-normal distributions. The RNGs in
 \begin{itemize}
 \tightlist
 \item
-  \texttt{binomial()}
+  \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.RandomState.binomial.html}{\texttt{binomial()}}
 \item
-  \texttt{exponential()}
+  \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.RandomState.exponential.html}{\texttt{exponential()}}
 \item
-  \texttt{normal()}
+  \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.RandomState.normal.html}{\texttt{normal()}}
 \item
-  \texttt{lognormal()}
+  \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.RandomState.lognormal.html}{\texttt{lognormal()}}
 \item
-  \texttt{multivariate\_normal()}
+  \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.RandomState.multivariate_normal.html}{\texttt{multivariate\_normal()}}
 \item
-  \texttt{uniform()}
+  \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.RandomState.uniform.html}{\texttt{uniform()}}
 \end{itemize}
 
 and many others. For a complete list, see the
 \href{https://numpy.org/doc/stable/reference/random/generator.html\#distributions}{official
 documentation}.
 
-We will illustrate the use of these functions for the normal and
-multivariate normal distributions. For example, you can draw from the
-normal distribution with mean \(\mu=1.0\) and standard deviation
-\(\sigma=0.5\) using
+\vspace{1em}\emph{Example: Drawing from a normal distribution}
+
+We can draw from the normal distribution with mean \(\mu=1.0\) and
+standard deviation \(\sigma=0.5\) using
 \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.normal.html}{\texttt{normal()}}
 as follows:
 
@@ -747,10 +750,12 @@ Text(0.5, 1.0, 'Histogram of normal draws')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_24_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_25_1.pdf}
     \end{center}
     
-    To draw from the multivariate normal, we need to specify a vector of
+\vspace{1em}\emph{Example: Drawing from a multivariate normal distribution}
+
+To draw from the multivariate normal, we need to specify a vector of
 means \(\mu\) and the variance-covariance matrix \(\Sigma\), which we
 set to
 
@@ -789,7 +794,7 @@ to draw a sample:
 \PY{n}{x} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{multivariate\PYZus{}normal}\PY{p}{(}\PY{n}{mean}\PY{o}{=}\PY{n}{mu}\PY{p}{,} \PY{n}{cov}\PY{o}{=}\PY{n}{vcv}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{500}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Scatter plot of sample}
-\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZus{}1\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZus{}2\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Draws from bivariate normal distribution}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -804,7 +809,7 @@ Text(0.5, 1.0, 'Draws from bivariate normal distribution')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_26_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_27_1.pdf}
     \end{center}
     
 
@@ -818,7 +823,8 @@ distribution functions (CDFs) or compute some moments such as the mean
 of a random variable following some distribution. The SciPy project
 implements these functions for a wide range of discrete and continuous
 univariate distributions as well as for a few multivariate ones in the
-\texttt{scipy.stats} package.
+\href{https://docs.scipy.org/doc/scipy/reference/stats.html}{\texttt{scipy.stats}}
+package.
 
 The most useful functions include:
 
@@ -842,7 +848,7 @@ distribution dependent. See the
 \href{https://docs.scipy.org/doc/scipy/reference/stats.html}{official
 documentation} for details.
 
-    \emph{Examples:}
+\vspace{1em}\emph{Example: Plotting a normal probability density function (PDF)}
 
 We can overlay the histogram of normal draws with the actual normal PDF
 using SciPy's
@@ -885,19 +891,22 @@ distribution as follows:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7f956f82f6a0>
+<matplotlib.legend.Legend at 0x7f9c87b135b0>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_29_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_30_1.pdf}
     \end{center}
     
     In the above example we pass \texttt{density=True} to Matplotlib's
-\texttt{hist()} plotting function so that the result is rescaled to be
-comparable to the actual PDF.
+\href{https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html}{\texttt{hist()}}
+plotting function so that the result is rescaled to be comparable to the
+actual PDF.
 
-    Sometimes we need to compute the expectation of a function \(g(x)\) with
+\vspace{1em}\emph{Example: Computing the expectation of a function (advanced)}
+
+Sometimes we need to compute the expectation of a function \(g(x)\) with
 respect to a given distribution with PDF \(f(x)\) on some interval
 \((a,b)\):
 
@@ -927,8 +936,7 @@ We can compute it as follows:
 \PY{n}{cdf0} \PY{o}{=} \PY{n}{norm}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{n}{mu}\PY{p}{,} \PY{n}{scale}\PY{o}{=}\PY{n}{sigma}\PY{p}{)}       \PY{c+c1}{\PYZsh{} CDF at 0}
 
 \PY{c+c1}{\PYZsh{} Compute conditional expected value}
-\PY{n}{Ex} \PY{o}{=} \PY{n}{norm}\PY{o}{.}\PY{n}{expect}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{/}\PY{n}{cdf0}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{n}{mu}\PY{p}{,} \PY{n}{scale}\PY{o}{=}\PY{n}{sigma}\PY{p}{,} \PY{n}{lb}\PY{o}{=}\PY{n}{lb}\PY{p}{,} \PY{n}{ub}\PY{o}{=}\PY{n}{ub}\PY{p}{)}
-\PY{n}{Ex}                      \PY{c+c1}{\PYZsh{} print conditional expectation}
+\PY{n}{norm}\PY{o}{.}\PY{n}{expect}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{/}\PY{n}{cdf0}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{n}{mu}\PY{p}{,} \PY{n}{scale}\PY{o}{=}\PY{n}{sigma}\PY{p}{,} \PY{n}{lb}\PY{o}{=}\PY{n}{lb}\PY{p}{,} \PY{n}{ub}\PY{o}{=}\PY{n}{ub}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
@@ -966,7 +974,7 @@ even need to apply the scaling factor \(\frac{1}{F(0)}\):
 \hypertarget{statistics-functions}{%
 \subsection{Statistics functions}\label{statistics-functions}}
 
-In the previous section we examined functions associated with specific
+In the previous section, we examined functions associated with specific
 distributions. Additionally, there are numerous routines to process
 \emph{sample} data which are spread across NumPy and SciPy.
 
@@ -998,22 +1006,28 @@ In NumPy, the most useful routines include:
   \texttt{hist()} which plots it.
 \end{itemize}
 
-In addition, there are the variants \texttt{np.nanmean()},
-\texttt{np.nanstd()}, \texttt{np.nanvar()} \texttt{np.nanpercentile()}
-and \texttt{np.nanquantile()} which ignore \texttt{NaN} values. You can
-find the full list of routines in the
+In addition, there are the variants
+\href{https://numpy.org/doc/stable/reference/generated/numpy.nanmean.html}{\texttt{np.nanmean()}},
+\href{https://numpy.org/doc/stable/reference/generated/numpy.nanstd.html}{\texttt{np.nanstd()}},
+\href{https://numpy.org/doc/stable/reference/generated/numpy.nanvar.html}{\texttt{np.nanvar()}}
+\href{https://numpy.org/doc/stable/reference/generated/numpy.nanpercentile.html}{\texttt{np.nanpercentile()}}
+and
+\href{https://numpy.org/doc/stable/reference/generated/numpy.nanquantile.html}{\texttt{np.nanquantile()}}
+which ignore \texttt{NaN} values. You can find the full list of routines
+in the
 \href{https://numpy.org/doc/stable/reference/routines.statistics.html}{official
 documentation}.
 
-On top of that, the \texttt{scipy.stats} package contains functions to
-compute all sorts of descriptive statistics and statistical hypothesis
-tests. Many of these routines are too specific to be listed here, so
-have a look at the
+On top of that, the
+\href{https://docs.scipy.org/doc/scipy/reference/stats.html}{\texttt{scipy.stats}}
+package contains functions to compute all sorts of descriptive
+statistics and statistical hypothesis tests. Many of these routines are
+too specific to be listed here, so have a look at the
 \href{https://docs.scipy.org/doc/scipy/reference/stats.html\#summary-statistics}{official
 documentation} if you need to perform statistical analysis of your
 sample data.
 
-    \emph{Examples:}
+\vspace{1em}\emph{Example: Pairwise correlations}
 
 To compute the pairwise correlations of a sample drawn from a
 multivariate normal distribution we proceed as follows:
@@ -1043,8 +1057,9 @@ multivariate normal distribution we proceed as follows:
 \PY{c+c1}{\PYZsh{} Draw some multivariate normal random numbers}
 \PY{n}{x} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{multivariate\PYZus{}normal}\PY{p}{(}\PY{n}{mean}\PY{o}{=}\PY{n}{mu}\PY{p}{,} \PY{n}{cov}\PY{o}{=}\PY{n}{vcv}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{)}
 
-\PY{c+c1}{\PYZsh{} Compute correlation coefficient}
-\PY{n}{np}\PY{o}{.}\PY{n}{corrcoef}\PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{T}\PY{p}{)}        \PY{c+c1}{\PYZsh{} expects each row to contain one variable}
+\PY{c+c1}{\PYZsh{} Compute correlation coefficient (function expects each row to }
+\PY{c+c1}{\PYZsh{} contain one variable)}
+\PY{n}{np}\PY{o}{.}\PY{n}{corrcoef}\PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{T}\PY{p}{)}        
 \end{Verbatim}
 \end{tcolorbox}
 
@@ -1059,6 +1074,8 @@ array([[1.        , 0.51768322],
     Depending on the sample size, the correlation coefficient reported in
 the off-diagonal elements might or might not be close to the \(\rho\)
 used to draw the random data.
+
+\vspace{1em}\emph{Example: Descriptive statistics}
 
 In the next example, we demonstrate how to compute some descriptive
 statistics using SciPy's
@@ -1088,7 +1105,9 @@ distribution:
 
 \PY{c+c1}{\PYZsh{} Compute some descriptive statistics}
 \PY{n}{nobs}\PY{p}{,} \PY{n}{minmax}\PY{p}{,} \PY{n}{mean}\PY{p}{,} \PY{n}{variance}\PY{p}{,} \PY{n}{skewness}\PY{p}{,} \PY{n}{kurtosis} \PY{o}{=} \PY{n}{scipy}\PY{o}{.}\PY{n}{stats}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{n}{x}\PY{p}{)}
-\PY{n}{mean}        \PY{c+c1}{\PYZsh{} array of means}
+
+\PY{c+c1}{\PYZsh{} print array of means}
+\PY{n}{mean}        
 \end{Verbatim}
 \end{tcolorbox}
 
@@ -1102,7 +1121,8 @@ array([-0.98486214, -0.0719401 ,  0.99084898])
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{19}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{variance}    \PY{c+c1}{\PYZsh{} array of variances}
+\PY{c+c1}{\PYZsh{} array of variances}
+\PY{n}{variance}
 \end{Verbatim}
 \end{tcolorbox}
 
@@ -1113,7 +1133,9 @@ array([0.80017787, 1.96834418, 0.37118602])
 \end{Verbatim}
 \end{tcolorbox}
         
-    To illustrate how to use one of the many tests implemented in
+\vspace{1em}\emph{Example: Test for normality (advanced)}
+
+To illustrate how to use one of the many tests implemented in
 \texttt{scipy.stats}, we compute the
 \href{https://en.wikipedia.org/wiki/Jarque\%E2\%80\%93Bera_test}{Jarque-Bera
 test} statistic using
@@ -1146,8 +1168,8 @@ Test statistic: 3.472, p-value: 0.176
 zero skewness and zero excess kurtosis.
 
 
-\hypertarget{exercises}{%
-\subsection{Optional exercises}\label{exercises}}
+\hypertarget{optional-exercises}{%
+\subsection{Optional exercises}\label{optional-exercises}}
 
 The following exercises are considerably longer than those in previous
 units. The reason is that they incorporate everything we have covered so
@@ -1593,7 +1615,7 @@ Text(0.5, 1.05, 'Draws from the standard-t distribution')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_53_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_55_1.pdf}
     \end{center}
     
     A few comments on how we create the \(x\)-values and the plot range for
@@ -1874,12 +1896,12 @@ to plot the histogram and the true PDF.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{27}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.legend.Legend at 0x7f956e904c40>
+<matplotlib.legend.Legend at 0x7f9c876e22c0>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_67_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_69_1.pdf}
     \end{center}
     
     The dashed black line shows the analytically derived expected total
@@ -1958,7 +1980,7 @@ which we then use the generate the plot.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_70_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_72_1.pdf}
     \end{center}
     
     \hypertarget{solution-for-exercise-5}{%
@@ -2067,7 +2089,7 @@ estimate of the variance is in fact identical to the standard approach.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_72_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_74_1.pdf}
     \end{center}
     
     \hypertarget{solution-for-exercise-6}{%
@@ -2198,7 +2220,7 @@ list \texttt{means\_all} which we use below to create the histograms.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_76_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_78_1.pdf}
     \end{center}
     
     Finally, the code below creates the histograms for each sample size.
@@ -2233,7 +2255,7 @@ for larger sample sizes are much closer together.
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_78_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_80_0.pdf}
     \end{center}
     
     As an aside, the use of the bootstrap in this scenario is somewhat
