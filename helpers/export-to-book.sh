@@ -21,7 +21,6 @@ cd "${BASEDIR}/lectures"
 nbmerge preface.ipynb unit*.ipynb -o "${OUTFILE}.ipynb"
 
 jupyter nbconvert \
-    --execute \
     --to=latex \
     --config="${BASEDIR}/jupyter_nbconvert_config.py" \
     --allow-errors \
