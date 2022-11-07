@@ -584,7 +584,7 @@ To save a NumPy array to a CSV file, there is a logical counterpart to
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Saving CSV file to /tmp/tmpc3sbezqs/data.csv
+Saving CSV file to /tmp/tmp5jdidzk5/data.csv
     \end{Verbatim}
 
     The above code creates a \(5 \times 3\) matrix of floats and stores
@@ -933,21 +933,21 @@ the \texttt{start=...} and \texttt{end=...} arguments.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{12}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-                                  Open         High          Low        Close  \textbackslash{}
+                   Open         High          Low        Close      Volume  \textbackslash{}
 Date
-2022-01-03 00:00:00-05:00  4778.140137  4796.640137  4758.169922  4796.560059
-2022-01-04 00:00:00-05:00  4804.509766  4818.620117  4774.270020  4793.540039
-2022-01-05 00:00:00-05:00  4787.990234  4797.700195  4699.439941  4700.580078
-2022-01-06 00:00:00-05:00  4693.390137  4725.009766  4671.259766  4696.049805
-2022-01-07 00:00:00-05:00  4697.660156  4707.950195  4662.740234  4677.029785
+2022-01-03  4778.140137  4796.640137  4758.169922  4796.560059  2775190000
+2022-01-04  4804.509766  4818.620117  4774.270020  4793.540039  3641050000
+2022-01-05  4787.990234  4797.700195  4699.439941  4700.580078  3733540000
+2022-01-06  4693.390137  4725.009766  4671.259766  4696.049805  3371250000
+2022-01-07  4697.660156  4707.950195  4662.740234  4677.029785  3279870000
 
-                               Volume  Dividends  Stock Splits
+            Dividends  Stock Splits
 Date
-2022-01-03 00:00:00-05:00  2775190000          0             0
-2022-01-04 00:00:00-05:00  3641050000          0             0
-2022-01-05 00:00:00-05:00  3733540000          0             0
-2022-01-06 00:00:00-05:00  3371250000          0             0
-2022-01-07 00:00:00-05:00  3279870000          0             0
+2022-01-03          0             0
+2022-01-04          0             0
+2022-01-05          0             0
+2022-01-06          0             0
+2022-01-07          0             0
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -987,6 +987,11 @@ Text(0, 0.5, 'Volume')
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_30_1.pdf}
     \end{center}
     
+    The above code uses
+\href{https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.twinx.html}{\texttt{twinx()}}
+to create a second (invisible) \(x\)-axis with an independent \(y\)-axis
+which allows us to plot the trading volume on a different scale.
+
 \vspace{1em}\emph{Example: Retrieving data for multiple symbols}
 
 We can download trading data for multiple symbols at once using the
@@ -1005,7 +1010,7 @@ proceed as follows:
 \PY{c+c1}{\PYZsh{} Get data for Amazon (AMZN) and Microsoft (MSFT) for the last three months.}
 \PY{c+c1}{\PYZsh{} valid intervals for the \PYZsq{}period\PYZsq{} argument are: }
 \PY{c+c1}{\PYZsh{}   1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo}
-\PY{n}{data} \PY{o}{=} \PY{n}{yf}\PY{o}{.}\PY{n}{download}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AMZN MSFT}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{period}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3mo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{data} \PY{o}{=} \PY{n}{yf}\PY{o}{.}\PY{n}{download}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AMZN MSFT}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{period}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3mo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
@@ -1017,32 +1022,32 @@ proceed as follows:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-                            Adj Close                   Close              \textbackslash{}
-                                 AMZN        MSFT        AMZN        MSFT
+             Adj Close                   Close                    High  \textbackslash{}
+                  AMZN        MSFT        AMZN        MSFT        AMZN
 Date
-2022-08-05 00:00:00-04:00  140.800003  282.310760  140.800003  282.910004
-2022-08-08 00:00:00-04:00  139.410004  279.726257  139.410004  280.320007
-2022-08-09 00:00:00-04:00  137.830002  281.702057  137.830002  282.299988
-2022-08-10 00:00:00-04:00  142.690002  288.547516  142.690002  289.160004
-2022-08-11 00:00:00-04:00  140.639999  286.412048  140.639999  287.019989
+2022-08-08  139.410004  279.726257  139.410004  280.320007  144.229996
+2022-08-09  137.830002  281.702057  137.830002  282.299988  138.949997
+2022-08-10  142.690002  288.547516  142.690002  289.160004  144.600006
+2022-08-11  140.639999  286.412048  140.639999  287.019989  144.490005
+2022-08-12  143.550003  291.291718  143.550003  291.910004  143.570007
 
-                                 High                     Low              \textbackslash{}
-                                 AMZN        MSFT        AMZN        MSFT
+                               Low                    Open              \textbackslash{}
+                  MSFT        AMZN        MSFT        AMZN        MSFT
 Date
-2022-08-05 00:00:00-04:00  142.860001  283.649994  139.600006  278.679993
-2022-08-08 00:00:00-04:00  144.229996  285.920013  138.289993  279.320007
-2022-08-09 00:00:00-04:00  138.949997  283.079987  136.210007  277.609985
-2022-08-10 00:00:00-04:00  144.600006  289.809998  141.009995  286.940002
-2022-08-11 00:00:00-04:00  144.490005  291.209991  139.759995  286.510010
+2022-08-08  285.920013  138.289993  279.320007  142.050003  284.049988
+2022-08-09  283.079987  136.210007  277.609985  138.050003  279.640015
+2022-08-10  289.809998  141.009995  286.940002  142.899994  288.170013
+2022-08-11  291.209991  139.759995  286.510010  143.860001  290.850006
+2022-08-12  291.910004  140.119995  286.940002  142.050003  288.480011
 
-                                 Open                Volume
-                                 AMZN        MSFT      AMZN      MSFT
+              Volume
+                AMZN      MSFT
 Date
-2022-08-05 00:00:00-04:00  140.100006  279.149994  50686900  16774600
-2022-08-08 00:00:00-04:00  142.050003  284.049988  52229000  18739200
-2022-08-09 00:00:00-04:00  138.050003  279.640015  40434700  23405200
-2022-08-10 00:00:00-04:00  142.899994  288.170013  54773800  24687800
-2022-08-11 00:00:00-04:00  143.860001  290.850006  44867300  20065900
+2022-08-08  52229000  18739200
+2022-08-09  40434700  23405200
+2022-08-10  54773800  24687800
+2022-08-11  44867300  20065900
+2022-08-12  47643500  22619700
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -1061,11 +1066,11 @@ the hierarchical column index:
 \prompt{Out}{outcolor}{15}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Date
-2022-08-05 00:00:00-04:00    140.800003
-2022-08-08 00:00:00-04:00    139.410004
-2022-08-09 00:00:00-04:00    137.830002
-2022-08-10 00:00:00-04:00    142.690002
-2022-08-11 00:00:00-04:00    140.639999
+2022-08-08    139.410004
+2022-08-09    137.830002
+2022-08-10    142.690002
+2022-08-11    140.639999
+2022-08-12    143.550003
 Name: (Close, AMZN), dtype: float64
 \end{Verbatim}
 \end{tcolorbox}
@@ -1087,7 +1092,7 @@ Name: (Close, AMZN), dtype: float64
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_35_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_36_1.pdf}
     \end{center}
     
     \hypertarget{pandas-datareader}{%
@@ -1220,15 +1225,10 @@ As with \texttt{yfinance} we discussed earlier, we use the search
 function on \href{https://finance.yahoo.com}{Yahoo! Finance} to identify
 the ticker symbol for the data series we are interested in.
 
-The example below also illustrates that we can optionally use instances
-of \texttt{datetime} to define the sample period instead of plain
-strings.
-
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{20}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{pandas\PYZus{}datareader}\PY{n+nn}{.}\PY{n+nn}{data} \PY{k}{as} \PY{n+nn}{web}
-\PY{k+kn}{import} \PY{n+nn}{datetime}
 
 \PY{c+c1}{\PYZsh{} Fetch stock price data for Tesla (ticker symbol TSLA)}
 \PY{n}{data} \PY{o}{=} \PY{n}{web}\PY{o}{.}\PY{n}{DataReader}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TSLA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
@@ -1268,7 +1268,7 @@ close'>
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_45_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_46_1.pdf}
     \end{center}
     
 
@@ -1453,7 +1453,7 @@ memory usage: 4.3 KB
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_55_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_56_1.pdf}
     \end{center}
     
     Other popular time series available on FRED are the
@@ -1560,7 +1560,7 @@ of the month, monthly average) and a currency pair, if applicable.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_60_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_61_1.pdf}
     \end{center}
     
     As another example, we retrieve the US dollar / Sterling exchange rate
@@ -1590,7 +1590,7 @@ using \texttt{start\_date} and \texttt{end\_date}.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_62_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_63_1.pdf}
     \end{center}
     
 \vspace{1em}\emph{Example: Data from blockchain.com}
@@ -1623,7 +1623,7 @@ Bitcoin in USD.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_64_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_65_1.pdf}
     \end{center}
     
 \vspace{1em}\emph{Example: Historical stock data}
@@ -1695,7 +1695,7 @@ memory usage: 25.6 KB
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_70_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_71_1.pdf}
     \end{center}
     
 
