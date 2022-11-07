@@ -164,7 +164,10 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \newcommand*{\mytitle}{Unit 8: Data input and output}
+    \newcommand*{\unitcounter}{7}
+    \addtocounter{section}{\unitcounter}
+    \addtocounter{section}{-1}
+    \newcommand*{\mytitle}{Unit \unitcounter: Data input and output}
 
     \input{overrides-post}
     
@@ -398,8 +401,8 @@ In this unit we discuss input and output, or I/O for short. We focus
 exclusively on I/O routines used to load and store data from files that
 are relevant for numerical computation and data analysis.
 
-    \hypertarget{io-with-numpy}{%
-\subsection{I/O with NumPy}\label{io-with-numpy}}
+    \hypertarget{inputoutput-with-numpy}{%
+\subsection{Input/output with NumPy}\label{inputoutput-with-numpy}}
 
 \hypertarget{loading-text-data}{%
 \subsubsection{Loading text data}\label{loading-text-data}}
@@ -429,6 +432,8 @@ them in the
 \href{https://numpy.org/doc/stable/reference/routines.io.html}{official
 documentation}.
 
+\vspace{1em}\emph{Example: Load character-separated text data}
+
 Imagine we have the following tabular data from
 \href{https://fred.stlouisfed.org/}{FRED}, where the first two rows look
 as follows:
@@ -443,19 +448,21 @@ Year & GDP & CPI & UNRATE\tabularnewline
 \bottomrule
 \end{longtable}
 
-To load this CSV file as a NumPy array, we use \texttt{loadtxt()}. As in
-the previous unit, it is advantageous to globally set the path to the
-\texttt{data/} directory that can point either to the local directory or
-to the \texttt{data/} directory on GitHub.
+These data are stored as character-separated values (CSV). To load this
+CSV file as a NumPy array, we use
+\href{(https://numpy.org/doc/stable/reference/generated/numpy.loadtxt.html)}{\texttt{loadtxt()}}.
+As in the previous unit, it is advantageous to globally set the path to
+the \texttt{data/} directory that can point either to the local
+directory or to the \texttt{data/} directory on GitHub.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{1}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Uncomment this to use files in the local data/ directory}
-\PY{c+c1}{\PYZsh{} DATA\PYZus{}PATH = \PYZsq{}../data\PYZsq{}}
+\PY{n}{DATA\PYZus{}PATH} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data}\PY{l+s+s1}{\PYZsq{}}
 
 \PY{c+c1}{\PYZsh{} Load data directly from GitHub}
-\PY{n}{DATA\PYZus{}PATH} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{https://raw.githubusercontent.com/richardfoltyn/MLFP\PYZhy{}ECON5130/main/data}\PY{l+s+s1}{\PYZsq{}}
+\PY{c+c1}{\PYZsh{} DATA\PYZus{}PATH = \PYZsq{}https://raw.githubusercontent.com/richardfoltyn/MLFP\PYZhy{}ECON5130/main/data\PYZsq{}}
 \end{Verbatim}
 \end{tcolorbox}
 
@@ -464,8 +471,7 @@ to the \texttt{data/} directory on GitHub.
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 
-
-\PY{c+c1}{\PYZsh{} relative path to CSV file}
+\PY{c+c1}{\PYZsh{} Path to CSV file}
 \PY{n}{file} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{DATA\PYZus{}PATH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/FRED.csv}\PY{l+s+s1}{\PYZsq{}}
 
 \PY{c+c1}{\PYZsh{} load CSV}
@@ -534,110 +540,32 @@ of universities with \texttt{loadtxt()}, we get the following error:
 \tightlist
 \item
   The file contains strings and floats, and \texttt{loadtxt()} by
-  default cannot load mixed data.
+  default cannot load mixed data (\eg strings and numerical data).
 \item
   There are missing values (empty fields), which \texttt{loadtxt()}
   cannot handle either.
 \end{enumerate}
 
-We can address the first issue by creating a so-called
-\href{https://numpy.org/doc/stable/user/basics.rec.html}{structured
-array}, \ie an array that contains fields with mixed data. This is
-accomplished by constructing a special \texttt{dtype} object that
-specifies the field names and their data types:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{4}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Define names and data types for fields in CSV file}
-\PY{c+c1}{\PYZsh{}   Data types are defined using two tokens:}
-\PY{c+c1}{\PYZsh{}       1.  The main data type (U: unicode string, f: float, i: integer)}
-\PY{c+c1}{\PYZsh{}       2.  The precision or field width}
-\PY{n}{dtypes} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dtype}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Institution}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U30}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}      \PY{c+c1}{\PYZsh{} unicode string of length 30}
-                   \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U20}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}          \PY{c+c1}{\PYZsh{} unicode string of length 20}
-                   \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Founded}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{i4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}           \PY{c+c1}{\PYZsh{} integer, 4 bytes}
-                   \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Students}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{i4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
-                   \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Staff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{i4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
-                   \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Admin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{i4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
-                   \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Budget}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f8}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}            \PY{c+c1}{\PYZsh{} float, 8 bytes}
-                   \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Russell}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{i1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}\PY{p}{)}          \PY{c+c1}{\PYZsh{} integer, 1 byte}
-
-\PY{n}{data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{loadtxt}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{;}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{skiprows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{dtypes}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
-\textcolor{ansi-red}{ValueError}\textcolor{ansi-red}{:} could not convert string to float: ''
-
-    \end{Verbatim}
-
-    However, this still fails because the of a few missing values.
-
-We can get around this by using \texttt{genfromtxt()}, which is more
-flexible and can also deal with missing data:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{5}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} load data using genfromtxt()}
-\PY{c+c1}{\PYZsh{} We still need to specify the dtype defined above!}
-\PY{n}{data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{genfromtxt}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{;}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{dtypes}\PY{p}{,} \PY{n}{encoding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utf8}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
-                     \PY{n}{skip\PYZus{}header}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Determine rows with missing data:}
-\PY{c+c1}{\PYZsh{}   \PYZhy{} missing integers are coded as \PYZhy{}1}
-\PY{c+c1}{\PYZsh{}   \PYZhy{} missing floats are coded as np.nan}
-\PY{n}{missing} \PY{o}{=} \PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Staff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{|} \PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Admin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{|} \PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Budget}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} print rows with missing values}
-\PY{n}{data}\PY{p}{[}\PY{n}{missing}\PY{p}{]}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{5}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-array([('"University of Strathclyde"', '"Scotland"', 1964, 22640,   -1, 3200,
-304.4, 0),
-       ('"University of Oxford"', '"England"', 1096, 24515, 7000,   -1, 2450. ,
-1),
-       ('"University of Manchester"', '"England"', 2004, 40250, 3849,   -1,
-1095.4, 1),
-       ('"University of Birmingham"', '"England"', 1825, 35445, 4020,   -1,
-673.8, 1),
-       ('"University of Nottingham"', '"England"', 1798, 30798, 3495,   -1,
-656.5, 1),
-       ('"University of Stirling"', '"Scotland"', 1967,  9548,   -1, 1872,
-113.3, 0),
-       ('"Swansea University"', '"Wales"', 1920, 20620,   -1, 3290,    nan, 0)],
-      dtype=[('Institution', '<U30'), ('Country', '<U20'), ('Founded', '<i4'),
-('Students', '<i4'), ('Staff', '<i4'), ('Admin', '<i4'), ('Budget', '<f8'),
-('Russell', 'i1')])
-\end{Verbatim}
-\end{tcolorbox}
-        
-    While the CSV file can now be processed without errors, you see that
-NumPy does not remove the double quotes around strings such as the
-university names. Instead of trying to fix this, it is advisable to just
-use pandas to load this kind of data which handles all these problems
-automatically. We examine this alternative below.
+The simplest way to address these issues is to use pandas to load the
+data which we turn to in the next section.
 
     \hypertarget{saving-data-to-text-files}{%
 \subsubsection{Saving data to text
 files}\label{saving-data-to-text-files}}
 
 To save a NumPy array to a CSV file, there is a logical counterpart to
-\texttt{np.loadtxt()} which is called \texttt{np.savetxt()}.
+\texttt{np.loadtxt()} which is called
+\href{https://numpy.org/doc/stable/reference/generated/numpy.savetxt.html}{\texttt{np.savetxt()}}.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{6}{\boxspacing}
+\prompt{In}{incolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{k+kn}{import} \PY{n+nn}{os}\PY{n+nn}{.}\PY{n+nn}{path}
 \PY{k+kn}{import} \PY{n+nn}{tempfile}
 
-\PY{c+c1}{\PYZsh{} Generate some random data on [0,1)}
-\PY{n}{data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{l+m+mi}{123}\PY{p}{)}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Generate three columns of 5 observations each}
+\PY{n}{data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} create temporary directory}
 \PY{n}{d} \PY{o}{=} \PY{n}{tempfile}\PY{o}{.}\PY{n}{TemporaryDirectory}\PY{p}{(}\PY{p}{)}
@@ -656,11 +584,11 @@ To save a NumPy array to a CSV file, there is a logical counterpart to
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Saving CSV file to /tmp/tmpjgn8en10/data.csv
+Saving CSV file to /tmp/tmpc3sbezqs/data.csv
     \end{Verbatim}
 
-    The above code creates a \(10 \times 5\) matrix of random floats and
-stores these in the file \texttt{data.csv} using 5 significant digits.
+    The above code creates a \(5 \times 3\) matrix of floats and stores
+these in the file \texttt{data.csv} using 5 significant digits.
 
 We store the destination file in a temporary directory which we create
 as follows:
@@ -689,22 +617,26 @@ directory, but can instead use any directory where your user has write
 permissions. For example, on Windows you could use something along the
 lines of
 
-\begin{verbatim}
-file = 'C:/Users/Path/to/file.txt'
-np.savetxt(file, data, delimiter=';', fmt='%8.5f')
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{file} \OperatorTok{=} \StringTok{\textquotesingle{}C:/Users/Path/to/file.txt\textquotesingle{}}
+\NormalTok{np.savetxt(}\BuiltInTok{file}\NormalTok{, data, delimiter}\OperatorTok{=}\StringTok{\textquotesingle{};\textquotesingle{}}\NormalTok{, fmt}\OperatorTok{=}\StringTok{\textquotesingle{}}\SpecialCharTok{\%8.5f}\StringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 You can even use relative paths. To store a file in the current working
 directory it is sufficient to just pass the file name:
 
-\begin{verbatim}
-file = 'file.txt'
-np.savetxt(file, data, delimiter=';', fmt='%8.5f')
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{file} \OperatorTok{=} \StringTok{\textquotesingle{}file.txt\textquotesingle{}}
+\NormalTok{np.savetxt(}\BuiltInTok{file}\NormalTok{, data, delimiter}\OperatorTok{=}\StringTok{\textquotesingle{};\textquotesingle{}}\NormalTok{, fmt}\OperatorTok{=}\StringTok{\textquotesingle{}}\SpecialCharTok{\%8.5f}\StringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 
-\hypertarget{io-with-pandas}{%
-\subsection{I/O with pandas}\label{io-with-pandas}}
+\hypertarget{inputoutput-with-pandas}{%
+\subsection{Input/output with pandas}\label{inputoutput-with-pandas}}
 
 Pandas's I/O routines are more powerful than those implemented in NumPy:
 
@@ -749,11 +681,12 @@ For a complete list of I/O routines, see the
 documentation}.
 
 To illustrate, we repeat the above examples using pandas's
-\texttt{read\_csv()}. Since the FRED data contains only floating-point
-data, the result is very similar to reading in a NumPy array.
+\href{https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html}{\texttt{read\_csv()}}.
+Since the FRED data contains only floating-point data, the result is
+very similar to reading in a NumPy array.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{7}{\boxspacing}
+\prompt{In}{incolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
 
@@ -766,7 +699,7 @@ data, the result is very similar to reading in a NumPy array.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{7}{\boxspacing}
+\prompt{Out}{outcolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
    Year     GDP   CPI  UNRATE
 0  1948  2118.5  24.0     3.8
@@ -775,11 +708,10 @@ data, the result is very similar to reading in a NumPy array.
 \end{tcolorbox}
         
     The difference between NumPy and pandas become obvious when we try to
-load our university data: this works out of the box, without the need to
-specify any data types or to handle missing values:
+load our university data: this works out of the box:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{8}{\boxspacing}
+\prompt{In}{incolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
 
@@ -792,7 +724,7 @@ specify any data types or to handle missing values:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{8}{\boxspacing}
+\prompt{Out}{outcolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
                    Institution           Country  Founded  Students   Staff  \textbackslash{}
 20      University of Stirling          Scotland     1967      9548     NaN
@@ -806,14 +738,14 @@ specify any data types or to handle missing values:
 \end{Verbatim}
 \end{tcolorbox}
         
-    Note that missing values are correctly converted to \texttt{np.nan} and
-the double quotes surrounding strings are automatically removed!
+    Note that missing values are correctly converted to
+\href{https://numpy.org/doc/stable/reference/constants.html\#numpy.NAN}{\texttt{np.nan}}.
 
 Unlike NumPy, pandas can also process other popular data formats such as
 MS Excel files (or OpenDocument spreadsheets):
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{9}{\boxspacing}
+\prompt{In}{incolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
 
@@ -826,7 +758,7 @@ MS Excel files (or OpenDocument spreadsheets):
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{9}{\boxspacing}
+\prompt{Out}{outcolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
                 Institution   Country  Founded  Students   Staff   Admin  \textbackslash{}
 0     University of Glasgow  Scotland     1451     30805  2942.0  4003.0
@@ -874,7 +806,7 @@ files, the width (\ie the number of characters) has to be explicitly
 specified:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{10}{\boxspacing}
+\prompt{In}{incolor}{8}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
 
@@ -888,7 +820,7 @@ specified:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{10}{\boxspacing}
+\prompt{Out}{outcolor}{8}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
    Year     GDP   CPI  UNRATE
 0  1948  2118.5  24.0     3.8
@@ -905,13 +837,448 @@ number of characters to be used for each field.
 \subsection{Retrieving macroeconomic / financial data from the
 web}\label{retrieving-macroeconomic-financial-data-from-the-web}}
 
-    \hypertarget{federal-reserve-economic-data-fred}{%
-\subsubsection{Federal Reserve Economic Data
-(FRED)}\label{federal-reserve-economic-data-fred}}
+    \hypertarget{yahoo-finance-data}{%
+\subsubsection{Yahoo! Finance data}\label{yahoo-finance-data}}
+
+\href{https://pypi.org/project/yfinance/}{\texttt{yfinance}} is a
+user-written library to access data from
+\href{https://finance.yahoo.com/}{Yahoo! Finance} using the public API
+(see the project's \href{https://github.com/ranaroussi/yfinance}{GitHub
+repository} for detailed examples). This project is not affiliated with
+Yahoo! Finance and is intended for personal use only. Before using the
+library, it needs to be installed from PyPi as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{pip}\NormalTok{ install yfinance }
+\end{Highlighting}
+\end{Shaded}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} When running via Google Colab, uncomment and execute the following line}
+\PY{c+c1}{\PYZsh{}! pip install yfinance}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \texttt{yfinance} allows us to retrieve information for a single symbol
+via properties of the \texttt{Ticker} object, or for multiple ticker
+symbols at once.
+
+\vspace{1em}\emph{Example: Retrieving data for a single symbol}
+
+We first use the API to retrieve data for a single symbol, in this case
+the \href{https://finance.yahoo.com/quote/\%5EGSPC}{S\&P 500 index}
+which has the (somewhat unusual) ticker symbol \texttt{\^{}GSPS}. One
+can easily find the desired ticker symbol by searching for some stock,
+index, currency or other asset on Yahoo! Finance.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{yfinance} \PY{k}{as} \PY{n+nn}{yf}
+
+\PY{c+c1}{\PYZsh{} Symbol for S\PYZam{}P 500 index}
+\PY{n}{symbol} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZca{}GSPC}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Create ticker object}
+\PY{n}{ticker} \PY{o}{=} \PY{n}{yf}\PY{o}{.}\PY{n}{Ticker}\PY{p}{(}\PY{n}{symbol}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    We can now use the attributes of the \texttt{ticker} object to get all
+sorts of information. For example, we can get some meta data from the
+\texttt{info} attribute as follows:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Descriptive name and asset class}
+\PY{n}{shortname} \PY{o}{=} \PY{n}{ticker}\PY{o}{.}\PY{n}{info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{shortName}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{quoteType} \PY{o}{=} \PY{n}{ticker}\PY{o}{.}\PY{n}{info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quoteType}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} 52\PYZhy{}week low and high}
+\PY{n}{low} \PY{o}{=} \PY{n}{ticker}\PY{o}{.}\PY{n}{info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fiftyTwoWeekLow}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{high} \PY{o}{=} \PY{n}{ticker}\PY{o}{.}\PY{n}{info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fiftyTwoWeekHigh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{shortname}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ is an }\PY{l+s+si}{\PYZob{}}\PY{n}{quoteType}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{shortname}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ 52\PYZhy{}week range: }\PY{l+s+si}{\PYZob{}}\PY{n}{low}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ \PYZhy{} }\PY{l+s+si}{\PYZob{}}\PY{n}{high}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} To see which keys are available, use the keys() method}
+\PY{c+c1}{\PYZsh{} ticker.info.keys()}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+S\&P 500 is an INDEX
+S\&P 500 52-week range: 3491.58 - 4818.62
+    \end{Verbatim}
+
+    We use the \texttt{history} attribute to get detailed price data. Unless
+we want all available data, we should select the relevant period using
+the \texttt{start=...} and \texttt{end=...} arguments.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Retrieve daily index values data for first quarter of this year}
+\PY{n}{daily} \PY{o}{=} \PY{n}{ticker}\PY{o}{.}\PY{n}{history}\PY{p}{(}\PY{n}{start}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2022\PYZhy{}01\PYZhy{}01}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2022\PYZhy{}03\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Print first 5 rows}
+\PY{n}{daily}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                                  Open         High          Low        Close  \textbackslash{}
+Date
+2022-01-03 00:00:00-05:00  4778.140137  4796.640137  4758.169922  4796.560059
+2022-01-04 00:00:00-05:00  4804.509766  4818.620117  4774.270020  4793.540039
+2022-01-05 00:00:00-05:00  4787.990234  4797.700195  4699.439941  4700.580078
+2022-01-06 00:00:00-05:00  4693.390137  4725.009766  4671.259766  4696.049805
+2022-01-07 00:00:00-05:00  4697.660156  4707.950195  4662.740234  4677.029785
+
+                               Volume  Dividends  Stock Splits
+Date
+2022-01-03 00:00:00-05:00  2775190000          0             0
+2022-01-04 00:00:00-05:00  3641050000          0             0
+2022-01-05 00:00:00-05:00  3733540000          0             0
+2022-01-06 00:00:00-05:00  3371250000          0             0
+2022-01-07 00:00:00-05:00  3279870000          0             0
+\end{Verbatim}
+\end{tcolorbox}
+        
+    We can then use this data to plot the daily closing price and trading
+volume.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+
+\PY{n}{fix}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Plot closing price}
+\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{daily}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{daily}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Close}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{darkblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Price at close}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Price at close}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create secondary y\PYZhy{}axis for trading volume}
+\PY{n}{ax2} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{twinx}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Plot trading volume as bar chart}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{daily}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{daily}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Volume}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}666666}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.4}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}ylim}\PY{p}{(}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0e10}\PY{p}{)}\PY{p}{)}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Volume}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0, 0.5, 'Volume')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_30_1.pdf}
+    \end{center}
+    
+\vspace{1em}\emph{Example: Retrieving data for multiple symbols}
+
+We can download trading data for multiple symbols at once using the
+\texttt{download()} function. Unlike the \texttt{Ticker} class, this
+immediately returns a \texttt{DataFrame} containing data similar to the
+\texttt{history} method we called previously, but now the column index
+contains an additional level for each ticker symbol. For example, to get
+the trading data for Amazon and Microsoft for the last 3 months, we
+proceed as follows:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{yfinance} \PY{k}{as} \PY{n+nn}{yf}
+
+\PY{c+c1}{\PYZsh{} Get data for Amazon (AMZN) and Microsoft (MSFT) for the last three months.}
+\PY{c+c1}{\PYZsh{} valid intervals for the \PYZsq{}period\PYZsq{} argument are: }
+\PY{c+c1}{\PYZsh{}   1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo}
+\PY{n}{data} \PY{o}{=} \PY{n}{yf}\PY{o}{.}\PY{n}{download}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AMZN MSFT}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{period}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3mo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[*********************100\%***********************]  2 of 2 completed
+    \end{Verbatim}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                            Adj Close                   Close              \textbackslash{}
+                                 AMZN        MSFT        AMZN        MSFT
+Date
+2022-08-05 00:00:00-04:00  140.800003  282.310760  140.800003  282.910004
+2022-08-08 00:00:00-04:00  139.410004  279.726257  139.410004  280.320007
+2022-08-09 00:00:00-04:00  137.830002  281.702057  137.830002  282.299988
+2022-08-10 00:00:00-04:00  142.690002  288.547516  142.690002  289.160004
+2022-08-11 00:00:00-04:00  140.639999  286.412048  140.639999  287.019989
+
+                                 High                     Low              \textbackslash{}
+                                 AMZN        MSFT        AMZN        MSFT
+Date
+2022-08-05 00:00:00-04:00  142.860001  283.649994  139.600006  278.679993
+2022-08-08 00:00:00-04:00  144.229996  285.920013  138.289993  279.320007
+2022-08-09 00:00:00-04:00  138.949997  283.079987  136.210007  277.609985
+2022-08-10 00:00:00-04:00  144.600006  289.809998  141.009995  286.940002
+2022-08-11 00:00:00-04:00  144.490005  291.209991  139.759995  286.510010
+
+                                 Open                Volume
+                                 AMZN        MSFT      AMZN      MSFT
+Date
+2022-08-05 00:00:00-04:00  140.100006  279.149994  50686900  16774600
+2022-08-08 00:00:00-04:00  142.050003  284.049988  52229000  18739200
+2022-08-09 00:00:00-04:00  138.050003  279.640015  40434700  23405200
+2022-08-10 00:00:00-04:00  142.899994  288.170013  54773800  24687800
+2022-08-11 00:00:00-04:00  143.860001  290.850006  44867300  20065900
+\end{Verbatim}
+\end{tcolorbox}
+        
+    To extract data for a particular symbol, we have to take into account
+the hierarchical column index:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Use hierarchical indexing to get data for Amazon}
+\PY{n}{data}\PY{p}{[}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Close}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AMZN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Date
+2022-08-05 00:00:00-04:00    140.800003
+2022-08-08 00:00:00-04:00    139.410004
+2022-08-09 00:00:00-04:00    137.830002
+2022-08-10 00:00:00-04:00    142.690002
+2022-08-11 00:00:00-04:00    140.639999
+Name: (Close, AMZN), dtype: float64
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Plot daily returns for both stocks}
+\PY{n}{returns} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Close}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{pct\PYZus{}change}\PY{p}{(}\PY{p}{)} \PY{o}{*} \PY{l+m+mf}{100.0}
+\PY{n}{returns}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AMZN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MSFT}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Daily returns (}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<AxesSubplot:xlabel='Date', ylabel='Daily returns (\%)'>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_35_1.pdf}
+    \end{center}
+    
+    \hypertarget{pandas-datareader}{%
+\subsubsection{Pandas Datareader}\label{pandas-datareader}}
+
+\href{https://github.com/pydata/pandas-datareader}{\texttt{pandas-datareader}}
+is a Python library that fetches online data from multiple sources and
+returns them as pandas \texttt{DataFrame} objects. Despite its name,
+this library is not included in \texttt{pandas} and may need to be
+installed separately, \eg by running
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{pip}\NormalTok{ install pandas{-}datareader}
+\end{Highlighting}
+\end{Shaded}
+
+The aim is to provide a uniform API to access data from multiple
+sources, including those covered in other sections in this unit. See the
+official
+\href{https://pandas-datareader.readthedocs.io/en/latest/}{documentation}
+for supported data sources and how to access them.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{17}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Uncomment and execute the following line if running in Google Colab}
+\PY{c+c1}{\PYZsh{} ! pip install pandas\PYZhy{}datareader}
+\end{Verbatim}
+\end{tcolorbox}
+
+\vspace{1em}\emph{Example: Downloading data from FRED}
+
+As a first illustration, we fetch macroeconomic data from
+\href{https://fred.stlouisfed.org/}{FRED}, or Federal Reserve Economic
+Data. FRED is provided by the Federal Reserve of St.~Louis and is one of
+the most important macroeconomic online databases (at least for
+US-centric data).
+
+An alternative (but more complicated) way to access this data is via the
+\texttt{fredapi} library, which we examine below. With
+\texttt{pandas-datareader}, no API key is required to access FRED which
+makes using it a little simpler than \texttt{fredapi}.
+
+    In order to retrieve any data, we first need to identify the series
+name. This is easiest done by searching for the data on
+\href{https://fred.stlouisfed.org/}{FRED} using your browser and copying
+the series name, highlighted in red in the screenshot below.
+
+\begin{figure}
+\centering
+\includegraphics{FRED_series_name_GDP.png}
+\caption{FRED series name}
+\end{figure}
+
+For example, if we want to retrieve the
+\href{https://fred.stlouisfed.org/series/GDP}{US Gross Domestic Product
+(GDP)}, the corresponding series name is \texttt{GDP}. The FRED web page
+contains additional useful information such as the time period for which
+the data is available, the data frequency (monthly, quarterly, annual)
+and whether it's seasonally adjusted.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{18}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} The convention is to import this library as web}
+\PY{k+kn}{import} \PY{n+nn}{pandas\PYZus{}datareader}\PY{n+nn}{.}\PY{n+nn}{data} \PY{k}{as} \PY{n+nn}{web}
+
+\PY{c+c1}{\PYZsh{} define start and end dates}
+\PY{n}{start\PYZus{}date} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{2000\PYZhy{}01\PYZhy{}01}\PY{l+s+s2}{\PYZdq{}}
+\PY{n}{end\PYZus{}date} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{2021\PYZhy{}12\PYZhy{}31}\PY{l+s+s2}{\PYZdq{}}
+
+\PY{c+c1}{\PYZsh{} Specify series name as first and \PYZsq{}fred\PYZsq{} data source as second argument}
+\PY{n}{gdp} \PY{o}{=} \PY{n}{web}\PY{o}{.}\PY{n}{DataReader}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{data\PYZus{}source}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fred}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{start}\PY{o}{=}\PY{n}{start\PYZus{}date}\PY{p}{,} 
+    \PY{n}{end}\PY{o}{=}\PY{n}{end\PYZus{}date}
+\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Show first 3 observations}
+\PY{n}{gdp}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{18}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                  GDP
+DATE
+2000-01-01  10002.179
+2000-04-01  10247.720
+2000-07-01  10318.165
+\end{Verbatim}
+\end{tcolorbox}
+        
+    We can also fetch multiple series at the same time, for example the CPI
+(\texttt{CPIAUCSL}) and the unemployment rate (\texttt{UNRATE}).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} without an explicit end argument, the latest available data}
+\PY{c+c1}{\PYZsh{} will be retrieved}
+\PY{n}{data} \PY{o}{=} \PY{n}{web}\PY{o}{.}\PY{n}{DataReader}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPIAUCSL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UNRATE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} 
+    \PY{n}{data\PYZus{}source}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fred}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{start}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2020\PYZhy{}01\PYZhy{}01}\PY{l+s+s1}{\PYZsq{}}
+\PY{p}{)}
+
+\PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+            CPIAUCSL  UNRATE
+DATE
+2020-01-01   258.682     3.5
+2020-02-01   259.007     3.5
+2020-03-01   258.165     4.4
+\end{Verbatim}
+\end{tcolorbox}
+        
+\vspace{1em}\emph{Example: Download data from Yahoo! Finance}
+
+As another example, we can use \texttt{pandas-datareader} as a client
+for Yahoo! Finance by specifying
+\texttt{\textquotesingle{}yahoo\textquotesingle{}} as the data source.
+As with \texttt{yfinance} we discussed earlier, we use the search
+function on \href{https://finance.yahoo.com}{Yahoo! Finance} to identify
+the ticker symbol for the data series we are interested in.
+
+The example below also illustrates that we can optionally use instances
+of \texttt{datetime} to define the sample period instead of plain
+strings.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{pandas\PYZus{}datareader}\PY{n+nn}{.}\PY{n+nn}{data} \PY{k}{as} \PY{n+nn}{web}
+\PY{k+kn}{import} \PY{n+nn}{datetime}
+
+\PY{c+c1}{\PYZsh{} Fetch stock price data for Tesla (ticker symbol TSLA)}
+\PY{n}{data} \PY{o}{=} \PY{n}{web}\PY{o}{.}\PY{n}{DataReader}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TSLA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{data\PYZus{}source}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{yahoo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{start}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2011\PYZhy{}01\PYZhy{}01}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2021\PYZhy{}12\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}
+\PY{p}{)}
+
+\PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                High       Low      Open     Close      Volume  Adj Close
+Date
+2011-01-03  1.800000  1.726667  1.789333  1.774667  19245000.0   1.774667
+2011-01-04  1.796667  1.734667  1.777333  1.778000  17811000.0   1.778000
+2011-01-05  1.793333  1.746000  1.765333  1.788667  21700500.0   1.788667
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Close}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Price as close}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{title}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Tesla (TSLA)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<AxesSubplot:title=\{'center':'Tesla (TSLA)'\}, xlabel='Date', ylabel='Price as
+close'>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_45_1.pdf}
+    \end{center}
+    
+
+\hypertarget{fred-federal-reserve-economic-data-optional}{%
+\subsubsection{FRED: Federal Reserve Economic Data
+(optional)}\label{fred-federal-reserve-economic-data-optional}}
 
 \href{https://fred.stlouisfed.org/}{FRED}, provided by the Federal
-Reserve of St.~Louis, is likely the most important macroeconomic online
-database (at least for US-centric data).
+Reserve of St.~Louis, is one of the most important macroeconomic online
+databases (at least for US-centric data).
 \href{https://pypi.org/project/fredapi/}{\texttt{fredapi}} is a Python
 API for the FRED data which provides a wrapper for the FRED web service
 (see also the project's \href{https://github.com/mortada/fredapi}{GitHub
@@ -920,9 +1287,11 @@ page}).
 Before accessing FRED, you need to install \texttt{fredapi} into your
 Python environment as follows:
 
-\begin{verbatim}
-pip install --no-deps fredapi
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{pip}\NormalTok{ install {-}{-}no{-}deps fredapi}
+\end{Highlighting}
+\end{Shaded}
 
 \emph{Important:}
 
@@ -934,8 +1303,8 @@ pip install --no-deps fredapi
   \texttt{pandas} could be overwritten.
 \item
   Anaconda users should \emph{not} use the \texttt{fredapi} package
-  provided in \texttt{conda-forge} as that one is outdated and will not
-  work.
+  provided in \texttt{conda-forge} as at the time of this writing it is
+  outdated and will not work.
 \end{itemize}
 
 To use FRED, you additional need an API key which can be requested at
@@ -954,29 +1323,35 @@ without a key. Once you have a key, you can specify it in several ways:
   Store it in a file and pass the file name when creating a
   \texttt{Fred} instance:
 
-\begin{verbatim}
-from fredapi import Fred
-fred = Fred(api_key_file='path_to_file')
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ fredapi }\ImportTok{import}\NormalTok{ Fred}
+\NormalTok{fred }\OperatorTok{=}\NormalTok{ Fred(api\_key\_file}\OperatorTok{=}\StringTok{\textquotesingle{}path\_to\_file\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 \item
   Pass the string containing the API key as a parameter:
 
-\begin{verbatim}
-from fredapi import Fred
-fred = Fred(api_key='INSERT API KEY HERE')
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ fredapi }\ImportTok{import}\NormalTok{ Fred}
+\NormalTok{fred }\OperatorTok{=}\NormalTok{ Fred(api\_key}\OperatorTok{=}\StringTok{\textquotesingle{}INSERT API KEY HERE\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 \end{enumerate}
 
 The following code assumes that the \texttt{FRED\_API\_KEY} variable has
 been set up and might not work in your environment if that is not the
 case.
 
-    \emph{Examples:}
+\vspace{1em}\emph{Example: Retrieve the 10-year real interest rate}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{11}{\boxspacing}
+\prompt{In}{incolor}{22}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Uncomment next line to install fredapi in your local or cloud\PYZhy{}hosted Python environment (Binder or Google Colab)}
+\PY{c+c1}{\PYZsh{} Uncomment the following to install fredapi in your local or }
+\PY{c+c1}{\PYZsh{} cloud\PYZhy{}hosted Python environment (\eg Google Colab)}
+
 \PY{c+c1}{\PYZsh{}! pip install \PYZhy{}\PYZhy{}no\PYZhy{}deps fredapi}
 \end{Verbatim}
 \end{tcolorbox}
@@ -1004,7 +1379,7 @@ it's seasonally adjusted.
 follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{12}{\boxspacing}
+\prompt{In}{incolor}{23}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{fredapi} \PY{k+kn}{import} \PY{n}{Fred}
 
@@ -1015,12 +1390,14 @@ follows:
 \PY{c+c1}{\PYZsh{} fred = Fred(api\PYZus{}key=\PYZsq{}INSERT API KEY HERE\PYZsq{})}
 
 \PY{c+c1}{\PYZsh{} Download observations starting from the year 2000 onward}
-\PY{n}{series} \PY{o}{=} \PY{n}{fred}\PY{o}{.}\PY{n}{get\PYZus{}series}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{REAINTRATREARAT10Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{observation\PYZus{}start}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2000\PYZhy{}01\PYZhy{}01}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{series} \PY{o}{=} \PY{n}{fred}\PY{o}{.}\PY{n}{get\PYZus{}series}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{REAINTRATREARAT10Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{observation\PYZus{}start}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2000\PYZhy{}01\PYZhy{}01}\PY{l+s+s1}{\PYZsq{}}
+\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{13}{\boxspacing}
+\prompt{In}{incolor}{24}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Print first 5 observations}
 \PY{n}{series}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
@@ -1028,7 +1405,7 @@ follows:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{13}{\boxspacing}
+\prompt{Out}{outcolor}{24}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 2000-01-01    3.411051
 2000-02-01    3.513343
@@ -1043,7 +1420,7 @@ dtype: float64
 corresponding dates set as the index.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{14}{\boxspacing}
+\prompt{In}{incolor}{25}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{series}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
@@ -1051,17 +1428,17 @@ corresponding dates set as the index.
 
     \begin{Verbatim}[commandchars=\\\{\}]
 <class 'pandas.core.series.Series'>
-DatetimeIndex: 273 entries, 2000-01-01 to 2022-09-01
+DatetimeIndex: 274 entries, 2000-01-01 to 2022-10-01
 Series name: None
 Non-Null Count  Dtype
 --------------  -----
-273 non-null    float64
+274 non-null    float64
 dtypes: float64(1)
 memory usage: 4.3 KB
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{15}{\boxspacing}
+\prompt{In}{incolor}{26}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Plot interest rate time series}
 \PY{n}{series}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ylabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{10\PYZhy{}year real interest rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -1069,14 +1446,14 @@ memory usage: 4.3 KB
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{15}{\boxspacing}
+\prompt{Out}{outcolor}{26}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 <AxesSubplot:ylabel='10-year real interest rate'>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_33_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_55_1.pdf}
     \end{center}
     
     Other popular time series available on FRED are the
@@ -1084,257 +1461,9 @@ memory usage: 4.3 KB
 \href{https://fred.stlouisfed.org/series/GDPC1}{real GDP} and the
 \href{https://fred.stlouisfed.org/series/UNRATE}{unemployment rate}.
 
-    \hypertarget{yahoo-finance-data}{%
-\subsubsection{Yahoo! Finance data}\label{yahoo-finance-data}}
-
-\href{https://pypi.org/project/yfinance/}{\texttt{yfinance}} is a
-user-written library to access data from
-\href{https://finance.yahoo.com/}{Yahoo! Finance} using the public API
-(see the project's \href{https://github.com/ranaroussi/yfinance}{GitHub
-repository} for detailed examples). This project is not affiliated with
-Yahoo! Finance and is intended for personal use only. Before using the
-library, it needs to be installed from PyPi as follows:
-
-\begin{verbatim}
-pip install yfinance 
-\end{verbatim}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{16}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} When running via Google Colab, uncomment and execute the following line}
-\PY{c+c1}{\PYZsh{}! pip install yfinance}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \texttt{yfinance} allows us to retrieve information for a single symbol
-via properties of the \texttt{Ticker} object, or for multiple ticker
-symbols at once.
-
-\emph{Example: Retrieving data for a single symbol}
-
-We first use the API to retrieve data for a single symbol, in this case
-the \href{https://finance.yahoo.com/quote/\%5EGSPC}{S\&P 500 index}
-which has the (somewhat unusual) ticker symbol \texttt{\^{}GSPS}. One
-can easily find the desired ticker symbol by searching for some stock,
-index, currency or other asset on Yahoo! Finance.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{17}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{yfinance} \PY{k}{as} \PY{n+nn}{yf}
-
-\PY{c+c1}{\PYZsh{} Symbol for S\PYZam{}P 500 index}
-\PY{n}{symbol} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZca{}GSPC}\PY{l+s+s1}{\PYZsq{}}
-
-\PY{c+c1}{\PYZsh{} Create ticker object}
-\PY{n}{ticker} \PY{o}{=} \PY{n}{yf}\PY{o}{.}\PY{n}{Ticker}\PY{p}{(}\PY{n}{symbol}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    We can now use the attributes of the \texttt{ticker} object to get all
-sorts of information. For example, we can get some meta data from the
-\texttt{info} attribute as follows:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{18}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Descriptive name and asset class}
-\PY{n}{shortname} \PY{o}{=} \PY{n}{ticker}\PY{o}{.}\PY{n}{info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{shortName}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-\PY{n}{quoteType} \PY{o}{=} \PY{n}{ticker}\PY{o}{.}\PY{n}{info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quoteType}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-
-\PY{c+c1}{\PYZsh{} 52\PYZhy{}week low and high}
-\PY{n}{low} \PY{o}{=} \PY{n}{ticker}\PY{o}{.}\PY{n}{info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fiftyTwoWeekLow}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-\PY{n}{high} \PY{o}{=} \PY{n}{ticker}\PY{o}{.}\PY{n}{info}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fiftyTwoWeekHigh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{shortname}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ is an }\PY{l+s+si}{\PYZob{}}\PY{n}{quoteType}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{shortname}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ 52\PYZhy{}week range: }\PY{l+s+si}{\PYZob{}}\PY{n}{low}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ \PYZhy{} }\PY{l+s+si}{\PYZob{}}\PY{n}{high}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} To see which keys are available, use the keys() method}
-\PY{c+c1}{\PYZsh{} ticker.info.keys()}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-S\&P 500 is an INDEX
-S\&P 500 52-week range: 3584.13 - 4818.62
-    \end{Verbatim}
-
-    We use the \texttt{history} attribute to get detailed price data. Unless
-we want all available data, we should select the relevant period using
-the \texttt{start=...} and \texttt{end=...} arguments.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{19}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Retrieve daily index values data for this year}
-\PY{n}{daily} \PY{o}{=} \PY{n}{ticker}\PY{o}{.}\PY{n}{history}\PY{p}{(}\PY{n}{start}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2022\PYZhy{}01\PYZhy{}01}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2022\PYZhy{}03\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Print first 5 rows}
-\PY{n}{daily}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{19}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-                   Open         High          Low        Close      Volume  \textbackslash{}
-Date
-2022-01-03  4778.140137  4796.640137  4758.169922  4796.560059  2775190000
-2022-01-04  4804.509766  4818.620117  4774.270020  4793.540039  3641050000
-2022-01-05  4787.990234  4797.700195  4699.439941  4700.580078  3733540000
-2022-01-06  4693.390137  4725.009766  4671.259766  4696.049805  3371250000
-2022-01-07  4697.660156  4707.950195  4662.740234  4677.029785  3279870000
-
-            Dividends  Stock Splits
-Date
-2022-01-03          0             0
-2022-01-04          0             0
-2022-01-05          0             0
-2022-01-06          0             0
-2022-01-07          0             0
-\end{Verbatim}
-\end{tcolorbox}
-        
-    We can then use this data to plot the daily closing price and trading
-volume.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{20}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
-
-\PY{n}{fix}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Plot closing price}
-\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{daily}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{daily}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Close}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{darkblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Create secondary y\PYZhy{}axis for trading volume}
-\PY{n}{ax2} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{twinx}\PY{p}{(}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Plot trading volume as bar chart}
-\PY{n}{ax2}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{daily}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{daily}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Volume}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}666666}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.4}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
-\PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}ylim}\PY{p}{(}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0e10}\PY{p}{)}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{20}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-(0.0, 10000000000.0)
-\end{Verbatim}
-\end{tcolorbox}
-        
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_44_1.pdf}
-    \end{center}
-    
-    \emph{Example: Retrieving data for multiple symbols}
-
-We can download trading data for multiple symbols at once using the
-\texttt{download()} function. Unlike the \texttt{Ticker} class, this
-immediately returns a \texttt{DataFrame} containing data similar to the
-\texttt{history} method we called previosuly, but now the column index
-contains an additional level for each ticker symbol. For example, to get
-the trading data for Amazon and Microsoft for the last 3 months, we
-proceed as follows:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{21}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{yfinance} \PY{k}{as} \PY{n+nn}{yf}
-
-\PY{c+c1}{\PYZsh{} Get data for Amazon (AMZN) and Microsoft (MSFT) for the last three months.}
-\PY{c+c1}{\PYZsh{} valid intervals for the \PYZsq{}period\PYZsq{} argument are: }
-\PY{c+c1}{\PYZsh{}   1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo}
-\PY{n}{data} \PY{o}{=} \PY{n}{yf}\PY{o}{.}\PY{n}{download}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AMZN MSFT}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{period}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3mo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-[*********************100\%***********************]  2 of 2 completed
-    \end{Verbatim}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{21}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-             Adj Close                   Close                    High  \textbackslash{}
-                  AMZN        MSFT        AMZN        MSFT        AMZN
-Date
-2022-07-08  115.540001  267.093079  115.540001  267.660004  116.580002
-2022-07-11  111.750000  263.949738  111.750000  264.510010  114.300003
-2022-07-12  109.220001  253.132690  109.220001  253.669998  113.230003
-2022-07-13  110.400002  252.184708  110.400002  252.720001  111.779999
-2022-07-14  110.629997  253.541840  110.629997  254.080002  111.180000
-
-                               Low                    Open              \textbackslash{}
-                  MSFT        AMZN        MSFT        AMZN        MSFT
-Date
-2022-07-08  268.100006  113.690002  263.290009  114.599998  264.790009
-2022-07-11  266.529999  110.870003  262.179993  114.080002  265.649994
-2022-07-12  265.940002  108.339996  252.039993  112.160004  265.880005
-2022-07-13  253.550003  106.010002  248.110001  107.029999  250.190002
-2022-07-14  255.139999  107.580002  245.940002  110.239998  250.570007
-
-              Volume
-                AMZN      MSFT
-Date
-2022-07-08  45719700  19658800
-2022-07-11  53487600  19455200
-2022-07-12  54280300  35868500
-2022-07-13  61353800  29497400
-2022-07-14  51163100  25102800
-\end{Verbatim}
-\end{tcolorbox}
-        
-    To extract data for a particular symbol, we have to take into account
-the hierarchical column index:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{22}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Use hierarchical indexing to get data for Amazon}
-\PY{n}{data}\PY{p}{[}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Close}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AMZN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{22}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-Date
-2022-07-08    115.540001
-2022-07-11    111.750000
-2022-07-12    109.220001
-2022-07-13    110.400002
-2022-07-14    110.629997
-Name: (Close, AMZN), dtype: float64
-\end{Verbatim}
-\end{tcolorbox}
-        
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{23}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Plot daily returns for both stocks}
-\PY{n}{returns} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Close}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{diff}\PY{p}{(}\PY{p}{)} \PY{o}{/} \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Close}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-\PY{n}{returns}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AMZN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MSFT}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{23}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-<AxesSubplot:xlabel='Date'>
-\end{Verbatim}
-\end{tcolorbox}
-        
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_49_1.pdf}
-    \end{center}
-    
-    \hypertarget{nasdaq-data-api-formerly-quandl}{%
-\subsubsection{NASDAQ data API (formerly
-quandl)}\label{nasdaq-data-api-formerly-quandl}}
+    \hypertarget{nasdaq-data-api-optional}{%
+\subsubsection{NASDAQ data API
+(optional)}\label{nasdaq-data-api-optional}}
 
 The NASDAQ stock exchange provides an open-source Python library hosted
 on \href{https://github.com/Nasdaq/data-link-python}{GitHub} to access
@@ -1349,9 +1478,11 @@ Before using this service, you need to make sure that the Python package
 is installed. Depending on how you launched this notebook, you may need
 to execute the following code to install \texttt{nasdaq-data-link}:
 
-\begin{verbatim}
-pip install nasdaq-data-link
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{pip}\NormalTok{ install nasdaq{-}data{-}link}
+\end{Highlighting}
+\end{Shaded}
 
 Various types of data are available via this service and can be found
 using the online search at \url{https://data.nasdaq.com/search}.
@@ -1381,21 +1512,13 @@ using the online search at \url{https://data.nasdaq.com/search}.
   these to demonstrate how the API works.
 
   \emph{Important:} Even for freely available data, NASDAQ imposes a cap
-  of 50 calls per day. You need to register to get around this.
+  of 50 web requests per day. You need to register to get around this.
 \end{itemize}
 
 The data is returned as pandas \texttt{DataFrame} object (or
 alternatively as an NumPy array).
 
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{24}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} When running via Google Colab, uncomment and execute the following line}
-\PY{c+c1}{\PYZsh{}! pip install nasdaq\PYZhy{}data\PYZhy{}link}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \emph{Example: Data from the Bank of England}
+\vspace{1em}\emph{Example: Data from the Bank of England}
 
 Let's start by retrieving some macroeconomic times series from the Bank
 of England (BOE). It's not always straightforward to find the name of
@@ -1407,7 +1530,15 @@ exchange rate), the frequency and how it is aggregated (daily, last day
 of the month, monthly average) and a currency pair, if applicable.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{25}{\boxspacing}
+\prompt{In}{incolor}{27}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} When running via Google Colab, uncomment and execute the following line}
+\PY{c+c1}{\PYZsh{}! pip install nasdaq\PYZhy{}data\PYZhy{}link}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{28}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Retrieve 5\PYZhy{}year real implied yield on UK government bonds}
 \PY{k+kn}{import} \PY{n+nn}{nasdaqdatalink} \PY{k}{as} \PY{n+nn}{ndl}
@@ -1422,14 +1553,14 @@ of the month, monthly average) and a currency pair, if applicable.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{25}{\boxspacing}
+\prompt{Out}{outcolor}{28}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 <AxesSubplot:xlabel='Date', ylabel='5 Year Real Implied Forward (Monthly)'>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_53_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_60_1.pdf}
     \end{center}
     
     As another example, we retrieve the US dollar / Sterling exchange rate
@@ -1440,7 +1571,7 @@ arguments, for example restricting the time period we want to retrieve
 using \texttt{start\_date} and \texttt{end\_date}.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{26}{\boxspacing}
+\prompt{In}{incolor}{29}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Get USD / GDP exchange rate using the last observation for each month.}
 \PY{n}{df} \PY{o}{=} \PY{n}{ndl}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BOE/XUMLUSS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{start\PYZus{}date}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2000\PYZhy{}01\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -1452,24 +1583,24 @@ using \texttt{start\_date} and \texttt{end\_date}.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{26}{\boxspacing}
+\prompt{Out}{outcolor}{29}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 <AxesSubplot:xlabel='Date', ylabel='USD/GBP exchange rate'>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_55_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_62_1.pdf}
     \end{center}
     
-    \emph{Example: Data from blockchain.com}
+\vspace{1em}\emph{Example: Data from blockchain.com}
 
 The NASDAQ data link also supports retrieving data on cryptocurrencies.
 For example, there is a freely accessible time series for the price of
 Bitcoin in USD.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{27}{\boxspacing}
+\prompt{In}{incolor}{30}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{nasdaqdatalink} \PY{k}{as} \PY{n+nn}{ndl}
 
@@ -1485,17 +1616,17 @@ Bitcoin in USD.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{27}{\boxspacing}
+\prompt{Out}{outcolor}{30}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 <AxesSubplot:xlabel='Date', ylabel='BTC price in USD'>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_57_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_64_1.pdf}
     \end{center}
     
-    \emph{Example: Historical stock data}
+\vspace{1em}\emph{Example: Historical stock data}
 
 As a final example, we obtain the trading data for the stock of Apple
 (ticker symbol \texttt{AAPL}) for the year 2001. Such data is often not
@@ -1503,10 +1634,13 @@ available without a subscription or a login, but it works if the
 requested time period is sufficiently far in the past!
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{28}{\boxspacing}
+\prompt{In}{incolor}{31}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Retrieve stock data for Apple (ticker symbol AAPL)}
-\PY{n}{df} \PY{o}{=} \PY{n}{ndl}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{WIKI/AAPL}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{start\PYZus{}date}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2000\PYZhy{}01\PYZhy{}01}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{end\PYZus{}date}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2000\PYZhy{}12\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{df} \PY{o}{=} \PY{n}{ndl}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{WIKI/AAPL}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} 
+    \PY{n}{start\PYZus{}date}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2000\PYZhy{}01\PYZhy{}01}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{end\PYZus{}date}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2000\PYZhy{}12\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}
+\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
@@ -1515,7 +1649,7 @@ value, but a whole range of variables including the opening and closing
 price, the trading volume, \etc:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{29}{\boxspacing}
+\prompt{In}{incolor}{32}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{df}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
@@ -1547,282 +1681,23 @@ memory usage: 25.6 KB
 \texttt{DataFrame.plot()}.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{30}{\boxspacing}
+\prompt{In}{incolor}{33}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{df}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Close}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Stock prive of AAPL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{30}{\boxspacing}
+\prompt{Out}{outcolor}{33}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 <AxesSubplot:xlabel='Date', ylabel='Stock prive of AAPL'>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit08_files/unit08_63_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit07_files/unit07_70_1.pdf}
     \end{center}
     
-    \hypertarget{pandas-datareader}{%
-\subsubsection{Pandas Datareader}\label{pandas-datareader}}
-
-\href{https://github.com/pydata/pandas-datareader}{\texttt{pandas-datareader}}
-is a Python library that fetches online data from multiple sources and
-returns them as pandas \texttt{DataFrame} objects. Despite its name,
-this library is not included in \texttt{pandas} and may need to be
-installed separately, \eg by running
-
-\begin{verbatim}
-pip install pandas-datareader
-\end{verbatim}
-
-The aim is to provide a uniform API to access data from multiple
-sources, including those we covered earlier. See the official
-\href{https://pandas-datareader.readthedocs.io/en/latest/}{documentation}
-for supported data sources and how to access them.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{31}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} Uncomment and execute the following line if running in Google Colab}
-\PY{c+c1}{\PYZsh{} ! pip install pandas\PYZhy{}datareader}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \emph{Example: Downloading data from FRED}
-
-As a first illustration, we fetch macroeconomic data from
-\href{https://fred.stlouisfed.org/}{FRED}, but instead of
-\texttt{fredapi} we use \texttt{pandas-datareader} and set the data
-source to \texttt{\textquotesingle{}fred\textquotesingle{}}. No API key
-is required for this particular data source, but this is not true for
-all data sources supported by \texttt{pandas-datareader}.
-
-Note that we find the name of the series we want to download in the same
-way as previously discussed in the section on FRED.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{32}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} The convention is to import this library as web}
-\PY{k+kn}{import} \PY{n+nn}{pandas\PYZus{}datareader}\PY{n+nn}{.}\PY{n+nn}{data} \PY{k}{as} \PY{n+nn}{web}
-
-\PY{c+c1}{\PYZsh{} define start and end dates}
-\PY{n}{start\PYZus{}date} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{2000\PYZhy{}01\PYZhy{}01}\PY{l+s+s2}{\PYZdq{}}
-\PY{n}{end\PYZus{}date} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{2021\PYZhy{}12\PYZhy{}31}\PY{l+s+s2}{\PYZdq{}}
-
-\PY{c+c1}{\PYZsh{} Specify series name as first and \PYZsq{}fred\PYZsq{} data source as second argument}
-\PY{n}{gdp} \PY{o}{=} \PY{n}{web}\PY{o}{.}\PY{n}{DataReader}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fred}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{start\PYZus{}date}\PY{p}{,} \PY{n}{end\PYZus{}date}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Show first 3 observations}
-\PY{n}{gdp}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{32}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-                  GDP
-DATE
-2000-01-01  10002.179
-2000-04-01  10247.720
-2000-07-01  10318.165
-\end{Verbatim}
-\end{tcolorbox}
-        
-    We can also fetch multiple series at the same time, for example the CPI
-and the unemployment rate.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{33}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{data} \PY{o}{=} \PY{n}{web}\PY{o}{.}\PY{n}{DataReader}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPIAUCSL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UNRATE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{data\PYZus{}source}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fred}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{start}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2020\PYZhy{}01\PYZhy{}01}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{33}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-            CPIAUCSL  UNRATE
-DATE
-2020-01-01   258.682     3.5
-2020-02-01   259.007     3.5
-2020-03-01   258.165     4.4
-\end{Verbatim}
-\end{tcolorbox}
-        
-    \emph{Example: Download data from Yahoo! Finance}
-
-As another example, we can use \texttt{pandas-datareader} as a client
-for Yahoo! Finance by specifying
-\texttt{\textquotesingle{}yahoo\textquotesingle{}} as the data source.
-As with \texttt{yfinance} we discussed earlier, we use the search
-function on \href{https://finance.yahoo.com}{Yahoo! Finance} to identify
-the ticker symbol for the data series we are interested in.
-
-The example below also illustrates that we can optionally use instances
-of \texttt{datetime} to define the sample period instead of plain
-strings.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{34}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{pandas\PYZus{}datareader}\PY{n+nn}{.}\PY{n+nn}{data} \PY{k}{as} \PY{n+nn}{web}
-\PY{k+kn}{import} \PY{n+nn}{datetime}
-
-\PY{c+c1}{\PYZsh{} Instead of strings, we can define period in terms of datetime objects:}
-\PY{c+c1}{\PYZsh{} Sample period: 2011\PYZhy{}01\PYZhy{}1 to 2021\PYZhy{}12\PYZhy{}31}
-\PY{n}{start} \PY{o}{=} \PY{n}{datetime}\PY{o}{.}\PY{n}{datetime}\PY{p}{(}\PY{l+m+mi}{2011}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
-\PY{n}{end} \PY{o}{=} \PY{n}{datetime}\PY{o}{.}\PY{n}{datetime}\PY{p}{(}\PY{l+m+mi}{2021}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{31}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} Fetch stock price data for Tesla (ticker symbol TSLA)}
-\PY{n}{data} \PY{o}{=} \PY{n}{web}\PY{o}{.}\PY{n}{DataReader}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TSLA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data\PYZus{}source}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{yahoo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{start}\PY{o}{=}\PY{n}{start}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{n}{end}\PY{p}{)}
-
-\PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{34}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-                High       Low      Open     Close      Volume  Adj Close
-Date
-2011-01-03  1.800000  1.726667  1.789333  1.774667  19245000.0   1.774667
-2011-01-04  1.796667  1.734667  1.777333  1.778000  17811000.0   1.778000
-2011-01-05  1.793333  1.746000  1.765333  1.788667  21700500.0   1.788667
-\end{Verbatim}
-\end{tcolorbox}
-        
-
-\hypertarget{pickling}{%
-\subsection{Pickling}\label{pickling}}
-
-A wholly different approach to data I/O is taken by Python's built-in
-\href{https://docs.python.org/3/library/pickle.html}{\texttt{pickle}}
-module. Almost any Python object can be dumped into a binary file and
-read back using \texttt{pickle.dump()} and \texttt{pickle.load()}.
-
-The big advantage over other methods is that hierarchies of objects are
-automatically supported. For example, we can pickle a list containing a
-\texttt{tuple}, a string and a NumPy array:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{35}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\PY{k+kn}{import} \PY{n+nn}{pickle}
-\PY{k+kn}{import} \PY{n+nn}{tempfile}
-\PY{k+kn}{import} \PY{n+nn}{os}\PY{n+nn}{.}\PY{n+nn}{path}
-
-\PY{c+c1}{\PYZsh{} Generate 2d array of integers}
-\PY{n}{arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
-\PY{n}{tpl} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}
-\PY{n}{text} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pickle is very powerful!}\PY{l+s+s1}{\PYZsq{}}
-
-\PY{c+c1}{\PYZsh{} data: several nested containers and strings}
-\PY{n}{data} \PY{o}{=} \PY{p}{[}\PY{n}{tpl}\PY{p}{,} \PY{n}{text}\PY{p}{,} \PY{n}{arr}\PY{p}{]}
-
-\PY{c+c1}{\PYZsh{} create temporary directory}
-\PY{n}{d} \PY{o}{=} \PY{n}{tempfile}\PY{o}{.}\PY{n}{TemporaryDirectory}\PY{p}{(}\PY{p}{)}
-\PY{c+c1}{\PYZsh{} Binary destination file}
-\PY{n}{file} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{d}\PY{o}{.}\PY{n}{name}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data.bin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} print destination file path}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pickled data written to }\PY{l+s+si}{\PYZob{}}\PY{n}{file}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{wb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
-    \PY{n}{pickle}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{f}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Pickled data written to /tmp/tmptks0h9gt/data.bin
-    \end{Verbatim}
-
-    We can then read back the data as follows:
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{36}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} load pickle data from above}
-\PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
-    \PY{n}{data} \PY{o}{=} \PY{n}{pickle}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{n}{f}\PY{p}{)}
-
-\PY{c+c1}{\PYZsh{} expand data into its components}
-\PY{n}{tpl}\PY{p}{,} \PY{n}{text}\PY{p}{,} \PY{n}{arr} \PY{o}{=} \PY{n}{data}
-\PY{n}{arr}         \PY{c+c1}{\PYZsh{} prints previously generated 2d array}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{36}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-array([[0, 1, 2, 3, 4],
-       [5, 6, 7, 8, 9]])
-\end{Verbatim}
-\end{tcolorbox}
-        
-    The above example introduces a few concepts we have not encountered so
-far:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  The built-in function
-  \href{https://docs.python.org/3/library/functions.html\#open}{\texttt{open()}}
-  is used to open files for reading or writing.
-
-  \begin{itemize}
-  \tightlist
-  \item
-    The second argument indicates whether a file should be read-only,
-    \texttt{r}, or writeable, \texttt{w}.
-  \item
-    The \texttt{b} sets the file mode to \emph{binary}, \ie its
-    contents are \emph{not} human-readable text.
-  \end{itemize}
-\item
-  We usually access files using a so-called \emph{context manager}. A
-  context manager is created via the \texttt{with} statement.
-
-  A big advantage of using a context manager is that the file resource
-  made available as \texttt{f} in the block following \texttt{with} is
-  automatically cleaned up as soon as the block exits. This is
-  particularly important when writing data.
-\end{enumerate}
-
-So why not always use \texttt{pickle} to load and store data?
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Pickling is Python-specific and no other application can process
-  pickled data.
-\item
-  The pickle protocol can change in a newer version of Python, and you
-  might not be able to read back your old pickled objects.
-\item
-  Even worse, because projects such as NumPy and pandas implement their
-  own pickling routines, you might not even be able to unpickle old
-  DataFrames when you upgrade to a newer pandas version!
-\item
-  \texttt{pickle} is not secure: It is possible to construct binary data
-  that will execute arbitrary code when unpickling, so you don't want to
-  unpickle data from untrusted sources.
-\item
-  Some objects cannot be pickled automatically. For example, this
-  applies to any classes defined with Numba or Cython, unless special
-  care is taken to implement the pickle protocol.
-\end{enumerate}
-
-\texttt{pickle} is great for internal use when you do not need to
-exchange data with others and have complete control over your computing
-environment (\ie you can enforce a specific version of Python and the
-libraries you are using). For anything else, you should avoid it.
-
 
     % Add a bibliography block to the postdoc
     
