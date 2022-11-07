@@ -578,29 +578,53 @@ To access pandas data structures and routines, we need to import them
 first. The near-universal convention is to make pandas available using
 the name \texttt{pd}:
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\end{Highlighting}
+\end{Shaded}
+
+\vspace{1em}\emph{Example: Create Series from 1-dimensional NumPy array}
+
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}             \PY{c+c1}{\PYZsh{} universal convention: import using pd}
+
+\PY{n}{data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create pandas Series from 1d array}
+\PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{data}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-\vspace{1em}\emph{Example: Create from NumPy array}
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+0    0
+1    1
+2    2
+3    3
+4    4
+dtype: int64
+\end{Verbatim}
+\end{tcolorbox}
+        
+\vspace{1em}\emph{Example: Create DataFrame from NumPy array}
 
 We can create a \texttt{DataFrame} from a NumPy array:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}             \PY{c+c1}{\PYZsh{} universal convention: import using pd}
-
+\PY{c+c1}{\PYZsh{} Create matrix of data}
 \PY{n}{data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Define variable (or column) names}
 \PY{n}{varnames} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{B}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
 
-\PY{c+c1}{\PYZsh{} Create pandas DataFrame}
+\PY{c+c1}{\PYZsh{} Create pandas DataFrame from matrix}
 \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{varnames}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
@@ -2076,7 +2100,7 @@ bar chart, we can directly use pandas's
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_102_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_103_1.pdf}
     \end{center}
     
     Alternatively, we can construct the graph using Matplotlib ourselves:
@@ -2101,7 +2125,7 @@ bar chart, we can directly use pandas's
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_104_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_105_0.pdf}
     \end{center}
     
     Sometimes Matplotlib's routines directly work with pandas's data
@@ -2146,7 +2170,7 @@ illustrate this using the US unemployment rate at annual frequency.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_107_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_108_1.pdf}
     \end{center}
     
 \vspace{1em}\emph{Example: Creating box plots}
@@ -2188,7 +2212,7 @@ post-ware GDP growth, inflation and the unemployment rate in the US:
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_109_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_110_1.pdf}
     \end{center}
     
 \vspace{1em}\emph{Example: Creating scatter plots}
@@ -2223,7 +2247,7 @@ inflation in any given year over the post-war period.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_111_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_112_1.pdf}
     \end{center}
     
     Pandas also offers the convenience function
@@ -2254,7 +2278,7 @@ variables:
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_113_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_114_0.pdf}
     \end{center}
     
     In general, the wrappers implemented in pandas are useful to get an idea
@@ -2579,7 +2603,7 @@ array([[<AxesSubplot:xlabel='Year'>, <AxesSubplot:xlabel='Year'>],
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_123_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_124_1.pdf}
     \end{center}
     
     A few comments:
@@ -2773,7 +2797,7 @@ as follows:
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_128_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_129_1.pdf}
     \end{center}
     
     \hypertarget{solution-for-exercise-3}{%
@@ -2926,7 +2950,7 @@ array([[<AxesSubplot:title=\{'center':'Staff/Student'\}, xlabel='Russell'>,
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_136_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_137_1.pdf}
     \end{center}
     
     \hypertarget{solution-for-exercise-4}{%
@@ -3054,7 +3078,7 @@ xlabel='Country'>
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_143_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_144_1.pdf}
     \end{center}
     
     Note how the legend title is automatically set to the column index name
@@ -3109,7 +3133,7 @@ xlabel='Founding year'>
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_146_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_147_1.pdf}
     \end{center}
     
     \hypertarget{solution-for-exercise-5}{%
@@ -3317,7 +3341,7 @@ Text(0.5, 0.98, "Okun's law")
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_152_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit06_files/unit06_153_1.pdf}
     \end{center}
     
 
