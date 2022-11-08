@@ -496,7 +496,7 @@ heterogeneous data:
 \item
   Each variable is permitted to have a different data type.
 \item
-  We can use \emph{labels} to select observations, instead of having to
+  We can use \emph{labels} to select observations instead of having to
   use a linear numerical index as with NumPy.
 
   We could, for example, index a data set using National Insurance
@@ -592,7 +592,7 @@ the name \texttt{pd}:
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}             \PY{c+c1}{\PYZsh{} universal convention: import using pd}
 
-\PY{n}{data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
+\PY{n}{data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Create pandas Series from 1d array}
 \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{data}\PY{p}{)}
@@ -602,11 +602,11 @@ the name \texttt{pd}:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-0    0
-1    1
-2    2
-3    3
-4    4
+0    5
+1    6
+2    7
+3    8
+4    9
 dtype: int64
 \end{Verbatim}
 \end{tcolorbox}
@@ -1418,7 +1418,7 @@ For example, we can easily group our universities by country using
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
 
-\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/universities.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{;}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{DATA\PYZus{}PATH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/universities.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{;}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Group observations by country (Scotland, England, \etc)}
 \PY{n}{groups} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
@@ -1642,7 +1642,7 @@ students by the corresponding country:
 \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Avg\PYZus{}Student}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Students}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Print results for each institution}
-\PY{n}{df}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Institution}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Avg\PYZus{}Student}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\PY{n}{df}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Institution}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Avg\PYZus{}Student}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
@@ -1655,6 +1655,11 @@ students by the corresponding country:
 2   University of St Andrews  Scotland  19563.142857
 3     University of Aberdeen  Scotland  19563.142857
 4  University of Strathclyde  Scotland  19563.142857
+5                        LSE   England  27119.846154
+6                        UCL   England  27119.846154
+7    University of Cambridge   England  27119.846154
+8       University of Oxford   England  27119.846154
+9      University of Warwick   England  27119.846154
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -2119,7 +2124,7 @@ bar chart, we can directly use pandas's
 \PY{c+c1}{\PYZsh{} Create bar chart}
 \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{labels}\PY{p}{,} \PY{n}{values}\PY{p}{)}
 
-\PY{c+c1}{\PYZsh{} Rotate tick}
+\PY{c+c1}{\PYZsh{} Rotate ticks}
 \PY{n}{plt}\PY{o}{.}\PY{n}{tick\PYZus{}params}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{labelrotation}\PY{o}{=}\PY{l+m+mi}{90}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
@@ -2177,7 +2182,7 @@ illustrate this using the US unemployment rate at annual frequency.
 
 To quickly plot some descriptive statistics, we can use the
 \href{https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.box.html}{\texttt{plot.box()}}
-provided by pandas. We demonstrate this but plotting the distribution of
+provided by pandas. We demonstrate this by plotting the distribution of
 post-ware GDP growth, inflation and the unemployment rate in the US:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
