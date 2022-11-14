@@ -47,7 +47,7 @@
     \fi
 
     \usepackage{fancyvrb} % verbatim replacement that allows latex
-    \usepackage{grffile} % extends the file name processing of package graphics 
+    \usepackage{grffile} % extends the file name processing of package graphics
                          % to support a larger range
     \makeatletter % fix for old versions of grffile with XeLaTeX
     \@ifpackagelater{grffile}{2019/11/01}
@@ -131,7 +131,7 @@
     \newcommand{\RegionMarkerTok}[1]{{#1}}
     \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
     \newcommand{\NormalTok}[1]{{#1}}
-    
+
     % Additional commands for more recent versions of Pandoc
     \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
     \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
@@ -150,8 +150,8 @@
     \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
     \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
     \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
-    
-    
+
+
     % Define a nice break command that doesn't care if a line doesn't already
     % exist.
     \def\br{\hspace*{\fill} \\* }
@@ -164,7 +164,10 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \newcommand*{\mytitle}{Unit 9: Introduction to unsupervised learning}
+    \newcommand*{\unitcounter}{9}
+    \addtocounter{section}{\unitcounter}
+    \addtocounter{section}{-1}
+    \newcommand*{\mytitle}{Unit \unitcounter: Introduction to unsupervised learning}
     
     \input{overrides-post}
     
@@ -273,53 +276,53 @@
 \makeatother
 
 
-    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    % For linebreaks inside Verbatim environment from package fancyvrb.
     \makeatletter
-        \newbox\Wrappedcontinuationbox 
-        \newbox\Wrappedvisiblespacebox 
-        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
-        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
-        \newcommand*\Wrappedcontinuationindent {3ex } 
-        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
-        % Take advantage of the already applied Pygments mark-up to insert 
-        % potential linebreaks for TeX processing. 
-        %        {, <, #, %, $, ' and ": go to next line. 
-        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
-        % Use of \textquotesingle for straight quote. 
-        \newcommand*\Wrappedbreaksatspecials {% 
-            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
-            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
-            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
-            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
-            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
-            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
-            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
-            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
-            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
-            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
-            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
-            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
-            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
-            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
-        } 
-        % Some characters . , ; ? ! / are not pygmentized. 
-        % This macro makes them "active" and they will insert potential linebreaks 
-        \newcommand*\Wrappedbreaksatpunct {% 
-            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
-            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
-            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
-            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
-            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
-            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
-            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
             \catcode`\.\active
-            \catcode`\,\active 
+            \catcode`\,\active
             \catcode`\;\active
             \catcode`\:\active
             \catcode`\?\active
             \catcode`\!\active
-            \catcode`\/\active 
-            \lccode`\~`\~ 	
+            \catcode`\/\active
+            \lccode`\~`\~
         }
     \makeatother
 
@@ -342,10 +345,10 @@
             \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
             {\kern\fontdimen2\font}%
         }%
-        
+
         % Allow breaks at special characters using \PYG... macros.
         \Wrappedbreaksatspecials
-        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
         \OriginalVerbatim[#1,fontsize=\small,codes*=\Wrappedbreaksatpunct]%
     }
     \makeatother
@@ -355,7 +358,7 @@
     \definecolor{outcolor}{HTML}{D84315}
     \definecolor{cellborder}{HTML}{CFCFCF}
     \definecolor{cellbackground}{HTML}{FCFCFC}
-    
+
     % prompt
     \makeatletter
     \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
@@ -367,7 +370,7 @@
 
     
     % Prevent overflowing lines due to hard-to-break entities
-    \sloppy 
+    \sloppy
     % Setup hyperref package
     \hypersetup{
       breaklinks=true,  % so long urls are correctly broken across lines
@@ -407,13 +410,13 @@ three groups:
   \emph{Supervised learning}
 
   Models in this group use both input data (often called independent
-  variables, features, covariates, predictors, or X variables) and the
-  corresponding output data (dependent variables, outcomes, targets) to
-  establish a relationship between within a training data set. We can
-  then use this relationship to make predictions about outputs in new
-  data.
+  variables, features, covariates, predictors, or \(X\) variables) and
+  the corresponding output data (dependent variable, outcome, target, or
+  \(y\) variable) to establish some relationship \(y = f(X)\) within a
+  training data set. We can then use this relationship to make
+  predictions about outputs in new data.
 
-  Subcategories within this group include
+  Subcategories within this group include:
 
   \begin{itemize}
   \tightlist
@@ -456,44 +459,88 @@ three groups:
 \subsection{Principal component
 analysis}\label{principal-component-analysis}}
 
-Principal component analysis (PCA) is one of the most widely used
-dimensionality reduction techniques (and thus falls under the umbrella
-of \emph{unsupervised learning}). To compute the principal components,
-we often use a matrix factorisation technique known as singular value
-decomposition, which we study in the next section. Alternatively (and
-equivalently), principal components can be computed from the eigenvalues
-and eigenvectors of the data's covariance matrix. We ignore this second
-approach in this unit.
+\href{https://en.wikipedia.org/wiki/Principal_component_analysis}{Principal
+component analysis} (PCA) is one of the most widely used dimensionality
+reduction techniques. Assume we have a dataset consisting of
+\(i = 1,\dots,N\) observations of \(k = 1,\dots,K\) variables (or
+features) \(\mathbf{x}_k\). For simplicity, assume that all
+\(\mathbf{x}_k\) are \emph{centred}, \ie the have been transformed so
+that they have zero means. We could image two ways to reduce the
+dimensionality of this dataset:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Discard some of the variables and keep only a number \(J \ll K\).
+\item
+  Create a collection of alternative variables \(\mathbf{p}_j\) which
+  are linear combinations of \(\mathbf{x}_k\). The dimensionality
+  reduction arises if we form only \(J \ll K\) such variables.
+\end{enumerate}
+
+These variables \(\mathbf{p}_j\) are called principle components if we
+construct them in a particular way. Let \(\mathbf{p}_1\) be the first
+such component which is a linear combination of all
+\(\{\mathbf{x}_k\}\), \[
+\mathbf{p}_1 = v_{11} \mathbf{x}_1 + v_{21} \mathbf{x}_2 + \cdots + v_{K1} \mathbf{x}_K
+    = \sum_{k=1}^K v_{k1} x_{ik}
+\] where the \(v_{1k}\) are called \emph{coefficients} or
+\emph{loadings} (note that the term ``loadings'' is not used
+consistently in the literature and sometimes refers to a rescaled
+version of \(v\)). We want to pick these coefficients in some optimal
+fashion, which in this case is by requiring that they maximise the
+sample variance of the first principle component subject to the
+constraint that \(\sum_{k=1}^K v_{k1}^2 = 1\). Therefore, these
+coefficients are the solution to the following maximisation problem: \[
+\max_{v_{11},v_{21},\dots,v_{K1}} 
+\left\{ 
+    \frac{1}{n}\sum_{i=1}^N p_{i1}^2
+\right\}
+= 
+\left\{ 
+    \frac{1}{n}\sum_{i=1}^N \left( \sum_{k=1}^K v_{k1} x_{ik} \right)^2
+\right\} 
+\quad \text{subject to} \quad 
+ \sum_{k=1}^K v_{k1}^2 = 1
+\]
+
+We never solve the above maximisation problem by hand to find the
+coefficients but instead use an algorithm from linear algebra called the
+\emph{singular value decomposition}.
 
     \hypertarget{singular-value-decomposition-and-principal-components}{%
 \subsubsection{Singular value decomposition and principal
 components}\label{singular-value-decomposition-and-principal-components}}
 
-\href{https://en.wikipedia.org/wiki/Singular_value_decomposition}{Singular
-value decomposition} (SVD) is a matrix factorisation that is commonly
-used in econometrics and statistics. For example, we can use it to
-implement
-\href{https://en.wikipedia.org/wiki/Principal_component_analysis}{principal
-component analysis} (PCA), principal component regression, OLS or Ridge
-regression.
+To compute the principal components, we often use a matrix factorisation
+technique known as
+\href{https://en.wikipedia.org/wiki/Singular_value_decomposition}{singular
+value decomposition} (SVD). Alternatively (and equivalently), principal
+components can be computed from the eigenvalues and eigenvectors of the
+data's covariance matrix. We ignore this second approach in this unit.
 
-Let \(\mathbf{X} \in \mathbb{R}^{m\times n}\) be a matrix. For our
-purposes, we will assume that \(m \geq n\) since \(\mathbf{X}\) will be
-the matrix containing the data with observations in rows and variables
-in column. The (compact) SVD of \(\mathbf{X}\) is given by \[
+SVD is a matrix factorisation that is commonly used in econometrics and
+statistics. For example, we can use it to implement PCA, principal
+component regression, OLS or Ridge regression (which we cover in the
+next unit).
+
+Let \(\mathbf{X} \in \mathbb{R}^{N\times K}\) be a matrix of data with
+\(N\) observations (in rows) of \(K\) variables (in columns) with
+\(N \geq K\). The (compact) SVD of \(\mathbf{X}\) is given by \[
 \mathbf{X} = \mathbf{U} \Sigma \mathbf{V}^\top
-\] where \(\mathbf{U} \in \mathbb{R}^{m\times n}\) and
-\(\mathbf{V} \in \mathbb{R}^{n\times n}\) are orthogonal matrices, and
-\(\bm\Sigma \in \mathbb{R}^{n \times n}\) is a diagonal matrix \[
+\] where \(\mathbf{U} \in \mathbb{R}^{N\times K}\) and
+\(\mathbf{V} \in \mathbb{R}^{K\times K}\) are orthogonal matrices, and
+\(\bm\Sigma \in \mathbb{R}^{K \times K}\) is a diagonal matrix \[
 \bm\Sigma =  \begin{bmatrix} 
     \sigma_1 & & & & \\
      & \sigma_2 & & & \\
      & & \ddots & & \\
-     & & & \sigma_n & 
+     & & & \sigma_K & 
 \end{bmatrix}
-\] The elements \(\sigma_i\) are called singular values of
+\] The elements \(\sigma_k\) are called singular values of
 \(\mathbf{X}\), and \(\bm\Sigma\) is arranged such that
-\(\sigma_1 \geq \sigma_2 \geq \dots \geq \sigma_n\). Since
+\(\sigma_1 \geq \sigma_2 \geq \dots \geq \sigma_K\). Since
 \(\mathbf{U}\) is not necessarily square, it's not truly orthogonal, but
 its columns are still orthogonal to each other.
 
@@ -509,25 +556,30 @@ These matrices satisfy the following useful properties: \[
 \] where \(\mathbf{I}_n\) is the \(n\times n\) identity matrix.
 
 Once we have obtained the singular value decomposition, we can project
-the data \(\mathbf{X}\) onto the basis spanned by the principal
-components to obtain the transformed data \(\mathbf{P}\): \[
-\begin{aligned}
-    \mathbf{P} &= \mathbf{X} \mathbf{V}
-\end{aligned}
+the data \(\mathbf{X}\) onto the coordinate system underlying the
+principal components to obtain the transformed data \(\mathbf{P}\): \[
+    \mathbf{P} = \mathbf{X} \mathbf{V}
 \] Intuitively, the \(j\)-th column of \(\mathbf{V}\) defines how the
 \(j\)-th column in \(\mathbf{P}\) is obtained as a linear combination of
-the columns of \(\mathbf{X}\). The power of PCA comes from the fact that
-we don't need to use all columns in \(\mathbf{V}\) so that the dimension
-of \(\mathbf{P}\) is lower than the dimension of the original data
-\(\mathbf{X}\).
+the columns of \(\mathbf{X}\). If you recall our definition of the first
+principle component from above, \[
+\mathbf{p}_1 = v_{11} \mathbf{x}_1 + v_{21} \mathbf{x}_2 + \cdots + v_{K1} \mathbf{x}_K
+\] you can immediately see that the coefficients \(v_{k1}\) are stored
+in the first column of \(\mathbf{V}\), and the first column of
+\(\mathbf{P}\) corresponds to the first principal component
+\(\mathbf{p}_1\).
+
+The power of PCA comes from the fact that we don't need to use all
+columns in \(\mathbf{V}\) so that the dimension of \(\mathbf{P}\) is
+lower than the dimension of the original data \(\mathbf{X}\).
 
 In Python, we compute the SVD using the
 \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html}{\texttt{svd()}}
 function from \texttt{numpy.linalg}.
 
-    \hypertarget{example-bivariate-normal}{%
-\subsubsection{Example: Bivariate
-normal}\label{example-bivariate-normal}}
+    \hypertarget{example-bivariate-normal-sample}{%
+\vspace{1em}\subsubsection{Example: Bivariate normal
+sample}\label{example-bivariate-normal-sample}}
 
 Imagine we construct \(X\) as 200 random draws from a bivariate normal:
 
@@ -535,7 +587,6 @@ Imagine we construct \(X\) as 200 random draws from a bivariate normal:
 \prompt{In}{incolor}{1}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k+kn}{import} \PY{n}{default\PYZus{}rng}
 
 \PY{c+c1}{\PYZsh{} Draw a bivariate normal sample using the function we defined above}
@@ -544,16 +595,31 @@ Imagine we construct \(X\) as 200 random draws from a bivariate normal:
 \PY{n}{rho} \PY{o}{=} \PY{l+m+mf}{0.75}                          \PY{c+c1}{\PYZsh{} Correlation coefficient}
 \PY{n}{Nobs} \PY{o}{=} \PY{l+m+mi}{200}                          \PY{c+c1}{\PYZsh{} Sample size}
 
+
+\PY{c+c1}{\PYZsh{} Correlation matrix}
+\PY{n}{corr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}
+    \PY{p}{[}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{rho}\PY{p}{]}\PY{p}{,} 
+    \PY{p}{[}\PY{n}{rho}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{]}
+\PY{p}{]}\PY{p}{)}
 \PY{c+c1}{\PYZsh{} Create variance\PYZhy{}covariance matrix}
-\PY{n}{corr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{rho}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{rho}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{]}\PY{p}{]}\PY{p}{)}
 \PY{n}{vcv} \PY{o}{=} \PY{n}{sigma}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]} \PY{o}{*} \PY{n}{corr} \PY{o}{*} \PY{n}{sigma}
 
-\PY{c+c1}{\PYZsh{} Draw MVN random numbers:}
+\PY{c+c1}{\PYZsh{} Draw multivariate normal random numbers:}
 \PY{c+c1}{\PYZsh{} each row represents one sample draw.}
 \PY{n}{rng} \PY{o}{=} \PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{l+m+mi}{123}\PY{p}{)}
 \PY{n}{X} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{multivariate\PYZus{}normal}\PY{p}{(}\PY{n}{mean}\PY{o}{=}\PY{n}{mu}\PY{p}{,} \PY{n}{cov}\PY{o}{=}\PY{n}{vcv}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{n}{Nobs}\PY{p}{)}
 
+\PY{c+c1}{\PYZsh{} Split into variables X1, X2}
 \PY{n}{x1}\PY{p}{,} \PY{n}{x2} \PY{o}{=} \PY{n}{X}\PY{o}{.}\PY{n}{T}
+\end{Verbatim}
+\end{tcolorbox}
+
+    We use a scatter plot to visualise the random draws:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 
 \PY{c+c1}{\PYZsh{} Scatter plot of sample}
 \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -564,14 +630,14 @@ Imagine we construct \(X\) as 200 random draws from a bivariate normal:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{1}{\boxspacing}
+\prompt{Out}{outcolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Text(0.5, 1.0, 'Draws from bivariate normal distribution')
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_5_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_7_1.pdf}
     \end{center}
     
     \hypertarget{performing-pca-manually-using-svd}{%
@@ -583,13 +649,12 @@ Later on, we will examine how we do the same task using
 \texttt{scikit-learn}, one of the most widely used Python libraries for
 ML.
 
-Before performing PCA, it is often recommended to standardise the
-variables, \ie transform them so that they have zero mean and unit
-variance. For this example, we will only demean the data but ignore the
-variance.
+Before performing PCA, it is recommended to standardise the variables,
+\ie transform them so that they have zero mean and unit variance. For
+this example, we will only demean the data but ignore the variance.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{2}{\boxspacing}
+\prompt{In}{incolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Demean variables}
 
@@ -608,7 +673,7 @@ transformed using the matrix multiplication \[
 \] where \(\mathbf{X}\) now denotes the standardised values.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{3}{\boxspacing}
+\prompt{In}{incolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{linalg} \PY{k+kn}{import} \PY{n}{svd}
 
@@ -635,45 +700,46 @@ that each axes corresponds to a principal component. Most of the
 variation clearly occurs along the first axis!
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{4}{\boxspacing}
+\prompt{In}{incolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Plot principal components}
 
 \PY{c+c1}{\PYZsh{} Scatter plot of sample}
-\PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZus{}1\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZus{}2\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{axline}\PY{p}{(}\PY{n}{Xmean}\PY{p}{,} \PY{n}{Xmean} \PY{o}{+} \PY{n}{Vt}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{axline}\PY{p}{(}\PY{n}{Xmean}\PY{p}{,} \PY{n}{Xmean} \PY{o}{+} \PY{n}{Vt}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{fig}\PY{p}{,} \PY{p}{(}\PY{n}{ax0}\PY{p}{,} \PY{n}{ax1}\PY{p}{)} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZus{}1\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZus{}2\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{axline}\PY{p}{(}\PY{n}{Xmean}\PY{p}{,} \PY{n}{Xmean} \PY{o}{+} \PY{n}{Vt}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{axline}\PY{p}{(}\PY{n}{Xmean}\PY{p}{,} \PY{n}{Xmean} \PY{o}{+} \PY{n}{Vt}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
 
+\PY{c+c1}{\PYZsh{} Plot arrows pointing along axes of individual components}
 \PY{n}{PC\PYZus{}arrows} \PY{o}{=} \PY{n}{Vt} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{var\PYZus{}PC}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{)}
 \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{PC\PYZus{}arrows}\PY{p}{:}
     \PY{c+c1}{\PYZsh{} Scale up arrows by 3 so that they are visible!}
-    \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{Xmean} \PY{o}{+} \PY{n}{v}\PY{o}{*}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{Xmean}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{arrowstyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZgt{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+    \PY{n}{ax0}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{Xmean} \PY{o}{+} \PY{n}{v}\PY{o}{*}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{Xmean}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{arrowstyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZgt{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
 
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Plot in principal component coordinate system}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{PC}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{PC}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{PC}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{PC}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{4}{\boxspacing}
+\prompt{Out}{outcolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7fdb1deb34f0>
+<matplotlib.lines.Line2D at 0x7f925e242560>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_11_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_13_1.pdf}
     \end{center}
     
     \hypertarget{performing-pca-using-scikit-learn}{%
@@ -684,9 +750,11 @@ Of course, in real applications we don't need to manually compute the
 principal components but can use a library such as \texttt{scikit-learn}
 to do it for us (see the documentation for
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html\#sklearn.decomposition.PCA}{\texttt{PCA}}
-for details).
+and the section on PCA in the
+\href{https://scikit-learn.org/stable/modules/decomposition.html\#pca}{official
+user guide} for details).
 
-Most models implemented in \texttt{scikit-learn} follow a the same
+Most models implemented in \texttt{scikit-learn} follow the same
 paradigm:
 
 \begin{enumerate}
@@ -696,8 +764,8 @@ paradigm:
   fit to the data. In our present case, the class is called
   \texttt{PCA}.
 
-  In many cases, we specify arguments that government how a model is fit
-  to the data, \eg the number of principal components to use.
+  In many cases, we specify arguments that govern how a model is fit to
+  the data, \eg the number of principal components to use.
 \item
   We fit the model (on the training data set) by calling the
   \texttt{fit()} method.
@@ -712,7 +780,7 @@ demeans the input data (but does not normalise the variance to 1), so we
 don't need to do it manually.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{5}{\boxspacing}
+\prompt{In}{incolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k+kn}{import} \PY{n}{PCA}
 
@@ -728,7 +796,7 @@ don't need to do it manually.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{5}{\boxspacing}
+\prompt{Out}{outcolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 PCA(n\_components=2)
 \end{Verbatim}
@@ -741,7 +809,7 @@ method. Note that we could have called
 instead to perform the two previous steps in a single call.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{6}{\boxspacing}
+\prompt{In}{incolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Obtain data projected onto principal components}
 \PY{n}{PC\PYZus{}skl} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X}\PY{p}{)}
@@ -751,16 +819,15 @@ instead to perform the two previous steps in a single call.
 \end{Verbatim}
 \end{tcolorbox}
 
-    The principal components themselves (\ie the axes that serve as the
-basis for the transformed data) are stored in the attribute
-\texttt{components\_} and are identical to the matrix
-\(\mathbf{V}^\top\) we computed above.
+    The principal component coefficients (used to create the transformed
+data) are stored in the attribute \texttt{components\_} and are
+identical to the matrix \(\mathbf{V}^\top\) we computed above.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{7}{\boxspacing}
+\prompt{In}{incolor}{8}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} The attribute components\PYZus{} can be used to retrieve the V\PYZsq{} matrix}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Principal components (matrix V}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{components\PYZus{} (matrix V}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
 \PY{n+nb}{print}\PY{p}{(}\PY{n}{pca}\PY{o}{.}\PY{n}{components\PYZus{}}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Check that these are identical to the matrix V\PYZsq{} we computed via SVD}
@@ -769,7 +836,7 @@ basis for the transformed data) are stored in the attribute
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Principal components (matrix V'):
+components\_ (matrix V'):
 [[ 0.38420018  0.92324981]
  [ 0.92324981 -0.38420018]]
     \end{Verbatim}
@@ -784,12 +851,12 @@ for a full list). For example,
   \texttt{explained\_variance\_} stores the variances of all principal
   components; and
 \item
-  \texttt{explained\_variance\_ratio} stores the fraction of the
+  \texttt{explained\_variance\_ratio\_} stores the fraction of the
   variance ``explained'' by each component.
 \end{itemize}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{8}{\boxspacing}
+\prompt{In}{incolor}{9}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} The attribute explained\PYZus{}variance\PYZus{} stores the variances of all PCs}
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Variance of each PC: }\PY{l+s+si}{\PYZob{}}\PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -809,39 +876,44 @@ captures about 92\% of the variance in the data.
 
     Finally, it is often interesting to examine how much any of the original
 variables in \(\mathbf{X}\) contribute to each principal component.
-These contributes are called \emph{loadings} and can be computed as
+These contributions are called \emph{loadings} (again, note that the
+term ``loadings'' is not used consistently) and can be computed as
 follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{9}{\boxspacing}
+\prompt{In}{incolor}{10}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{loadings} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{components\PYZus{}}\PY{o}{.}\PY{n}{T} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}}\PY{p}{)}
-\PY{n}{loadings}
+
+\PY{c+c1}{\PYZsh{} Use pandas DataFrame to tabulate loadings}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{loadings}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{9}{\boxspacing}
+\prompt{Out}{outcolor}{10}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([[ 0.41665418,  0.28373402],
-       [ 1.00123818, -0.11807277]])
+         PC1       PC2
+X1  0.416654  0.283734
+X2  1.001238 -0.118073
 \end{Verbatim}
 \end{tcolorbox}
         
-    The output tells is that the first principal component (which
-corresponds to the first column in the above matrix) loads heavily on
-the second column of \(\mathbf{X}\), which can also be seen from the
+    The output tells us that the first principal component (which
+corresponds to the first column in the above matrix) loads more heavily
+on the second column of \(\mathbf{X}\), which can also be seen from the
 previous graph.
 
     \hypertarget{example-higher-dimensional-data}{%
-\subsubsection{Example: Higher-dimensional
+\vspace{1em}\subsubsection{Example: Higher-dimensional
 data}\label{example-higher-dimensional-data}}
 
 \hypertarget{creating-highly-correlated-inputs}{%
 \subsubsection*{Creating highly correlated
 inputs}\label{creating-highly-correlated-inputs}}
 
-The previous example was meant as an introduction, but did not really
+The previous example was meant as an introduction but did not really
 illustrate the dimension reduction of PCA. After all, with only two
 dimensions there was not much to be reduced! Consider now a
 higher-dimensional (but still artificial) example with 10 dimensions.
@@ -867,15 +939,16 @@ For this purpose, we create highly correlated data as follows:
 \end{enumerate}
 
 For illustrative purposes, we draw the elements of \(\mathbf{A}\) from a
-normal distribution, but that makes no difference. The point of the
-example is that we take two independent variables in \(\mathbf{Z}\) and
-create \(K \gg 2\) variables in \(\mathbf{X}\) which are linear
-combinations of \(\mathbf{Z}\). Intuitively, many of the columns of
-\(\mathbf{X}\) will be highly correlated since they were created from
-the same variation in \(\mathbf{Z}\).
+normal distribution but we could have picked almost any other
+coefficients. The point of the example is that we take two independent
+variables in \(\mathbf{Z}\) and create \(K \gg 2\) variables in
+\(\mathbf{X}\) which are linear combinations of \(\mathbf{Z}\).
+Intuitively, many of the columns of \(\mathbf{X}\) will be highly
+correlated since they were created from the same variation in
+\(\mathbf{Z}\).
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{10}{\boxspacing}
+\prompt{In}{incolor}{11}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k+kn}{import} \PY{n}{default\PYZus{}rng}
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
@@ -894,11 +967,11 @@ the same variation in \(\mathbf{Z}\).
 \end{Verbatim}
 \end{tcolorbox}
 
-    We can plot the columns of \texttt{Z} against each other to verify that
-they don't seem to exhibit any particular dependence structure.
+    We can plot the columns of \(\mathbf{Z}\) against each other to verify
+that they don't seem to exhibit any particular dependence structure.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{11}{\boxspacing}
+\prompt{In}{incolor}{12}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 
@@ -909,22 +982,22 @@ they don't seem to exhibit any particular dependence structure.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{11}{\boxspacing}
+\prompt{Out}{outcolor}{12}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Text(0, 0.5, 'Z2')
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_27_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_29_1.pdf}
     \end{center}
     
     Next, we create the transformation matrix \(\mathbf{A}\). You can do
 this in various ways, so we simply choose to draw the elements of
-\(\mathbf{A}\) from a normal distribution.
+\(\mathbf{A}\) from a standard normal distribution.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{12}{\boxspacing}
+\prompt{In}{incolor}{13}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{A} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{n}{Z}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{K}\PY{p}{)}\PY{p}{)}
 
@@ -934,7 +1007,7 @@ this in various ways, so we simply choose to draw the elements of
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{12}{\boxspacing}
+\prompt{Out}{outcolor}{13}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 array([[-0.93706677,  2.62894657],
        [-0.80933814,  0.45287643],
@@ -944,11 +1017,17 @@ array([[-0.93706677,  2.62894657],
         
     The above coefficients show us how the columns of \(\mathbf{X}\) are
 formed: the first column is obtained as
-\texttt{X{[}:,\ 0{]}\ =\ -0.937\ *\ Z{[}:,\ 0{]}\ +\ 2.629\ *\ Z{[}:,\ 1{]}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X[:, }\DecValTok{0}\NormalTok{] }\OperatorTok{=} \OperatorTok{{-}}\FloatTok{0.937} \OperatorTok{*}\NormalTok{ Z[:, }\DecValTok{0}\NormalTok{] }\OperatorTok{+} \FloatTok{2.629} \OperatorTok{*}\NormalTok{ Z[:, }\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
 and so on.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{13}{\boxspacing}
+\prompt{In}{incolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Compute X as linear combinations of Z}
 \PY{n}{X} \PY{o}{=} \PY{n}{Z} \PY{o}{@} \PY{n}{A}
@@ -959,7 +1038,7 @@ and so on.
 can illustrate this using pairwise scatter plots as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{14}{\boxspacing}
+\prompt{In}{incolor}{15}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{pandas}\PY{n+nn}{.}\PY{n+nn}{plotting} \PY{k+kn}{import} \PY{n}{scatter\PYZus{}matrix}
 
@@ -972,7 +1051,7 @@ can illustrate this using pairwise scatter plots as follows:
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_33_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_35_0.pdf}
     \end{center}
     
     Moreover, we can compute the pairwise correlation coefficients using
@@ -982,7 +1061,7 @@ method which computes the correlation matrix between all columns of a
 \texttt{DataFrame}.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{15}{\boxspacing}
+\prompt{In}{incolor}{16}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Print only three decimal places}
 \PY{n}{pd}\PY{o}{.}\PY{n}{set\PYZus{}option}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{display.precision}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}
@@ -993,7 +1072,7 @@ method which computes the correlation matrix between all columns of a
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{15}{\boxspacing}
+\prompt{Out}{outcolor}{16}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
        X0     X1     X2     X3     X4     X5     X6     X7     X8     X9
 X0  1.000  0.931  0.933  0.893  0.739  0.067 -0.900  0.891 -0.824 -0.997
@@ -1017,7 +1096,7 @@ We now use \texttt{scikit-learn}'s \texttt{PCA} to perform the principal
 component analysis just as we did in the bivariate case.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{16}{\boxspacing}
+\prompt{In}{incolor}{17}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k+kn}{import} \PY{n}{PCA}
 
@@ -1038,7 +1117,7 @@ dimension is basically constant (this is also the case for the remaining
 principal components).
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{17}{\boxspacing}
+\prompt{In}{incolor}{18}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
 
@@ -1059,38 +1138,43 @@ principal components).
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_39_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_41_0.pdf}
     \end{center}
     
     To see what's going in, we create a graph that plots the share of total
-variance captured by each component. The plot below shows that for
-principal components beyond the 2nd one, this share is zero. This should
-come as no surprise since we generated the higher-dimensional data in
-\(\mathbf{X}\) from only two dimensions of independent data.
+variance captured by each component. This type of plot is called a
+\emph{scree plot} and is occasionally used to visually pin down the
+number of principal components to use.
+
+The plot below shows that for principal components beyond the 2nd one,
+this share is zero. This should come as no surprise since we generated
+the higher-dimensional data in \(\mathbf{X}\) from only two dimensions
+of independent data.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{18}{\boxspacing}
+\prompt{In}{incolor}{19}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 
-
 \PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{K}\PY{p}{)}
-\PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}ratio\PYZus{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}ratio\PYZus{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{xvalues} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Principal component}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Share of variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Scree plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{18}{\boxspacing}
+\prompt{Out}{outcolor}{19}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-Text(0, 0.5, 'Share of variance')
+Text(0.5, 1.0, 'Scree plot')
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_41_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_43_1.pdf}
     \end{center}
     
     \hypertarget{pca-with-automatically-selected-number-of-principal-components}{%
@@ -1110,7 +1194,7 @@ request that the number of components should capture at leat 90\% of the
 variance:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{19}{\boxspacing}
+\prompt{In}{incolor}{20}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Perform PCA, select components to capture 90\PYZpc{} of variance}
 \PY{n}{pca} \PY{o}{=} \PY{n}{PCA}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{)}
@@ -1124,7 +1208,7 @@ variance:
 suspect when looking at the previous graph.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{20}{\boxspacing}
+\prompt{In}{incolor}{21}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of components: }\PY{l+s+si}{\PYZob{}}\PY{n}{pca}\PY{o}{.}\PY{n}{n\PYZus{}components\PYZus{}}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
@@ -1140,7 +1224,7 @@ was generated randomly, this plot is not particularly insightful but
 will be much more useful with real data.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{21}{\boxspacing}
+\prompt{In}{incolor}{22}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Compute loadings for all PCs}
 \PY{n}{loadings} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{components\PYZus{}}\PY{o}{.}\PY{n}{T} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}}\PY{p}{)}
@@ -1166,14 +1250,14 @@ will be much more useful with real data.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{21}{\boxspacing}
+\prompt{Out}{outcolor}{22}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Text(0.5, 0.98, 'Loadings for principal components')
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_47_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_49_1.pdf}
     \end{center}
     
 
