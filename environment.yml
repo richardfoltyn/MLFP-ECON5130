@@ -19,3 +19,4 @@ dependencies:
   - pip
   - pip:
     - fredapi
+    - nbconvert[webpdf]
