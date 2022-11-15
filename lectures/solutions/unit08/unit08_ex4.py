@@ -1,5 +1,5 @@
 """
-Unit 6, Exercise 4
+Unit 8, Exercise 4
 
 Author: Richard Foltyn
 """
@@ -56,4 +56,4 @@ plt.ylabel('Mean')
 # Use identical y-lims across ex. 4-6
 plt.ylim((1.0, 8.0))
 
-plt.savefig('unit06_ex4.pdf')
+plt.savefig('unit08_ex4.pdf')

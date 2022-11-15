@@ -1,5 +1,5 @@
 """
-Unit 6, Exercise 3
+Unit 8, Exercise 3
 
 Author: Richard Foltyn
 """
@@ -67,5 +67,5 @@ ax.set_ylabel('Density')
 ax.legend(loc='upper right', frameon=False)
 
 fig.tight_layout()
-fig.savefig('unit06_ex3.pdf')
+fig.savefig('unit08_ex3.pdf')
 

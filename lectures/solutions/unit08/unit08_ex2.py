@@ -1,5 +1,5 @@
 """
-Unit 6, Exercise 2
+Unit 8, Exercise 2
 
 Author: Richard Foltyn
 """
@@ -112,9 +112,9 @@ ax.set_ylabel(r'$x^2 \cdot f(x)$')
 ax.set_xlabel(r'$x$')
 
 ax.legend(loc='upper left', frameon=False, ncol=2)
-fig.savefig('unit06_ex2_MC.pdf')
+fig.savefig('unit08_ex2_MC.pdf')
 # Store as SVG to be included in Notebook
-fig.savefig('unit06_ex2_MC.svg')
+fig.savefig('unit08_ex2_MC.svg')
 
 
 ################################################################################
@@ -138,6 +138,6 @@ ax.set_xticklabels([r'$a$', r'$\mu$', r'$b$'])
 ax.set_ylabel('PDF')
 ax.set_yticks([])
 fig.tight_layout()
-fig.savefig('unit06_ex2_PDF.pdf')
+fig.savefig('unit08_ex2_PDF.pdf')
 # Store as SVG to be included in Notebook
-fig.savefig('unit06_ex2_PDF.svg')
+fig.savefig('unit08_ex2_PDF.svg')

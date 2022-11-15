@@ -1,5 +1,5 @@
 """
-Unit 6, Exercise 1
+Unit 8, Exercise 1
 
 Author: Richard Foltyn
 """
@@ -55,4 +55,4 @@ fig.tight_layout()
 # Add overall title
 fig.suptitle('Draws from the standard-t distribution', fontsize=16, y=1.05)
 
-fig.savefig('unit06_ex1.pdf')
+fig.savefig('unit08_ex1.pdf')

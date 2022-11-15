@@ -1,5 +1,5 @@
 """
-Unit 7, Exercise 6
+Unit 8, Exercise 6
 
 Author: Richard Foltyn
 """
@@ -84,7 +84,7 @@ plt.ylabel('Mean')
 # Use identical y-lims across ex. 4-6
 plt.ylim((1.0, 8.0))
 
-plt.savefig('unit06_ex6.pdf')
+plt.savefig('unit08_ex6.pdf')
 
 ################################################################################
 # Plot histograms
@@ -110,4 +110,4 @@ for k, ax in enumerate(axes.flatten()):
         ax.set_xlabel(r'$\overline{x}_{k}^j$')
 
 fig.tight_layout()
-fig.savefig('unit06_ex6_hist.pdf')
+fig.savefig('unit08_ex6_hist.pdf')
