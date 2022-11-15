@@ -479,12 +479,12 @@ dimensionality of this dataset:
   reduction arises if we form only \(J \ll K\) such variables.
 \end{enumerate}
 
-These variables \(\mathbf{p}_j\) are called principle components if we
+The variables \(\mathbf{p}_j\) are called principle components if we
 construct them in a particular way. Let \(\mathbf{p}_1\) be the first
 such component which is a linear combination of all
 \(\{\mathbf{x}_k\}\), \[
 \mathbf{p}_1 = v_{11} \mathbf{x}_1 + v_{21} \mathbf{x}_2 + \cdots + v_{K1} \mathbf{x}_K
-    = \sum_{k=1}^K v_{k1} x_{ik}
+    = \sum_{k=1}^K v_{k1} \mathbf{x}_{k}
 \] where the \(v_{1k}\) are called \emph{coefficients} or
 \emph{loadings} (note that the term ``loadings'' is not used
 consistently in the literature and sometimes refers to a rescaled
@@ -581,7 +581,8 @@ function from \texttt{numpy.linalg}.
 \vspace{1em}\subsubsection{Example: Bivariate normal
 sample}\label{example-bivariate-normal-sample}}
 
-Imagine we construct \(X\) as 200 random draws from a bivariate normal:
+Imagine we construct \(\mathbf{X}\) as 200 random draws from a bivariate
+normal:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{1}{\boxspacing}
@@ -681,7 +682,7 @@ transformed using the matrix multiplication \[
 \PY{c+c1}{\PYZsh{} otherwise SVD can take a long time and consume lots of memory!}
 \PY{n}{U}\PY{p}{,} \PY{n}{S}\PY{p}{,} \PY{n}{Vt} \PY{o}{=} \PY{n}{svd}\PY{p}{(}\PY{n}{Xcen}\PY{p}{,} \PY{n}{full\PYZus{}matrices}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
 
-\PY{c+c1}{\PYZsh{} Project onto basis spanned by principal components}
+\PY{c+c1}{\PYZsh{} Project onto principal components coordinates}
 \PY{n}{PC} \PY{o}{=} \PY{n}{Xcen} \PY{o}{@} \PY{n}{Vt}\PY{o}{.}\PY{n}{T}
 
 \PY{c+c1}{\PYZsh{} Variance is highest for first component}
@@ -734,7 +735,7 @@ variation clearly occurs along the first axis!
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7f925e242560>
+<matplotlib.lines.Line2D at 0x7f1a4b710c10>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -1260,6 +1261,476 @@ Text(0.5, 0.98, 'Loadings for principal components')
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_49_1.pdf}
     \end{center}
     
+
+\hypertarget{optional-exercises}{%
+\subsection{Optional exercises}\label{optional-exercises}}
+
+    \hypertarget{exercise-1-pca-of-uncorrelated-variables}{%
+\subsubsection{Exercise 1: PCA of uncorrelated
+variables}\label{exercise-1-pca-of-uncorrelated-variables}}
+
+    Imagine we have data \(\mathbf{X}\) with \(N=1000\) observations of a
+randomly drawn sample of \(K=5\) variables where each variable is
+standard-normally distributed. Assume that all variables are
+uncorrelated.
+
+Since these variables are uncorrelated and identically distributed, we
+can simply draw an array of shape \((N, K)\) from the univariate normal
+distribution as follows instead of using the multivariate normal
+distribution:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{23}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{l+m+mi}{123}\PY{p}{)}
+
+\PY{n}{K} \PY{o}{=} \PY{l+m+mi}{5}
+\PY{n}{Nobs} \PY{o}{=} \PY{l+m+mi}{1000}
+
+\PY{n}{X} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{n}{Nobs}\PY{p}{,} \PY{n}{K}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Using this random sample, perform the following tasks:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create pairwise scatter plots of all variables in \(\mathbf{X}\).
+\item
+  Perform a principal component analysis on this sample using
+  \texttt{scikit-learn}'s \texttt{PCA} implementation.
+\item
+  Create pairwise scatter plots of all principal components. Do these
+  plots look any different from the ones you created earlier? Explain
+  your finding!
+\item
+  Generate a scree plot showing the fraction of variance captured by
+  each principal component.
+\item
+  Is it possible to reduce the dimensionality of this data without
+  sacrificing too much information? Why or why not?
+\end{enumerate}
+
+    \hypertarget{exercise-2-pca-of-quarterly-business-cycle-indicators}{%
+\subsubsection{Exercise 2: PCA of quarterly business cycle
+indicators}\label{exercise-2-pca-of-quarterly-business-cycle-indicators}}
+
+In this exercise, we use the quarterly data from FRED on GDP, CPI and
+the unemployment rate (UNRATE) in the United States stored in the CSV
+file \texttt{FRED\_QTR.csv} in the \texttt{data/} folder. To load the
+data, proceed as follows:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Uncomment this to use files in the local data/ directory}
+\PY{n}{DATA\PYZus{}PATH} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Load data directly from GitHub}
+\PY{c+c1}{\PYZsh{} DATA\PYZus{}PATH = \PYZsq{}https://raw.githubusercontent.com/richardfoltyn/MLFP\PYZhy{}ECON5130/main/data\PYZsq{}}
+
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+
+\PY{n}{file} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{DATA\PYZus{}PATH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/FRED\PYZus{}QTR.csv}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Generate the following variables which serve as indicators for the
+business cycle (the cyclical state of the economy):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Compute GDP growth as the percentage change of GDP between two
+  periods.
+\item
+  Compute inflation as the percentage change of the CPI between two
+  periods.
+\item
+  Compute differences in the unemployment rate between two periods (this
+  is measured in percentage points).
+\end{enumerate}
+
+Note that you will need to drop the first row with missing observations.
+This can be done using
+\href{https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.dropna.html}{\texttt{dropna()}}.
+
+    Perform the following tasks using the data you just created:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Compute and report the correlation matrix for all three business cycle
+  indicators. Which variables are particularly highly correlated?
+\item
+  Create pairwise scatter plots of all three business cycle indicators.
+\item
+  Perform a principal component analysis using \texttt{scikit-learn}'s
+  \texttt{PCA} implementation.
+\item
+  Tabulate the loadings for each component.
+\item
+  Create a scree plot showing the fraction of variance explained by each
+  component. How many components would one need to capture 90\% of the
+  sample variance?
+\end{enumerate}
+
+
+\hypertarget{solutions}{%
+\subsection{Solutions}\label{solutions}}
+
+    \hypertarget{solution-for-exercise-1}{%
+\subsubsection{Solution for exercise 1}\label{solution-for-exercise-1}}
+
+We generate the random sample as instructed:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{l+m+mi}{123}\PY{p}{)}
+
+\PY{n}{K} \PY{o}{=} \PY{l+m+mi}{5}
+\PY{n}{Nobs} \PY{o}{=} \PY{l+m+mi}{1000}
+
+\PY{n}{X} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{n}{Nobs}\PY{p}{,} \PY{n}{K}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    We use the function \texttt{scatter\_matrix()} provided in
+\texttt{pandas.plotting} to create pairwise scatter plots for all 5
+variables. As can be seen, these variables look uncorrelated since this
+is how we constructed them in the first place.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{pandas}\PY{n+nn}{.}\PY{n+nn}{plotting} \PY{k+kn}{import} \PY{n}{scatter\PYZus{}matrix}
+
+\PY{c+c1}{\PYZsh{} Create temporary DataFrame for scatter plots}
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{K}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{scatter\PYZus{}matrix}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{,} \PY{n}{diagonal}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kde}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_63_0.pdf}
+    \end{center}
+    
+    To perform the principal component analysis, we use the
+\texttt{sklearn.decomposition.PCA} implementation. Note that
+\texttt{PCA.fit()} automatically centres the data (which is not needed
+here since it is already mean zero).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{27}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k+kn}{import} \PY{n}{PCA}
+
+\PY{n}{pca} \PY{o}{=} \PY{n}{PCA}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Fit principal components, apply transformation to generate PCs}
+\PY{n}{PC} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{X}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    As before, we use the \texttt{scatter\_matrix()} function to create
+pairwise scatter plots of all principal components. Note that the
+principal components are uncorrelated by construction, even if the
+original data was correlated (which was not the case here).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{28}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{pandas}\PY{n+nn}{.}\PY{n+nn}{plotting} \PY{k+kn}{import} \PY{n}{scatter\PYZus{}matrix}
+
+\PY{c+c1}{\PYZsh{} Store PCs in DataFrame}
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{PC}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{K}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{scatter\PYZus{}matrix}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{,} \PY{n}{diagonal}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kde}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_67_0.pdf}
+    \end{center}
+    
+    Lastly, we use the attribute \texttt{explained\_variance\_ratio\_} to
+obtain the fraction of the variance captured by each individual
+principal component.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{29}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+
+\PY{c+c1}{\PYZsh{} Create scree plot of explained variance for each component}
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{K}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}ratio\PYZus{}}\PY{p}{,} 
+    \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Principal component}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Share of variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Scree plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{29}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0.5, 1.0, 'Scree plot')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_69_1.pdf}
+    \end{center}
+    
+    As the plot shows, each principal component captures approximately the
+same share of variance. It therefore does not really make sense to apply
+dimensionality reduction to this data set, since all original variables
+were already uncorrelated.
+
+    \hypertarget{solution-for-exercise-2}{%
+\subsubsection{Solution for exercise 2}\label{solution-for-exercise-2}}
+
+We first load the CSV file and keep only the relevant columns
+\texttt{GDP}, \texttt{CPI} and \texttt{UNRATE}.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{30}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Uncomment this to use files in the local data/ directory}
+\PY{n}{DATA\PYZus{}PATH} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Load data directly from GitHub}
+\PY{c+c1}{\PYZsh{} DATA\PYZus{}PATH = \PYZsq{}https://raw.githubusercontent.com/richardfoltyn/MLFP\PYZhy{}ECON5130/main/data\PYZsq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{31}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+
+\PY{n}{file} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{DATA\PYZus{}PATH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/FRED\PYZus{}QTR.csv}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Keep only columns of interest}
+\PY{n}{df} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPI}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UNRATE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Tabulate first 5 observations}
+\PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{31}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+      GDP   CPI  UNRATE
+0  2086.0  23.6     3.7
+1  2120.4  24.0     3.7
+2  2132.6  24.4     3.8
+3  2135.0  24.2     3.8
+4  2105.6  23.9     4.7
+\end{Verbatim}
+\end{tcolorbox}
+        
+    We apply the required transformations to obtain inflation from relative
+changes in CPI and the GDP growth from relative changes in GDP. We
+obtain changes in the unemployment rate (measured in percentage points)
+as a simple difference.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{32}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Compute inflation}
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Inflation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPI}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{pct\PYZus{}change}\PY{p}{(}\PY{p}{)} \PY{o}{*} \PY{l+m+mf}{100.0}
+
+\PY{c+c1}{\PYZsh{} Compute GDP growth}
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP\PYZus{}growth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{pct\PYZus{}change}\PY{p}{(}\PY{p}{)} \PY{o}{*} \PY{l+m+mf}{100.0}
+
+\PY{c+c1}{\PYZsh{} Compute absolute change in unemployment rate}
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UNRATE\PYZus{}diff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UNRATE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{diff}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Next, we discard all other columns and drop observations with missing
+values using the \texttt{dropna()} method.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{33}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Keep only (relative) changes, drop all other columns}
+\PY{n}{variables} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP\PYZus{}growth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Inflation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UNRATE\PYZus{}diff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{df} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{variables}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Differences create missing values for first observation, drop these}
+\PY{n}{df} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    We compute the correlation matrix using the
+\href{https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html}{\texttt{corr()}}
+method. The result shows that GDP growth is particularly (negatively)
+correlated with changes in unemployment, \ie if the economy is
+growing, unemployment is going down. This is in line with economic
+intuition.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{34}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{34}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+             GDP\_growth  Inflation  UNRATE\_diff
+GDP\_growth        1.000     -0.065       -0.678
+Inflation        -0.065      1.000        0.025
+UNRATE\_diff      -0.678      0.025        1.000
+\end{Verbatim}
+\end{tcolorbox}
+        
+    The pairwise scatter plots for all growth rates and relative changes can
+be obtained with \texttt{scatter\_matrix()}, as usual.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{35}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{pandas}\PY{n+nn}{.}\PY{n+nn}{plotting} \PY{k+kn}{import} \PY{n}{scatter\PYZus{}matrix}
+
+\PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{scatter\PYZus{}matrix}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{n}{variables}\PY{p}{]}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{n}{diagonal}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kde}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_81_0.pdf}
+    \end{center}
+    
+    We now perform the principal component analysis. To do this, we convert
+the \texttt{DataFrame} to a regular NumPy array.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{36}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k+kn}{import} \PY{n}{PCA}
+
+\PY{n}{pca} \PY{o}{=} \PY{n}{PCA}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} perform PCA. Note that sklearn is programmed to work with NumPy arrays,}
+\PY{c+c1}{\PYZsh{} so convert DataFrame to array}
+\PY{n}{X} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{to\PYZus{}numpy}\PY{p}{(}\PY{p}{)}
+\PY{n}{pca}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{36}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+PCA()
+\end{Verbatim}
+\end{tcolorbox}
+        
+    The loadings for each principal component are obtained as follows. We
+see that the first PC load particularly strongly on (negative) GDP
+growth.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{37}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{loadings} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{components\PYZus{}}\PY{o}{.}\PY{n}{T} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Print pretty table with loadings}
+\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{loadings}\PY{p}{,} 
+    \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{]}\PY{p}{,}
+    \PY{n}{index}\PY{o}{=}\PY{n}{variables}\PY{p}{,}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{37}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+               PC0    PC1    PC2
+GDP\_growth  -0.926 -0.112  0.080
+Inflation    0.149 -0.785  0.003
+UNRATE\_diff  0.282  0.044  0.260
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Lastly, we create the scree plot using the
+\texttt{explained\_variance\_ratio\_} attribute. As you can see, the
+last principal component captures only a tiny fraction of the variance
+and could thus potentially be discarded.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{38}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+
+\PY{n}{K} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{variables}\PY{p}{)}
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{K}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create scree plot}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}ratio\PYZus{}}\PY{p}{,} 
+    \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Principal component}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Share of variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Scree plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{38}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0.5, 1.0, 'Scree plot')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{unit09_files/unit09_87_1.pdf}
+    \end{center}
+    
+    We can compute the cumulative variance explained by an increasing number
+of components as follows:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{39}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}ratio\PYZus{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{39}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([0.57606753, 0.9554459 , 1.        ])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    To capture at least 90\% of the variance, we only need the first two
+principal components.
+
 
     % Add a bibliography block to the postdoc
     
