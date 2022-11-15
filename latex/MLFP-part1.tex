@@ -46,7 +46,7 @@
     \fi
 
     \usepackage{fancyvrb} % verbatim replacement that allows latex
-    \usepackage{grffile} % extends the file name processing of package graphics 
+    \usepackage{grffile} % extends the file name processing of package graphics
                          % to support a larger range
     \makeatletter % fix for old versions of grffile with XeLaTeX
     \@ifpackagelater{grffile}{2019/11/01}
@@ -130,7 +130,7 @@
     \newcommand{\RegionMarkerTok}[1]{{#1}}
     \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
     \newcommand{\NormalTok}[1]{{#1}}
-    
+
     % Additional commands for more recent versions of Pandoc
     \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
     \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
@@ -149,8 +149,8 @@
     \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
     \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
     \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
-    
-    
+
+
     % Define a nice break command that doesn't care if a line doesn't already
     % exist.
     \def\br{\hspace*{\fill} \\* }
@@ -275,53 +275,53 @@
 \makeatother
 
 
-    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    % For linebreaks inside Verbatim environment from package fancyvrb.
     \makeatletter
-        \newbox\Wrappedcontinuationbox 
-        \newbox\Wrappedvisiblespacebox 
-        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
-        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
-        \newcommand*\Wrappedcontinuationindent {3ex } 
-        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
-        % Take advantage of the already applied Pygments mark-up to insert 
-        % potential linebreaks for TeX processing. 
-        %        {, <, #, %, $, ' and ": go to next line. 
-        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
-        % Use of \textquotesingle for straight quote. 
-        \newcommand*\Wrappedbreaksatspecials {% 
-            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
-            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
-            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
-            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
-            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
-            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
-            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
-            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
-            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
-            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
-            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
-            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
-            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
-            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
-        } 
-        % Some characters . , ; ? ! / are not pygmentized. 
-        % This macro makes them "active" and they will insert potential linebreaks 
-        \newcommand*\Wrappedbreaksatpunct {% 
-            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
-            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
-            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
-            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
-            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
-            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
-            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
             \catcode`\.\active
-            \catcode`\,\active 
+            \catcode`\,\active
             \catcode`\;\active
             \catcode`\:\active
             \catcode`\?\active
             \catcode`\!\active
-            \catcode`\/\active 
-            \lccode`\~`\~ 	
+            \catcode`\/\active
+            \lccode`\~`\~
         }
     \makeatother
 
@@ -344,10 +344,10 @@
             \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
             {\kern\fontdimen2\font}%
         }%
-        
+
         % Allow breaks at special characters using \PYG... macros.
         \Wrappedbreaksatspecials
-        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
         \OriginalVerbatim[#1,fontsize=\small,codes*=\Wrappedbreaksatpunct]%
     }
     \makeatother
@@ -357,7 +357,7 @@
     \definecolor{outcolor}{HTML}{D84315}
     \definecolor{cellborder}{HTML}{CFCFCF}
     \definecolor{cellbackground}{HTML}{FCFCFC}
-    
+
     % prompt
     \makeatletter
     \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
@@ -369,7 +369,7 @@
 
     
     % Prevent overflowing lines due to hard-to-break entities
-    \sloppy 
+    \sloppy
     % Setup hyperref package
     \hypersetup{
       breaklinks=true,  % so long urls are correctly broken across lines
@@ -10242,7 +10242,7 @@ heterogeneous data:
 \item
   Each variable is permitted to have a different data type.
 \item
-  We can use \emph{labels} to select observations, instead of having to
+  We can use \emph{labels} to select observations instead of having to
   use a linear numerical index as with NumPy.
 
   We could, for example, index a data set using National Insurance
@@ -10324,29 +10324,53 @@ To access pandas data structures and routines, we need to import them
 first. The near-universal convention is to make pandas available using
 the name \texttt{pd}:
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\end{Highlighting}
+\end{Shaded}
+
+\vspace{1em}\emph{Example: Create Series from 1-dimensional NumPy array}
+
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}             \PY{c+c1}{\PYZsh{} universal convention: import using pd}
+
+\PY{n}{data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create pandas Series from 1d array}
+\PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{data}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-\vspace{1em}\emph{Example: Create from NumPy array}
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+0    5
+1    6
+2    7
+3    8
+4    9
+dtype: int64
+\end{Verbatim}
+\end{tcolorbox}
+        
+\vspace{1em}\emph{Example: Create DataFrame from NumPy array}
 
 We can create a \texttt{DataFrame} from a NumPy array:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}             \PY{c+c1}{\PYZsh{} universal convention: import using pd}
-
+\PY{c+c1}{\PYZsh{} Create matrix of data}
 \PY{n}{data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Define variable (or column) names}
 \PY{n}{varnames} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{B}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
 
-\PY{c+c1}{\PYZsh{} Create pandas DataFrame}
+\PY{c+c1}{\PYZsh{} Create pandas DataFrame from matrix}
 \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{varnames}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
@@ -11140,7 +11164,7 @@ For example, we can easily group our universities by country using
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
 
-\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/universities.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{;}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{DATA\PYZus{}PATH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/universities.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{;}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Group observations by country (Scotland, England, \etc)}
 \PY{n}{groups} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
@@ -11364,7 +11388,7 @@ students by the corresponding country:
 \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Avg\PYZus{}Student}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Students}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Print results for each institution}
-\PY{n}{df}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Institution}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Avg\PYZus{}Student}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\PY{n}{df}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Institution}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Avg\PYZus{}Student}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
@@ -11377,6 +11401,11 @@ students by the corresponding country:
 2   University of St Andrews  Scotland  19563.142857
 3     University of Aberdeen  Scotland  19563.142857
 4  University of Strathclyde  Scotland  19563.142857
+5                        LSE   England  27119.846154
+6                        UCL   England  27119.846154
+7    University of Cambridge   England  27119.846154
+8       University of Oxford   England  27119.846154
+9      University of Warwick   England  27119.846154
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -11822,7 +11851,7 @@ bar chart, we can directly use pandas's
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_758_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_759_1.pdf}
     \end{center}
     
     Alternatively, we can construct the graph using Matplotlib ourselves:
@@ -11841,13 +11870,13 @@ bar chart, we can directly use pandas's
 \PY{c+c1}{\PYZsh{} Create bar chart}
 \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{labels}\PY{p}{,} \PY{n}{values}\PY{p}{)}
 
-\PY{c+c1}{\PYZsh{} Rotate tick}
+\PY{c+c1}{\PYZsh{} Rotate ticks}
 \PY{n}{plt}\PY{o}{.}\PY{n}{tick\PYZus{}params}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{labelrotation}\PY{o}{=}\PY{l+m+mi}{90}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_760_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_761_0.pdf}
     \end{center}
     
     Sometimes Matplotlib's routines directly work with pandas's data
@@ -11892,14 +11921,14 @@ illustrate this using the US unemployment rate at annual frequency.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_763_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_764_1.pdf}
     \end{center}
     
 \vspace{1em}\emph{Example: Creating box plots}
 
 To quickly plot some descriptive statistics, we can use the
 \href{https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.box.html}{\texttt{plot.box()}}
-provided by pandas. We demonstrate this but plotting the distribution of
+provided by pandas. We demonstrate this by plotting the distribution of
 post-ware GDP growth, inflation and the unemployment rate in the US:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -11934,7 +11963,7 @@ post-ware GDP growth, inflation and the unemployment rate in the US:
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_765_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_766_1.pdf}
     \end{center}
     
 \vspace{1em}\emph{Example: Creating scatter plots}
@@ -11969,7 +11998,7 @@ inflation in any given year over the post-war period.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_767_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_768_1.pdf}
     \end{center}
     
     Pandas also offers the convenience function
@@ -12000,7 +12029,7 @@ variables:
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_769_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_770_0.pdf}
     \end{center}
     
     In general, the wrappers implemented in pandas are useful to get an idea
@@ -12263,7 +12292,7 @@ us to perform these tasks in many different ways, so your implementation
 might look very different.
 
 The solutions are also provided as Python scripts in the
-\href{../lectures/solutions/unit07}{lectures/solutions/unit07/} folder.
+\href{../lectures/solutions/unit06}{lectures/solutions/unit06/} folder.
 
     \hypertarget{solution-for-exercise-1}{%
 \subsection{Solution for exercise 1}\label{solution-for-exercise-1}}
@@ -12325,7 +12354,7 @@ array([[<AxesSubplot:xlabel='Year'>, <AxesSubplot:xlabel='Year'>],
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_779_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_780_1.pdf}
     \end{center}
     
     A few comments:
@@ -12519,7 +12548,7 @@ as follows:
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_784_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_785_1.pdf}
     \end{center}
     
     \hypertarget{solution-for-exercise-3}{%
@@ -12672,7 +12701,7 @@ array([[<AxesSubplot:title=\{'center':'Staff/Student'\}, xlabel='Russell'>,
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_792_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_793_1.pdf}
     \end{center}
     
     \hypertarget{solution-for-exercise-4}{%
@@ -12800,7 +12829,7 @@ xlabel='Country'>
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_799_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_800_1.pdf}
     \end{center}
     
     Note how the legend title is automatically set to the column index name
@@ -12855,7 +12884,7 @@ xlabel='Founding year'>
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_802_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_803_1.pdf}
     \end{center}
     
     \hypertarget{solution-for-exercise-5}{%
@@ -13063,7 +13092,7 @@ Text(0.5, 0.98, "Okun's law")
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_808_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_809_1.pdf}
     \end{center}
     
     \hypertarget{data-input-and-output}{%
@@ -13256,7 +13285,7 @@ To save a NumPy array to a CSV file, there is a logical counterpart to
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Saving CSV file to /tmp/tmpc3sbezqs/data.csv
+Saving CSV file to /tmp/tmp5jdidzk5/data.csv
     \end{Verbatim}
 
     The above code creates a \(5 \times 3\) matrix of floats and stores
@@ -13605,21 +13634,21 @@ the \texttt{start=...} and \texttt{end=...} arguments.
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{12}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-                                  Open         High          Low        Close  \textbackslash{}
+                   Open         High          Low        Close      Volume  \textbackslash{}
 Date
-2022-01-03 00:00:00-05:00  4778.140137  4796.640137  4758.169922  4796.560059
-2022-01-04 00:00:00-05:00  4804.509766  4818.620117  4774.270020  4793.540039
-2022-01-05 00:00:00-05:00  4787.990234  4797.700195  4699.439941  4700.580078
-2022-01-06 00:00:00-05:00  4693.390137  4725.009766  4671.259766  4696.049805
-2022-01-07 00:00:00-05:00  4697.660156  4707.950195  4662.740234  4677.029785
+2022-01-03  4778.140137  4796.640137  4758.169922  4796.560059  2775190000
+2022-01-04  4804.509766  4818.620117  4774.270020  4793.540039  3641050000
+2022-01-05  4787.990234  4797.700195  4699.439941  4700.580078  3733540000
+2022-01-06  4693.390137  4725.009766  4671.259766  4696.049805  3371250000
+2022-01-07  4697.660156  4707.950195  4662.740234  4677.029785  3279870000
 
-                               Volume  Dividends  Stock Splits
+            Dividends  Stock Splits
 Date
-2022-01-03 00:00:00-05:00  2775190000          0             0
-2022-01-04 00:00:00-05:00  3641050000          0             0
-2022-01-05 00:00:00-05:00  3733540000          0             0
-2022-01-06 00:00:00-05:00  3371250000          0             0
-2022-01-07 00:00:00-05:00  3279870000          0             0
+2022-01-03          0             0
+2022-01-04          0             0
+2022-01-05          0             0
+2022-01-06          0             0
+2022-01-07          0             0
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -13656,9 +13685,14 @@ Text(0, 0.5, 'Volume')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_839_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_840_1.pdf}
     \end{center}
     
+    The above code uses
+\href{https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.twinx.html}{\texttt{twinx()}}
+to create a second (invisible) \(x\)-axis with an independent \(y\)-axis
+which allows us to plot the trading volume on a different scale.
+
 \vspace{1em}\emph{Example: Retrieving data for multiple symbols}
 
 We can download trading data for multiple symbols at once using the
@@ -13677,7 +13711,7 @@ proceed as follows:
 \PY{c+c1}{\PYZsh{} Get data for Amazon (AMZN) and Microsoft (MSFT) for the last three months.}
 \PY{c+c1}{\PYZsh{} valid intervals for the \PYZsq{}period\PYZsq{} argument are: }
 \PY{c+c1}{\PYZsh{}   1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo}
-\PY{n}{data} \PY{o}{=} \PY{n}{yf}\PY{o}{.}\PY{n}{download}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AMZN MSFT}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{period}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3mo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{data} \PY{o}{=} \PY{n}{yf}\PY{o}{.}\PY{n}{download}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AMZN MSFT}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{period}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3mo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
@@ -13689,32 +13723,32 @@ proceed as follows:
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-                            Adj Close                   Close              \textbackslash{}
-                                 AMZN        MSFT        AMZN        MSFT
+             Adj Close                   Close                    High  \textbackslash{}
+                  AMZN        MSFT        AMZN        MSFT        AMZN
 Date
-2022-08-05 00:00:00-04:00  140.800003  282.310760  140.800003  282.910004
-2022-08-08 00:00:00-04:00  139.410004  279.726257  139.410004  280.320007
-2022-08-09 00:00:00-04:00  137.830002  281.702057  137.830002  282.299988
-2022-08-10 00:00:00-04:00  142.690002  288.547516  142.690002  289.160004
-2022-08-11 00:00:00-04:00  140.639999  286.412048  140.639999  287.019989
+2022-08-08  139.410004  279.726257  139.410004  280.320007  144.229996
+2022-08-09  137.830002  281.702057  137.830002  282.299988  138.949997
+2022-08-10  142.690002  288.547516  142.690002  289.160004  144.600006
+2022-08-11  140.639999  286.412048  140.639999  287.019989  144.490005
+2022-08-12  143.550003  291.291718  143.550003  291.910004  143.570007
 
-                                 High                     Low              \textbackslash{}
-                                 AMZN        MSFT        AMZN        MSFT
+                               Low                    Open              \textbackslash{}
+                  MSFT        AMZN        MSFT        AMZN        MSFT
 Date
-2022-08-05 00:00:00-04:00  142.860001  283.649994  139.600006  278.679993
-2022-08-08 00:00:00-04:00  144.229996  285.920013  138.289993  279.320007
-2022-08-09 00:00:00-04:00  138.949997  283.079987  136.210007  277.609985
-2022-08-10 00:00:00-04:00  144.600006  289.809998  141.009995  286.940002
-2022-08-11 00:00:00-04:00  144.490005  291.209991  139.759995  286.510010
+2022-08-08  285.920013  138.289993  279.320007  142.050003  284.049988
+2022-08-09  283.079987  136.210007  277.609985  138.050003  279.640015
+2022-08-10  289.809998  141.009995  286.940002  142.899994  288.170013
+2022-08-11  291.209991  139.759995  286.510010  143.860001  290.850006
+2022-08-12  291.910004  140.119995  286.940002  142.050003  288.480011
 
-                                 Open                Volume
-                                 AMZN        MSFT      AMZN      MSFT
+              Volume
+                AMZN      MSFT
 Date
-2022-08-05 00:00:00-04:00  140.100006  279.149994  50686900  16774600
-2022-08-08 00:00:00-04:00  142.050003  284.049988  52229000  18739200
-2022-08-09 00:00:00-04:00  138.050003  279.640015  40434700  23405200
-2022-08-10 00:00:00-04:00  142.899994  288.170013  54773800  24687800
-2022-08-11 00:00:00-04:00  143.860001  290.850006  44867300  20065900
+2022-08-08  52229000  18739200
+2022-08-09  40434700  23405200
+2022-08-10  54773800  24687800
+2022-08-11  44867300  20065900
+2022-08-12  47643500  22619700
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -13733,11 +13767,11 @@ the hierarchical column index:
 \prompt{Out}{outcolor}{15}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Date
-2022-08-05 00:00:00-04:00    140.800003
-2022-08-08 00:00:00-04:00    139.410004
-2022-08-09 00:00:00-04:00    137.830002
-2022-08-10 00:00:00-04:00    142.690002
-2022-08-11 00:00:00-04:00    140.639999
+2022-08-08    139.410004
+2022-08-09    137.830002
+2022-08-10    142.690002
+2022-08-11    140.639999
+2022-08-12    143.550003
 Name: (Close, AMZN), dtype: float64
 \end{Verbatim}
 \end{tcolorbox}
@@ -13759,7 +13793,7 @@ Name: (Close, AMZN), dtype: float64
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_844_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_846_1.pdf}
     \end{center}
     
     \hypertarget{pandas-datareader}{%
@@ -13892,15 +13926,10 @@ As with \texttt{yfinance} we discussed earlier, we use the search
 function on \href{https://finance.yahoo.com}{Yahoo! Finance} to identify
 the ticker symbol for the data series we are interested in.
 
-The example below also illustrates that we can optionally use instances
-of \texttt{datetime} to define the sample period instead of plain
-strings.
-
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{20}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{pandas\PYZus{}datareader}\PY{n+nn}{.}\PY{n+nn}{data} \PY{k}{as} \PY{n+nn}{web}
-\PY{k+kn}{import} \PY{n+nn}{datetime}
 
 \PY{c+c1}{\PYZsh{} Fetch stock price data for Tesla (ticker symbol TSLA)}
 \PY{n}{data} \PY{o}{=} \PY{n}{web}\PY{o}{.}\PY{n}{DataReader}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TSLA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
@@ -13940,7 +13969,7 @@ close'>
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_854_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_856_1.pdf}
     \end{center}
     
 
@@ -14125,7 +14154,7 @@ memory usage: 4.3 KB
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_864_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_866_1.pdf}
     \end{center}
     
     Other popular time series available on FRED are the
@@ -14232,7 +14261,7 @@ of the month, monthly average) and a currency pair, if applicable.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_869_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_871_1.pdf}
     \end{center}
     
     As another example, we retrieve the US dollar / Sterling exchange rate
@@ -14262,7 +14291,7 @@ using \texttt{start\_date} and \texttt{end\_date}.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_871_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_873_1.pdf}
     \end{center}
     
 \vspace{1em}\emph{Example: Data from blockchain.com}
@@ -14295,7 +14324,7 @@ Bitcoin in USD.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_873_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_875_1.pdf}
     \end{center}
     
 \vspace{1em}\emph{Example: Historical stock data}
@@ -14367,7 +14396,7 @@ memory usage: 25.6 KB
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_879_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_881_1.pdf}
     \end{center}
     
     \hypertarget{random-number-generation-and-statistics}{%
@@ -14664,7 +14693,7 @@ have to obtain an RNG instance explicitly, for example by using the
 \subsection{Drawing random numbers from
 distributions}\label{drawing-random-numbers-from-distributions}}
 
-Often we want to draw random numbers from a specific distribution, such
+Often we want to draw random numbers from a specific distribution such
 as the normal or log-normal distributions. The RNGs in
 \texttt{numpy.random} support a multitude of distributions, including:
 
@@ -14726,7 +14755,7 @@ Text(0.5, 1.0, 'Histogram of normal draws')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_905_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_907_1.pdf}
     \end{center}
     
 \vspace{1em}\emph{Example: Drawing from a multivariate normal distribution}
@@ -14785,7 +14814,7 @@ Text(0.5, 1.0, 'Draws from bivariate normal distribution')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_907_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_909_1.pdf}
     \end{center}
     
 
@@ -14872,7 +14901,7 @@ distribution as follows:
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_910_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_912_1.pdf}
     \end{center}
     
     In the above example we pass \texttt{density=True} to Matplotlib's
@@ -14886,13 +14915,13 @@ Sometimes we need to compute the expectation of a function \(g(x)\) with
 respect to a given distribution with PDF \(f(x)\) on some interval
 \((a,b)\):
 
-\[E[g(x)] = \int_a^b g(x) f(x) dx\]
+\[\mathbb{E}[g(x)] = \int_a^b g(x) f(x) dx\]
 
 For example, we might want to know the mean of a \emph{truncated} normal
 with parameters \(\mu=0\), \(\sigma=1.0\) with support on
 \((-\infty,0)\), \ie
 
-\[E[x| x \leq 0] = \int_{-\infty}^0 x \frac{f(x)}{F(0)}dx\]
+\[\mathbb{E}[x| x \leq 0] = \int_{-\infty}^0 x \frac{f(x)}{F(0)}dx\]
 
 where \(f(x)\) and \(F(x)\) are the PDF and CDF of the standard normal.
 We can compute it as follows:
@@ -15219,17 +15248,18 @@ illustrated in the following figure:
 
 \begin{figure}
 \centering
-\includegraphics{solutions/unit06/unit06_ex2_PDF.pdf}
+\includegraphics{solutions/unit08/unit08_ex2_PDF.pdf}
 \caption{PDF of truncated normal}
 \end{figure}
 
-Compute the second non-central moment \(E[X^2]\) in four different ways:
+Compute the second non-central moment \(\mathbb{E}[X^2]\) in four
+different ways:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Use the fact that \(Var(X) = E[X^2] - E[X]^2\). Call the methods
-  \texttt{mean()} and \texttt{var()} of the
+  Use the fact that \(Var(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2\). Call
+  the methods \texttt{mean()} and \texttt{var()} of the
   \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.truncnorm.html}{truncated
   normal} implemented in SciPy to compute the (squared) mean and
   variance.
@@ -15244,13 +15274,13 @@ from scipy.stats import truncnorm
   directly compute the desired moment.
 \item
   Use the \texttt{expect()} method of SciPy's truncated normal to
-  compute the expectation \(E[X^2]\).
+  compute the expectation \(\mathbb{E}[X^2]\).
 \item
   Use \href{https://en.wikipedia.org/wiki/Monte_Carlo_integration}{Monte
-  Carlo integration} to compute the expectation \(E[X^2]\). There are
-  numerous ways to do MC integration. In this exercise, we use a variant
-  which draws random samples from a 2-dimensional uniform distribution
-  to compute an area under the integrand:
+  Carlo integration} to compute the expectation \(\mathbb{E}[X^2]\).
+  There are numerous ways to do MC integration. In this exercise, we use
+  a variant which draws random samples from a 2-dimensional uniform
+  distribution to compute an area under the integrand:
 
   \begin{itemize}
   \tightlist
@@ -15274,7 +15304,7 @@ from scipy.stats import truncnorm
 
   \begin{figure}
   \centering
-  \includegraphics{solutions/unit06/unit06_ex2_MC.pdf}
+  \includegraphics{solutions/unit08/unit08_ex2_MC.pdf}
   \caption{MC integration}
   \end{figure}
 
@@ -15301,9 +15331,9 @@ terminal wealth is given by \(W = a\cdot R\). The total gross return is
 the product of the period-1 and period-2 gross returns,
 \(R = R_1\cdot R_2\). We impose that per-period log returns
 \(r_t = \log R_t\) are jointly normally distributed with mean
-\(E[r_t] = \mu\), variance \(Var(r_t) = \sigma^2\) for \(t\in\{1,2\}\)
-with a correlation coefficient \(Corr(r_1,r_2) = \rho\). Let \(a = 1\),
-\(\mu = 0.04\), \(\sigma = 0.16\) and \(\rho = 0.5\).
+\(\mathbb{E}[r_t] = \mu\), variance \(Var(r_t) = \sigma^2\) for
+\(t\in\{1,2\}\) with a correlation coefficient \(Corr(r_1,r_2) = \rho\).
+Let \(a = 1\), \(\mu = 0.04\), \(\sigma = 0.16\) and \(\rho = 0.5\).
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -15323,7 +15353,7 @@ with a correlation coefficient \(Corr(r_1,r_2) = \rho\). Let \(a = 1\),
     \href{https://en.wikipedia.org/wiki/Log-normal_distribution}{log-normally}
     distributed and has the expected value
 
-    \[E[R] = \exp\left(\mu_R + \frac{1}{2}\sigma_R^2 \right)\]
+    \[\mathbb{E}[R] = \exp\left(\mu_R + \frac{1}{2}\sigma_R^2 \right)\]
   \end{itemize}
 \item
   Compute the expected terminal wealth after 2 periods using Monte Carlo
@@ -15341,7 +15371,7 @@ with a correlation coefficient \(Corr(r_1,r_2) = \rho\). Let \(a = 1\),
   \item
     Compute the expected wealth as the sample average:
 
-    \[E[W] \approx \overline{W} = \frac{1}{N}\sum_{i=1}^N W_i\]
+    \[\mathbb{E}[W] \approx \overline{W} = \frac{1}{N}\sum_{i=1}^N W_i\]
   \end{enumerate}
 
   Make sure you get approximately the same result as in part 1 (you may
@@ -15507,7 +15537,7 @@ to estimate the confidence intervals of the mean estimate.
 \section{Solutions}\label{solutions}}
 
 The solutions are also provided as Python scripts in the
-\href{../lectures/solutions/unit06}{lectures/solutions/unit06/} folder.
+\href{../lectures/solutions/unit08}{lectures/solutions/unit08/} folder.
 
     \hypertarget{solution-for-exercise-1}{%
 \subsection{Solution for exercise 1}\label{solution-for-exercise-1}}
@@ -15591,7 +15621,7 @@ Text(0.5, 1.05, 'Draws from the standard-t distribution')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_935_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_937_1.pdf}
     \end{center}
     
     A few comments on how we create the \(x\)-values and the plot range for
@@ -15642,7 +15672,7 @@ correct parameters to SciPy's \texttt{truncnorm} methods:
 \PY{n}{za} \PY{o}{=} \PY{p}{(}\PY{n}{a}\PY{o}{\PYZhy{}}\PY{n}{mu}\PY{p}{)}\PY{o}{/}\PY{n}{sigma}
 \PY{n}{zb} \PY{o}{=} \PY{p}{(}\PY{n}{b}\PY{o}{\PYZhy{}}\PY{n}{mu}\PY{p}{)}\PY{o}{/}\PY{n}{sigma}
 
-\PY{c+c1}{\PYZsh{} Method 1: Compute from E[X\PYZca{}2] = Var(X) + E[X]\PYZca{}2}
+\PY{c+c1}{\PYZsh{} Method 1: Compute from \PYZbs{}mathbb\PYZob{}E\PYZcb{}[X\PYZca{}2] = Var(X) + \PYZbs{}mathbb\PYZob{}E\PYZcb{}[X]\PYZca{}2}
 \PY{n}{var} \PY{o}{=} \PY{n}{truncnorm}\PY{o}{.}\PY{n}{var}\PY{p}{(}\PY{n}{za}\PY{p}{,} \PY{n}{zb}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{n}{mu}\PY{p}{,} \PY{n}{scale}\PY{o}{=}\PY{n}{sigma}\PY{p}{)}
 \PY{n}{mean} \PY{o}{=} \PY{n}{truncnorm}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{za}\PY{p}{,} \PY{n}{zb}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{n}{mu}\PY{p}{,} \PY{n}{scale}\PY{o}{=}\PY{n}{sigma}\PY{p}{)}
 \PY{n}{m2\PYZus{}var\PYZus{}mean} \PY{o}{=} \PY{n}{var} \PY{o}{+} \PY{n}{mean} \PY{o}{*}\PY{o}{*} \PY{l+m+mf}{2.0}
@@ -15749,7 +15779,7 @@ Since \((r_1, r_2)\) are jointly normal, a standard result is that their
 sum \(r_1 + r_2\) is normally distributed with mean and variance given
 by
 
-\[\mu_{rr} = E[r_1 + r_2] = 2\mu \]
+\[\mu_{rr} = \mathbb{E}[r_1 + r_2] = 2\mu \]
 
 \[
 \sigma^2_{rr} = Var(r_1+r_2) = Var(r_1) + Var(r_2) + 2\cdot Cov(r_1,r_2) = 2\sigma^2 + 2\rho\sigma^2 
@@ -15760,7 +15790,7 @@ returns have the same mean and variance.
 
 Moreover, since \(\log R = r_1 + r_2\) is normally distributed, \(R\) is
 log-normally distributed and has the expected value \[
-E[R] = \exp\left(\mu_{rr} + \frac{1}{2}\sigma_{rr}^2 \right)
+\mathbb{E}[R] = \exp\left(\mu_{rr} + \frac{1}{2}\sigma_{rr}^2 \right)
     = \exp\left(2\mu + (1+\rho) \sigma^2 \right)
 \] Since \(a = 1\), this is also the expected value of terminal wealth
 \(W\).
@@ -15877,7 +15907,7 @@ to plot the histogram and the true PDF.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_949_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_951_1.pdf}
     \end{center}
     
     The dashed black line shows the analytically derived expected total
@@ -15956,7 +15986,7 @@ which we then use the generate the plot.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_952_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_954_1.pdf}
     \end{center}
     
     \hypertarget{solution-for-exercise-5}{%
@@ -16065,7 +16095,7 @@ estimate of the variance is in fact identical to the standard approach.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_954_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_956_1.pdf}
     \end{center}
     
     \hypertarget{solution-for-exercise-6}{%
@@ -16196,7 +16226,7 @@ list \texttt{means\_all} which we use below to create the histograms.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_958_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_960_1.pdf}
     \end{center}
     
     Finally, the code below creates the histograms for each sample size.
@@ -16231,7 +16261,7 @@ for larger sample sizes are much closer together.
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_960_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_962_0.pdf}
     \end{center}
     
     As an aside, the use of the bootstrap in this scenario is somewhat
@@ -16259,13 +16289,13 @@ three groups:
   \emph{Supervised learning}
 
   Models in this group use both input data (often called independent
-  variables, features, covariates, predictors, or X variables) and the
-  corresponding output data (dependent variables, outcomes, targets) to
-  establish a relationship between within a training data set. We can
-  then use this relationship to make predictions about outputs in new
-  data.
+  variables, features, covariates, predictors, or \(X\) variables) and
+  the corresponding output data (dependent variable, outcome, target, or
+  \(y\) variable) to establish some relationship \(y = f(X)\) within a
+  training data set. We can then use this relationship to make
+  predictions about outputs in new data.
 
-  Subcategories within this group include
+  Subcategories within this group include:
 
   \begin{itemize}
   \tightlist
@@ -16308,44 +16338,88 @@ three groups:
 \section{Principal component
 analysis}\label{principal-component-analysis}}
 
-Principal component analysis (PCA) is one of the most widely used
-dimensionality reduction techniques (and thus falls under the umbrella
-of \emph{unsupervised learning}). To compute the principal components,
-we often use a matrix factorisation technique known as singular value
-decomposition, which we study in the next section. Alternatively (and
-equivalently), principal components can be computed from the eigenvalues
-and eigenvectors of the data's covariance matrix. We ignore this second
-approach in this unit.
+\href{https://en.wikipedia.org/wiki/Principal_component_analysis}{Principal
+component analysis} (PCA) is one of the most widely used dimensionality
+reduction techniques. Assume we have a dataset consisting of
+\(i = 1,\dots,N\) observations of \(k = 1,\dots,K\) variables (or
+features) \(\mathbf{x}_k\). For simplicity, assume that all
+\(\mathbf{x}_k\) are \emph{centred}, \ie the have been transformed so
+that they have zero means. We could image two ways to reduce the
+dimensionality of this dataset:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Discard some of the variables and keep only a number \(J \ll K\).
+\item
+  Create a collection of alternative variables \(\mathbf{p}_j\) which
+  are linear combinations of \(\mathbf{x}_k\). The dimensionality
+  reduction arises if we form only \(J \ll K\) such variables.
+\end{enumerate}
+
+The variables \(\mathbf{p}_j\) are called principle components if we
+construct them in a particular way. Let \(\mathbf{p}_1\) be the first
+such component which is a linear combination of all
+\(\{\mathbf{x}_k\}\), \[
+\mathbf{p}_1 = v_{11} \mathbf{x}_1 + v_{21} \mathbf{x}_2 + \cdots + v_{K1} \mathbf{x}_K
+    = \sum_{k=1}^K v_{k1} \mathbf{x}_{k}
+\] where the \(v_{1k}\) are called \emph{coefficients} or
+\emph{loadings} (note that the term ``loadings'' is not used
+consistently in the literature and sometimes refers to a rescaled
+version of \(v\)). We want to pick these coefficients in some optimal
+fashion, which in this case is by requiring that they maximise the
+sample variance of the first principle component subject to the
+constraint that \(\sum_{k=1}^K v_{k1}^2 = 1\). Therefore, these
+coefficients are the solution to the following maximisation problem: \[
+\max_{v_{11},v_{21},\dots,v_{K1}} 
+\left\{ 
+    \frac{1}{n}\sum_{i=1}^N p_{i1}^2
+\right\}
+= 
+\left\{ 
+    \frac{1}{n}\sum_{i=1}^N \left( \sum_{k=1}^K v_{k1} x_{ik} \right)^2
+\right\} 
+\quad \text{subject to} \quad 
+ \sum_{k=1}^K v_{k1}^2 = 1
+\]
+
+We never solve the above maximisation problem by hand to find the
+coefficients but instead use an algorithm from linear algebra called the
+\emph{singular value decomposition}.
 
     \hypertarget{singular-value-decomposition-and-principal-components}{%
 \subsection{Singular value decomposition and principal
 components}\label{singular-value-decomposition-and-principal-components}}
 
-\href{https://en.wikipedia.org/wiki/Singular_value_decomposition}{Singular
-value decomposition} (SVD) is a matrix factorisation that is commonly
-used in econometrics and statistics. For example, we can use it to
-implement
-\href{https://en.wikipedia.org/wiki/Principal_component_analysis}{principal
-component analysis} (PCA), principal component regression, OLS or Ridge
-regression.
+To compute the principal components, we often use a matrix factorisation
+technique known as
+\href{https://en.wikipedia.org/wiki/Singular_value_decomposition}{singular
+value decomposition} (SVD). Alternatively (and equivalently), principal
+components can be computed from the eigenvalues and eigenvectors of the
+data's covariance matrix. We ignore this second approach in this unit.
 
-Let \(\mathbf{X} \in \mathbb{R}^{m\times n}\) be a matrix. For our
-purposes, we will assume that \(m \geq n\) since \(\mathbf{X}\) will be
-the matrix containing the data with observations in rows and variables
-in column. The (compact) SVD of \(\mathbf{X}\) is given by \[
+SVD is a matrix factorisation that is commonly used in econometrics and
+statistics. For example, we can use it to implement PCA, principal
+component regression, OLS or Ridge regression (which we cover in the
+next unit).
+
+Let \(\mathbf{X} \in \mathbb{R}^{N\times K}\) be a matrix of data with
+\(N\) observations (in rows) of \(K\) variables (in columns) with
+\(N \geq K\). The (compact) SVD of \(\mathbf{X}\) is given by \[
 \mathbf{X} = \mathbf{U} \Sigma \mathbf{V}^\top
-\] where \(\mathbf{U} \in \mathbb{R}^{m\times n}\) and
-\(\mathbf{V} \in \mathbb{R}^{n\times n}\) are orthogonal matrices, and
-\(\bm\Sigma \in \mathbb{R}^{n \times n}\) is a diagonal matrix \[
+\] where \(\mathbf{U} \in \mathbb{R}^{N\times K}\) and
+\(\mathbf{V} \in \mathbb{R}^{K\times K}\) are orthogonal matrices, and
+\(\bm\Sigma \in \mathbb{R}^{K \times K}\) is a diagonal matrix \[
 \bm\Sigma =  \begin{bmatrix} 
     \sigma_1 & & & & \\
      & \sigma_2 & & & \\
      & & \ddots & & \\
-     & & & \sigma_n & 
+     & & & \sigma_K & 
 \end{bmatrix}
-\] The elements \(\sigma_i\) are called singular values of
+\] The elements \(\sigma_k\) are called singular values of
 \(\mathbf{X}\), and \(\bm\Sigma\) is arranged such that
-\(\sigma_1 \geq \sigma_2 \geq \dots \geq \sigma_n\). Since
+\(\sigma_1 \geq \sigma_2 \geq \dots \geq \sigma_K\). Since
 \(\mathbf{U}\) is not necessarily square, it's not truly orthogonal, but
 its columns are still orthogonal to each other.
 
@@ -16361,33 +16435,38 @@ These matrices satisfy the following useful properties: \[
 \] where \(\mathbf{I}_n\) is the \(n\times n\) identity matrix.
 
 Once we have obtained the singular value decomposition, we can project
-the data \(\mathbf{X}\) onto the basis spanned by the principal
-components to obtain the transformed data \(\mathbf{P}\): \[
-\begin{aligned}
-    \mathbf{P} &= \mathbf{X} \mathbf{V}
-\end{aligned}
+the data \(\mathbf{X}\) onto the coordinate system underlying the
+principal components to obtain the transformed data \(\mathbf{P}\): \[
+    \mathbf{P} = \mathbf{X} \mathbf{V}
 \] Intuitively, the \(j\)-th column of \(\mathbf{V}\) defines how the
 \(j\)-th column in \(\mathbf{P}\) is obtained as a linear combination of
-the columns of \(\mathbf{X}\). The power of PCA comes from the fact that
-we don't need to use all columns in \(\mathbf{V}\) so that the dimension
-of \(\mathbf{P}\) is lower than the dimension of the original data
-\(\mathbf{X}\).
+the columns of \(\mathbf{X}\). If you recall our definition of the first
+principle component from above, \[
+\mathbf{p}_1 = v_{11} \mathbf{x}_1 + v_{21} \mathbf{x}_2 + \cdots + v_{K1} \mathbf{x}_K
+\] you can immediately see that the coefficients \(v_{k1}\) are stored
+in the first column of \(\mathbf{V}\), and the first column of
+\(\mathbf{P}\) corresponds to the first principal component
+\(\mathbf{p}_1\).
+
+The power of PCA comes from the fact that we don't need to use all
+columns in \(\mathbf{V}\) so that the dimension of \(\mathbf{P}\) is
+lower than the dimension of the original data \(\mathbf{X}\).
 
 In Python, we compute the SVD using the
 \href{https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html}{\texttt{svd()}}
 function from \texttt{numpy.linalg}.
 
-    \hypertarget{example-bivariate-normal}{%
-\vspace{1em}\subsection{Example: Bivariate
-normal}\label{example-bivariate-normal}}
+    \hypertarget{example-bivariate-normal-sample}{%
+\vspace{1em}\subsection{Example: Bivariate normal
+sample}\label{example-bivariate-normal-sample}}
 
-Imagine we construct \(X\) as 200 random draws from a bivariate normal:
+Imagine we construct \(\mathbf{X}\) as 200 random draws from a bivariate
+normal:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{1}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k+kn}{import} \PY{n}{default\PYZus{}rng}
 
 \PY{c+c1}{\PYZsh{} Draw a bivariate normal sample using the function we defined above}
@@ -16396,16 +16475,31 @@ Imagine we construct \(X\) as 200 random draws from a bivariate normal:
 \PY{n}{rho} \PY{o}{=} \PY{l+m+mf}{0.75}                          \PY{c+c1}{\PYZsh{} Correlation coefficient}
 \PY{n}{Nobs} \PY{o}{=} \PY{l+m+mi}{200}                          \PY{c+c1}{\PYZsh{} Sample size}
 
+
+\PY{c+c1}{\PYZsh{} Correlation matrix}
+\PY{n}{corr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}
+    \PY{p}{[}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{rho}\PY{p}{]}\PY{p}{,} 
+    \PY{p}{[}\PY{n}{rho}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{]}
+\PY{p}{]}\PY{p}{)}
 \PY{c+c1}{\PYZsh{} Create variance\PYZhy{}covariance matrix}
-\PY{n}{corr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{rho}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{rho}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{]}\PY{p}{]}\PY{p}{)}
 \PY{n}{vcv} \PY{o}{=} \PY{n}{sigma}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]} \PY{o}{*} \PY{n}{corr} \PY{o}{*} \PY{n}{sigma}
 
-\PY{c+c1}{\PYZsh{} Draw MVN random numbers:}
+\PY{c+c1}{\PYZsh{} Draw multivariate normal random numbers:}
 \PY{c+c1}{\PYZsh{} each row represents one sample draw.}
 \PY{n}{rng} \PY{o}{=} \PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{l+m+mi}{123}\PY{p}{)}
 \PY{n}{X} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{multivariate\PYZus{}normal}\PY{p}{(}\PY{n}{mean}\PY{o}{=}\PY{n}{mu}\PY{p}{,} \PY{n}{cov}\PY{o}{=}\PY{n}{vcv}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{n}{Nobs}\PY{p}{)}
 
+\PY{c+c1}{\PYZsh{} Split into variables X1, X2}
 \PY{n}{x1}\PY{p}{,} \PY{n}{x2} \PY{o}{=} \PY{n}{X}\PY{o}{.}\PY{n}{T}
+\end{Verbatim}
+\end{tcolorbox}
+
+    We use a scatter plot to visualise the random draws:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 
 \PY{c+c1}{\PYZsh{} Scatter plot of sample}
 \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -16416,14 +16510,14 @@ Imagine we construct \(X\) as 200 random draws from a bivariate normal:
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{1}{\boxspacing}
+\prompt{Out}{outcolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Text(0.5, 1.0, 'Draws from bivariate normal distribution')
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_967_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_971_1.pdf}
     \end{center}
     
     \hypertarget{performing-pca-manually-using-svd}{%
@@ -16435,13 +16529,12 @@ Later on, we will examine how we do the same task using
 \texttt{scikit-learn}, one of the most widely used Python libraries for
 ML.
 
-Before performing PCA, it is often recommended to standardise the
-variables, \ie transform them so that they have zero mean and unit
-variance. For this example, we will only demean the data but ignore the
-variance.
+Before performing PCA, it is recommended to standardise the variables,
+\ie transform them so that they have zero mean and unit variance. For
+this example, we will only demean the data but ignore the variance.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{2}{\boxspacing}
+\prompt{In}{incolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Demean variables}
 
@@ -16460,7 +16553,7 @@ transformed using the matrix multiplication \[
 \] where \(\mathbf{X}\) now denotes the standardised values.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{3}{\boxspacing}
+\prompt{In}{incolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{linalg} \PY{k+kn}{import} \PY{n}{svd}
 
@@ -16468,7 +16561,7 @@ transformed using the matrix multiplication \[
 \PY{c+c1}{\PYZsh{} otherwise SVD can take a long time and consume lots of memory!}
 \PY{n}{U}\PY{p}{,} \PY{n}{S}\PY{p}{,} \PY{n}{Vt} \PY{o}{=} \PY{n}{svd}\PY{p}{(}\PY{n}{Xcen}\PY{p}{,} \PY{n}{full\PYZus{}matrices}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
 
-\PY{c+c1}{\PYZsh{} Project onto basis spanned by principal components}
+\PY{c+c1}{\PYZsh{} Project onto principal components coordinates}
 \PY{n}{PC} \PY{o}{=} \PY{n}{Xcen} \PY{o}{@} \PY{n}{Vt}\PY{o}{.}\PY{n}{T}
 
 \PY{c+c1}{\PYZsh{} Variance is highest for first component}
@@ -16487,45 +16580,46 @@ that each axes corresponds to a principal component. Most of the
 variation clearly occurs along the first axis!
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{4}{\boxspacing}
+\prompt{In}{incolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Plot principal components}
 
 \PY{c+c1}{\PYZsh{} Scatter plot of sample}
-\PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZus{}1\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZus{}2\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{axline}\PY{p}{(}\PY{n}{Xmean}\PY{p}{,} \PY{n}{Xmean} \PY{o}{+} \PY{n}{Vt}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{axline}\PY{p}{(}\PY{n}{Xmean}\PY{p}{,} \PY{n}{Xmean} \PY{o}{+} \PY{n}{Vt}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{fig}\PY{p}{,} \PY{p}{(}\PY{n}{ax0}\PY{p}{,} \PY{n}{ax1}\PY{p}{)} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZus{}1\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZus{}2\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{axline}\PY{p}{(}\PY{n}{Xmean}\PY{p}{,} \PY{n}{Xmean} \PY{o}{+} \PY{n}{Vt}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{axline}\PY{p}{(}\PY{n}{Xmean}\PY{p}{,} \PY{n}{Xmean} \PY{o}{+} \PY{n}{Vt}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
 
+\PY{c+c1}{\PYZsh{} Plot arrows pointing along axes of individual components}
 \PY{n}{PC\PYZus{}arrows} \PY{o}{=} \PY{n}{Vt} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{var\PYZus{}PC}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{)}
 \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{PC\PYZus{}arrows}\PY{p}{:}
     \PY{c+c1}{\PYZsh{} Scale up arrows by 3 so that they are visible!}
-    \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{Xmean} \PY{o}{+} \PY{n}{v}\PY{o}{*}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{Xmean}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{arrowstyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZgt{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+    \PY{n}{ax0}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{Xmean} \PY{o}{+} \PY{n}{v}\PY{o}{*}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{Xmean}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{arrowstyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZgt{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
 
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{ax0}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Plot in principal component coordinate system}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{PC}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{PC}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{PC}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{PC}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{4}{\boxspacing}
+\prompt{Out}{outcolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.lines.Line2D at 0x7f2a138ce050>
+<matplotlib.lines.Line2D at 0x7f1a4b710c10>
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_973_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_977_1.pdf}
     \end{center}
     
     \hypertarget{performing-pca-using-scikit-learn}{%
@@ -16536,9 +16630,11 @@ Of course, in real applications we don't need to manually compute the
 principal components but can use a library such as \texttt{scikit-learn}
 to do it for us (see the documentation for
 \href{https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html\#sklearn.decomposition.PCA}{\texttt{PCA}}
-for details).
+and the section on PCA in the
+\href{https://scikit-learn.org/stable/modules/decomposition.html\#pca}{official
+user guide} for details).
 
-Most models implemented in \texttt{scikit-learn} follow a the same
+Most models implemented in \texttt{scikit-learn} follow the same
 paradigm:
 
 \begin{enumerate}
@@ -16548,8 +16644,8 @@ paradigm:
   fit to the data. In our present case, the class is called
   \texttt{PCA}.
 
-  In many cases, we specify arguments that government how a model is fit
-  to the data, \eg the number of principal components to use.
+  In many cases, we specify arguments that govern how a model is fit to
+  the data, \eg the number of principal components to use.
 \item
   We fit the model (on the training data set) by calling the
   \texttt{fit()} method.
@@ -16564,7 +16660,7 @@ demeans the input data (but does not normalise the variance to 1), so we
 don't need to do it manually.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{5}{\boxspacing}
+\prompt{In}{incolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k+kn}{import} \PY{n}{PCA}
 
@@ -16580,7 +16676,7 @@ don't need to do it manually.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{5}{\boxspacing}
+\prompt{Out}{outcolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 PCA(n\_components=2)
 \end{Verbatim}
@@ -16593,7 +16689,7 @@ method. Note that we could have called
 instead to perform the two previous steps in a single call.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{6}{\boxspacing}
+\prompt{In}{incolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Obtain data projected onto principal components}
 \PY{n}{PC\PYZus{}skl} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X}\PY{p}{)}
@@ -16603,16 +16699,15 @@ instead to perform the two previous steps in a single call.
 \end{Verbatim}
 \end{tcolorbox}
 
-    The principal components themselves (\ie the axes that serve as the
-basis for the transformed data) are stored in the attribute
-\texttt{components\_} and are identical to the matrix
-\(\mathbf{V}^\top\) we computed above.
+    The principal component coefficients (used to create the transformed
+data) are stored in the attribute \texttt{components\_} and are
+identical to the matrix \(\mathbf{V}^\top\) we computed above.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{7}{\boxspacing}
+\prompt{In}{incolor}{8}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} The attribute components\PYZus{} can be used to retrieve the V\PYZsq{} matrix}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Principal components (matrix V}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{components\PYZus{} (matrix V}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
 \PY{n+nb}{print}\PY{p}{(}\PY{n}{pca}\PY{o}{.}\PY{n}{components\PYZus{}}\PY{p}{)}
 
 \PY{c+c1}{\PYZsh{} Check that these are identical to the matrix V\PYZsq{} we computed via SVD}
@@ -16621,7 +16716,7 @@ basis for the transformed data) are stored in the attribute
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Principal components (matrix V'):
+components\_ (matrix V'):
 [[ 0.38420018  0.92324981]
  [ 0.92324981 -0.38420018]]
     \end{Verbatim}
@@ -16636,12 +16731,12 @@ for a full list). For example,
   \texttt{explained\_variance\_} stores the variances of all principal
   components; and
 \item
-  \texttt{explained\_variance\_ratio} stores the fraction of the
+  \texttt{explained\_variance\_ratio\_} stores the fraction of the
   variance ``explained'' by each component.
 \end{itemize}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{8}{\boxspacing}
+\prompt{In}{incolor}{9}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} The attribute explained\PYZus{}variance\PYZus{} stores the variances of all PCs}
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Variance of each PC: }\PY{l+s+si}{\PYZob{}}\PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -16661,28 +16756,33 @@ captures about 92\% of the variance in the data.
 
     Finally, it is often interesting to examine how much any of the original
 variables in \(\mathbf{X}\) contribute to each principal component.
-These contributes are called \emph{loadings} and can be computed as
+These contributions are called \emph{loadings} (again, note that the
+term ``loadings'' is not used consistently) and can be computed as
 follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{9}{\boxspacing}
+\prompt{In}{incolor}{10}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{loadings} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{components\PYZus{}}\PY{o}{.}\PY{n}{T} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}}\PY{p}{)}
-\PY{n}{loadings}
+
+\PY{c+c1}{\PYZsh{} Use pandas DataFrame to tabulate loadings}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{loadings}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{9}{\boxspacing}
+\prompt{Out}{outcolor}{10}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-array([[ 0.41665418,  0.28373402],
-       [ 1.00123818, -0.11807277]])
+         PC1       PC2
+X1  0.416654  0.283734
+X2  1.001238 -0.118073
 \end{Verbatim}
 \end{tcolorbox}
         
-    The output tells is that the first principal component (which
-corresponds to the first column in the above matrix) loads heavily on
-the second column of \(\mathbf{X}\), which can also be seen from the
+    The output tells us that the first principal component (which
+corresponds to the first column in the above matrix) loads more heavily
+on the second column of \(\mathbf{X}\), which can also be seen from the
 previous graph.
 
     \hypertarget{example-higher-dimensional-data}{%
@@ -16693,7 +16793,7 @@ data}\label{example-higher-dimensional-data}}
 \subsubsection{Creating highly correlated
 inputs}\label{creating-highly-correlated-inputs}}
 
-The previous example was meant as an introduction, but did not really
+The previous example was meant as an introduction but did not really
 illustrate the dimension reduction of PCA. After all, with only two
 dimensions there was not much to be reduced! Consider now a
 higher-dimensional (but still artificial) example with 10 dimensions.
@@ -16719,15 +16819,16 @@ For this purpose, we create highly correlated data as follows:
 \end{enumerate}
 
 For illustrative purposes, we draw the elements of \(\mathbf{A}\) from a
-normal distribution, but that makes no difference. The point of the
-example is that we take two independent variables in \(\mathbf{Z}\) and
-create \(K \gg 2\) variables in \(\mathbf{X}\) which are linear
-combinations of \(\mathbf{Z}\). Intuitively, many of the columns of
-\(\mathbf{X}\) will be highly correlated since they were created from
-the same variation in \(\mathbf{Z}\).
+normal distribution but we could have picked almost any other
+coefficients. The point of the example is that we take two independent
+variables in \(\mathbf{Z}\) and create \(K \gg 2\) variables in
+\(\mathbf{X}\) which are linear combinations of \(\mathbf{Z}\).
+Intuitively, many of the columns of \(\mathbf{X}\) will be highly
+correlated since they were created from the same variation in
+\(\mathbf{Z}\).
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{10}{\boxspacing}
+\prompt{In}{incolor}{11}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k+kn}{import} \PY{n}{default\PYZus{}rng}
 \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
@@ -16746,11 +16847,11 @@ the same variation in \(\mathbf{Z}\).
 \end{Verbatim}
 \end{tcolorbox}
 
-    We can plot the columns of \texttt{Z} against each other to verify that
-they don't seem to exhibit any particular dependence structure.
+    We can plot the columns of \(\mathbf{Z}\) against each other to verify
+that they don't seem to exhibit any particular dependence structure.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{11}{\boxspacing}
+\prompt{In}{incolor}{12}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 
@@ -16761,22 +16862,22 @@ they don't seem to exhibit any particular dependence structure.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{11}{\boxspacing}
+\prompt{Out}{outcolor}{12}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Text(0, 0.5, 'Z2')
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_989_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_993_1.pdf}
     \end{center}
     
     Next, we create the transformation matrix \(\mathbf{A}\). You can do
 this in various ways, so we simply choose to draw the elements of
-\(\mathbf{A}\) from a normal distribution.
+\(\mathbf{A}\) from a standard normal distribution.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{12}{\boxspacing}
+\prompt{In}{incolor}{13}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{A} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{n}{Z}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{K}\PY{p}{)}\PY{p}{)}
 
@@ -16786,7 +16887,7 @@ this in various ways, so we simply choose to draw the elements of
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{12}{\boxspacing}
+\prompt{Out}{outcolor}{13}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 array([[-0.93706677,  2.62894657],
        [-0.80933814,  0.45287643],
@@ -16796,11 +16897,17 @@ array([[-0.93706677,  2.62894657],
         
     The above coefficients show us how the columns of \(\mathbf{X}\) are
 formed: the first column is obtained as
-\texttt{X{[}:,\ 0{]}\ =\ -0.937\ *\ Z{[}:,\ 0{]}\ +\ 2.629\ *\ Z{[}:,\ 1{]}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X[:, }\DecValTok{0}\NormalTok{] }\OperatorTok{=} \OperatorTok{{-}}\FloatTok{0.937} \OperatorTok{*}\NormalTok{ Z[:, }\DecValTok{0}\NormalTok{] }\OperatorTok{+} \FloatTok{2.629} \OperatorTok{*}\NormalTok{ Z[:, }\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
 and so on.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{13}{\boxspacing}
+\prompt{In}{incolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Compute X as linear combinations of Z}
 \PY{n}{X} \PY{o}{=} \PY{n}{Z} \PY{o}{@} \PY{n}{A}
@@ -16811,7 +16918,7 @@ and so on.
 can illustrate this using pairwise scatter plots as follows:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{14}{\boxspacing}
+\prompt{In}{incolor}{15}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{pandas}\PY{n+nn}{.}\PY{n+nn}{plotting} \PY{k+kn}{import} \PY{n}{scatter\PYZus{}matrix}
 
@@ -16824,7 +16931,7 @@ can illustrate this using pairwise scatter plots as follows:
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_995_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_999_0.pdf}
     \end{center}
     
     Moreover, we can compute the pairwise correlation coefficients using
@@ -16834,7 +16941,7 @@ method which computes the correlation matrix between all columns of a
 \texttt{DataFrame}.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{15}{\boxspacing}
+\prompt{In}{incolor}{16}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Print only three decimal places}
 \PY{n}{pd}\PY{o}{.}\PY{n}{set\PYZus{}option}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{display.precision}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}
@@ -16845,7 +16952,7 @@ method which computes the correlation matrix between all columns of a
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{15}{\boxspacing}
+\prompt{Out}{outcolor}{16}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
        X0     X1     X2     X3     X4     X5     X6     X7     X8     X9
 X0  1.000  0.931  0.933  0.893  0.739  0.067 -0.900  0.891 -0.824 -0.997
@@ -16869,7 +16976,7 @@ We now use \texttt{scikit-learn}'s \texttt{PCA} to perform the principal
 component analysis just as we did in the bivariate case.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{16}{\boxspacing}
+\prompt{In}{incolor}{17}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k+kn}{import} \PY{n}{PCA}
 
@@ -16890,7 +16997,7 @@ dimension is basically constant (this is also the case for the remaining
 principal components).
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{17}{\boxspacing}
+\prompt{In}{incolor}{18}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{sharey}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
 
@@ -16911,38 +17018,43 @@ principal components).
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1001_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1005_0.pdf}
     \end{center}
     
     To see what's going in, we create a graph that plots the share of total
-variance captured by each component. The plot below shows that for
-principal components beyond the 2nd one, this share is zero. This should
-come as no surprise since we generated the higher-dimensional data in
-\(\mathbf{X}\) from only two dimensions of independent data.
+variance captured by each component. This type of plot is called a
+\emph{scree plot} and is occasionally used to visually pin down the
+number of principal components to use.
+
+The plot below shows that for principal components beyond the 2nd one,
+this share is zero. This should come as no surprise since we generated
+the higher-dimensional data in \(\mathbf{X}\) from only two dimensions
+of independent data.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{18}{\boxspacing}
+\prompt{In}{incolor}{19}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
 
-
 \PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{K}\PY{p}{)}
-\PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}ratio\PYZus{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}ratio\PYZus{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{xvalues} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Principal component}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Share of variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Scree plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{18}{\boxspacing}
+\prompt{Out}{outcolor}{19}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-Text(0, 0.5, 'Share of variance')
+Text(0.5, 1.0, 'Scree plot')
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1003_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1007_1.pdf}
     \end{center}
     
     \hypertarget{pca-with-automatically-selected-number-of-principal-components}{%
@@ -16962,7 +17074,7 @@ request that the number of components should capture at leat 90\% of the
 variance:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{19}{\boxspacing}
+\prompt{In}{incolor}{20}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Perform PCA, select components to capture 90\PYZpc{} of variance}
 \PY{n}{pca} \PY{o}{=} \PY{n}{PCA}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{)}
@@ -16976,7 +17088,7 @@ variance:
 suspect when looking at the previous graph.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{20}{\boxspacing}
+\prompt{In}{incolor}{21}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of components: }\PY{l+s+si}{\PYZob{}}\PY{n}{pca}\PY{o}{.}\PY{n}{n\PYZus{}components\PYZus{}}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
@@ -16992,7 +17104,7 @@ was generated randomly, this plot is not particularly insightful but
 will be much more useful with real data.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{21}{\boxspacing}
+\prompt{In}{incolor}{22}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Compute loadings for all PCs}
 \PY{n}{loadings} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{components\PYZus{}}\PY{o}{.}\PY{n}{T} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}}\PY{p}{)}
@@ -17018,16 +17130,486 @@ will be much more useful with real data.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{21}{\boxspacing}
+\prompt{Out}{outcolor}{22}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 Text(0.5, 0.98, 'Loadings for principal components')
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1009_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1013_1.pdf}
     \end{center}
     
+
+\hypertarget{optional-exercises}{%
+\section{Optional exercises}\label{optional-exercises}}
+
+    \hypertarget{exercise-1-pca-of-uncorrelated-variables}{%
+\subsection{Exercise 1: PCA of uncorrelated
+variables}\label{exercise-1-pca-of-uncorrelated-variables}}
+
+    Imagine we have data \(\mathbf{X}\) with \(N=1000\) observations of a
+randomly drawn sample of \(K=5\) variables where each variable is
+standard-normally distributed. Assume that all variables are
+uncorrelated.
+
+Since these variables are uncorrelated and identically distributed, we
+can simply draw an array of shape \((N, K)\) from the univariate normal
+distribution as follows instead of using the multivariate normal
+distribution:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{23}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{l+m+mi}{123}\PY{p}{)}
+
+\PY{n}{K} \PY{o}{=} \PY{l+m+mi}{5}
+\PY{n}{Nobs} \PY{o}{=} \PY{l+m+mi}{1000}
+
+\PY{n}{X} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{n}{Nobs}\PY{p}{,} \PY{n}{K}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Using this random sample, perform the following tasks:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create pairwise scatter plots of all variables in \(\mathbf{X}\).
+\item
+  Perform a principal component analysis on this sample using
+  \texttt{scikit-learn}'s \texttt{PCA} implementation.
+\item
+  Create pairwise scatter plots of all principal components. Do these
+  plots look any different from the ones you created earlier? Explain
+  your finding!
+\item
+  Generate a scree plot showing the fraction of variance captured by
+  each principal component.
+\item
+  Is it possible to reduce the dimensionality of this data without
+  sacrificing too much information? Why or why not?
+\end{enumerate}
+
+    \hypertarget{exercise-2-pca-of-quarterly-business-cycle-indicators}{%
+\subsection{Exercise 2: PCA of quarterly business cycle
+indicators}\label{exercise-2-pca-of-quarterly-business-cycle-indicators}}
+
+In this exercise, we use the quarterly data from FRED on GDP, CPI and
+the unemployment rate (UNRATE) in the United States stored in the CSV
+file \texttt{FRED\_QTR.csv} in the \texttt{data/} folder. To load the
+data, proceed as follows:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Uncomment this to use files in the local data/ directory}
+\PY{n}{DATA\PYZus{}PATH} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Load data directly from GitHub}
+\PY{c+c1}{\PYZsh{} DATA\PYZus{}PATH = \PYZsq{}https://raw.githubusercontent.com/richardfoltyn/MLFP\PYZhy{}ECON5130/main/data\PYZsq{}}
+
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+
+\PY{n}{file} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{DATA\PYZus{}PATH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/FRED\PYZus{}QTR.csv}\PY{l+s+s1}{\PYZsq{}}
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Generate the following variables which serve as indicators for the
+business cycle (the cyclical state of the economy):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Compute GDP growth as the percentage change of GDP between two
+  periods.
+\item
+  Compute inflation as the percentage change of the CPI between two
+  periods.
+\item
+  Compute differences in the unemployment rate between two periods (this
+  is measured in percentage points).
+\end{enumerate}
+
+Note that you will need to drop the first row with missing observations.
+This can be done using
+\href{https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.dropna.html}{\texttt{dropna()}}.
+
+    Perform the following tasks using the data you just created:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Compute and report the correlation matrix for all three business cycle
+  indicators. Which variables are particularly highly correlated?
+\item
+  Create pairwise scatter plots of all three business cycle indicators.
+\item
+  Perform a principal component analysis using \texttt{scikit-learn}'s
+  \texttt{PCA} implementation.
+\item
+  Tabulate the loadings for each component.
+\item
+  Create a scree plot showing the fraction of variance explained by each
+  component. How many components would one need to capture 90\% of the
+  sample variance?
+\end{enumerate}
+
+
+\hypertarget{solutions}{%
+\section{Solutions}\label{solutions}}
+
+    \hypertarget{solution-for-exercise-1}{%
+\subsection{Solution for exercise 1}\label{solution-for-exercise-1}}
+
+We generate the random sample as instructed:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{default\PYZus{}rng}\PY{p}{(}\PY{l+m+mi}{123}\PY{p}{)}
+
+\PY{n}{K} \PY{o}{=} \PY{l+m+mi}{5}
+\PY{n}{Nobs} \PY{o}{=} \PY{l+m+mi}{1000}
+
+\PY{n}{X} \PY{o}{=} \PY{n}{rng}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{n}{Nobs}\PY{p}{,} \PY{n}{K}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    We use the function \texttt{scatter\_matrix()} provided in
+\texttt{pandas.plotting} to create pairwise scatter plots for all 5
+variables. As can be seen, these variables look uncorrelated since this
+is how we constructed them in the first place.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{pandas}\PY{n+nn}{.}\PY{n+nn}{plotting} \PY{k+kn}{import} \PY{n}{scatter\PYZus{}matrix}
+
+\PY{c+c1}{\PYZsh{} Create temporary DataFrame for scatter plots}
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{K}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{scatter\PYZus{}matrix}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{,} \PY{n}{diagonal}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kde}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1027_0.pdf}
+    \end{center}
+    
+    To perform the principal component analysis, we use the
+\texttt{sklearn.decomposition.PCA} implementation. Note that
+\texttt{PCA.fit()} automatically centres the data (which is not needed
+here since it is already mean zero).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{27}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k+kn}{import} \PY{n}{PCA}
+
+\PY{n}{pca} \PY{o}{=} \PY{n}{PCA}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Fit principal components, apply transformation to generate PCs}
+\PY{n}{PC} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{X}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    As before, we use the \texttt{scatter\_matrix()} function to create
+pairwise scatter plots of all principal components. Note that the
+principal components are uncorrelated by construction, even if the
+original data was correlated (which was not the case here).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{28}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{pandas}\PY{n+nn}{.}\PY{n+nn}{plotting} \PY{k+kn}{import} \PY{n}{scatter\PYZus{}matrix}
+
+\PY{c+c1}{\PYZsh{} Store PCs in DataFrame}
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{PC}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{K}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{scatter\PYZus{}matrix}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{,} \PY{n}{diagonal}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kde}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1031_0.pdf}
+    \end{center}
+    
+    Lastly, we use the attribute \texttt{explained\_variance\_ratio\_} to
+obtain the fraction of the variance captured by each individual
+principal component.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{29}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+
+\PY{c+c1}{\PYZsh{} Create scree plot of explained variance for each component}
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{K}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}ratio\PYZus{}}\PY{p}{,} 
+    \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Principal component}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Share of variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Scree plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{29}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0.5, 1.0, 'Scree plot')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1033_1.pdf}
+    \end{center}
+    
+    As the plot shows, each principal component captures approximately the
+same share of variance. It therefore does not really make sense to apply
+dimensionality reduction to this data set, since all original variables
+were already uncorrelated.
+
+    \hypertarget{solution-for-exercise-2}{%
+\subsection{Solution for exercise 2}\label{solution-for-exercise-2}}
+
+We first load the CSV file and keep only the relevant columns
+\texttt{GDP}, \texttt{CPI} and \texttt{UNRATE}.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{30}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Uncomment this to use files in the local data/ directory}
+\PY{n}{DATA\PYZus{}PATH} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{c+c1}{\PYZsh{} Load data directly from GitHub}
+\PY{c+c1}{\PYZsh{} DATA\PYZus{}PATH = \PYZsq{}https://raw.githubusercontent.com/richardfoltyn/MLFP\PYZhy{}ECON5130/main/data\PYZsq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{31}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+
+\PY{n}{file} \PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{DATA\PYZus{}PATH}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/FRED\PYZus{}QTR.csv}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Keep only columns of interest}
+\PY{n}{df} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPI}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UNRATE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Tabulate first 5 observations}
+\PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{31}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+      GDP   CPI  UNRATE
+0  2086.0  23.6     3.7
+1  2120.4  24.0     3.7
+2  2132.6  24.4     3.8
+3  2135.0  24.2     3.8
+4  2105.6  23.9     4.7
+\end{Verbatim}
+\end{tcolorbox}
+        
+    We apply the required transformations to obtain inflation from relative
+changes in CPI and the GDP growth from relative changes in GDP. We
+obtain changes in the unemployment rate (measured in percentage points)
+as a simple difference.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{32}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Compute inflation}
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Inflation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPI}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{pct\PYZus{}change}\PY{p}{(}\PY{p}{)} \PY{o}{*} \PY{l+m+mf}{100.0}
+
+\PY{c+c1}{\PYZsh{} Compute GDP growth}
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP\PYZus{}growth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{pct\PYZus{}change}\PY{p}{(}\PY{p}{)} \PY{o}{*} \PY{l+m+mf}{100.0}
+
+\PY{c+c1}{\PYZsh{} Compute absolute change in unemployment rate}
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UNRATE\PYZus{}diff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UNRATE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{diff}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Next, we discard all other columns and drop observations with missing
+values using the \texttt{dropna()} method.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{33}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Keep only (relative) changes, drop all other columns}
+\PY{n}{variables} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GDP\PYZus{}growth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Inflation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UNRATE\PYZus{}diff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{df} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{variables}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Differences create missing values for first observation, drop these}
+\PY{n}{df} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    We compute the correlation matrix using the
+\href{https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html}{\texttt{corr()}}
+method. The result shows that GDP growth is particularly (negatively)
+correlated with changes in unemployment, \ie if the economy is
+growing, unemployment is going down. This is in line with economic
+intuition.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{34}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{34}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+             GDP\_growth  Inflation  UNRATE\_diff
+GDP\_growth        1.000     -0.065       -0.678
+Inflation        -0.065      1.000        0.025
+UNRATE\_diff      -0.678      0.025        1.000
+\end{Verbatim}
+\end{tcolorbox}
+        
+    The pairwise scatter plots for all growth rates and relative changes can
+be obtained with \texttt{scatter\_matrix()}, as usual.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{35}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{pandas}\PY{n+nn}{.}\PY{n+nn}{plotting} \PY{k+kn}{import} \PY{n}{scatter\PYZus{}matrix}
+
+\PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{scatter\PYZus{}matrix}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{n}{variables}\PY{p}{]}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{n}{diagonal}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kde}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1045_0.pdf}
+    \end{center}
+    
+    We now perform the principal component analysis. To do this, we convert
+the \texttt{DataFrame} to a regular NumPy array.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{36}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k+kn}{import} \PY{n}{PCA}
+
+\PY{n}{pca} \PY{o}{=} \PY{n}{PCA}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} perform PCA. Note that sklearn is programmed to work with NumPy arrays,}
+\PY{c+c1}{\PYZsh{} so convert DataFrame to array}
+\PY{n}{X} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{to\PYZus{}numpy}\PY{p}{(}\PY{p}{)}
+\PY{n}{pca}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{36}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+PCA()
+\end{Verbatim}
+\end{tcolorbox}
+        
+    The loadings for each principal component are obtained as follows. We
+see that the first PC load particularly strongly on (negative) GDP
+growth.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{37}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{loadings} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{components\PYZus{}}\PY{o}{.}\PY{n}{T} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Print pretty table with loadings}
+\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{loadings}\PY{p}{,} 
+    \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{]}\PY{p}{,}
+    \PY{n}{index}\PY{o}{=}\PY{n}{variables}\PY{p}{,}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{37}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+               PC0    PC1    PC2
+GDP\_growth  -0.926 -0.112  0.080
+Inflation    0.149 -0.785  0.003
+UNRATE\_diff  0.282  0.044  0.260
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Lastly, we create the scree plot using the
+\texttt{explained\_variance\_ratio\_} attribute. As you can see, the
+last principal component captures only a tiny fraction of the variance
+and could thus potentially be discarded.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{38}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+
+\PY{n}{K} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{variables}\PY{p}{)}
+\PY{n}{xvalues} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{K}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create scree plot}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xvalues}\PY{p}{,} \PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}ratio\PYZus{}}\PY{p}{,} 
+    \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{steelblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{xvalues}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Principal component}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Share of variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Scree plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{38}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0.5, 1.0, 'Scree plot')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1051_1.pdf}
+    \end{center}
+    
+    We can compute the cumulative variance explained by an increasing number
+of components as follows:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{39}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}ratio\PYZus{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{39}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([0.57606753, 0.9554459 , 1.        ])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    To capture at least 90\% of the variance, we only need the first two
+principal components.
+
     \hypertarget{introduction-to-supervised-learning}{%
 \chapter{Introduction to supervised
 learning}\label{introduction-to-supervised-learning}}
@@ -17229,7 +17811,7 @@ Text(0.5, 0.98, 'Univariate linear regression')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1017_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1062_1.pdf}
     \end{center}
     
     The dashed black line shows the true relationship which is known in this
@@ -17487,7 +18069,7 @@ samples and adds the fitted line.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1032_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1077_1.pdf}
     \end{center}
     
     Since this is a univariate model, we can also plot the prediction error
@@ -17528,7 +18110,7 @@ error for each observations, \[
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1034_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1079_1.pdf}
     \end{center}
     
     As the graph shows, the errors are reasonably centred around \(0\) as we
@@ -17808,7 +18390,7 @@ Text(0, 0.5, '\$y\_\{test\} - \textbackslash{}\textbackslash{}widehat\{y\}\_\{te
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1051_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1096_1.pdf}
     \end{center}
     
     The scatter plot indicates that the prediction errors differ
@@ -17953,7 +18535,7 @@ Text(0, 0.5, '\$y\_\{test\} - \textbackslash{}\textbackslash{}widehat\{y\}\_\{te
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1059_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1104_1.pdf}
     \end{center}
     
     \hypertarget{using-scikit-learn-pipelines}{%
@@ -18100,7 +18682,7 @@ Text(0, 0.5, '\$y\_\{test\} - \textbackslash{}\textbackslash{}widehat\{y\}\_\{te
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1067_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1112_1.pdf}
     \end{center}
     
 
@@ -18335,7 +18917,7 @@ the hyperparameter we want to tune.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1078_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1123_1.pdf}
     \end{center}
     
     Here we see that for \(d=0\) (the intercept-only model), the model
@@ -18560,7 +19142,7 @@ Text(0, 0.5, '\$y\$')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1088_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1133_1.pdf}
     \end{center}
     
     \hypertarget{estimating-the-ridge-and-linear-regression-models}{%
@@ -18705,7 +19287,7 @@ Text(0, 0.5, '\$y\$, \$\textbackslash{}\textbackslash{}widehat\{y\}\$')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1094_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1139_1.pdf}
     \end{center}
     
     As the graph shows, the OLS model vastly overfits the data which is what
@@ -18769,7 +19351,7 @@ Text(0, 0.5, 'Coefficient value')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1098_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1143_1.pdf}
     \end{center}
     
     For small \(\alpha\) (on the left) the estimated coefficients are close
@@ -18865,7 +19447,7 @@ plot the MSE as a function of \(\alpha\).
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1105_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1150_0.pdf}
     \end{center}
     
     Now that we have identified the optimal \(\alpha\), we can re-fit the
@@ -18922,7 +19504,7 @@ Text(0, 0.5, '\$y\$')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1108_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1153_1.pdf}
     \end{center}
     
 
@@ -19104,7 +19686,7 @@ Text(0, 0.5, '\$y\$, \$\textbackslash{}\textbackslash{}widehat\{y\}\$')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1117_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1162_1.pdf}
     \end{center}
     
     You might be wondering why we chose \(\alpha = 0.015\) whereas we
@@ -19171,7 +19753,7 @@ Text(0, 0.5, 'Coefficient value')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1121_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1166_1.pdf}
     \end{center}
     
     The graph shows that the coefficient estimates are quite different that
@@ -19202,7 +19784,7 @@ Text(0, 0.5, 'Number of non-zero coefficients')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1123_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1168_1.pdf}
     \end{center}
     
     Clearly, the model estimated by Lasso in this case is substantially less
@@ -19299,7 +19881,7 @@ candidate \(\alpha\) values.
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1130_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1175_0.pdf}
     \end{center}
     
     Now that we have identified the optimal \(\alpha\), we can re-fit the
@@ -19356,7 +19938,7 @@ Text(0, 0.5, '\$y\$')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1133_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1178_1.pdf}
     \end{center}
     
 
@@ -20082,7 +20664,7 @@ Text(0, 0.5, 'Prediction error')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1175_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1220_1.pdf}
     \end{center}
     
     \hypertarget{alternative-way-to-construct-interactions}{%
@@ -20170,7 +20752,7 @@ Text(0, 0.5, 'Prediction error')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1179_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1224_1.pdf}
     \end{center}
     
     \hypertarget{plotting-predicted-vs.-true-values}{%
@@ -20252,7 +20834,7 @@ true values are dashed.
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1183_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1228_0.pdf}
     \end{center}
     
     \hypertarget{exercise-2-polynomial-under--and-overfitting}{%
@@ -20313,7 +20895,7 @@ Text(0, 0.5, '\$y\$')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1186_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1231_1.pdf}
     \end{center}
     
     \hypertarget{polynomial-approximations}{%
@@ -20360,7 +20942,7 @@ create a polynomial in \(x\).
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1188_0.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1233_0.pdf}
     \end{center}
     
     As the figure shows, a degree-0 polynomial is just a constant, while a
@@ -20475,7 +21057,7 @@ calling the \texttt{fit()} method of the pipeline object.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1197_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1242_1.pdf}
     \end{center}
     
     \hypertarget{exercise-4-optimal-polynomial-degree-with-cross-validation}{%
@@ -20530,7 +21112,7 @@ Text(0, 0.5, '\$y\$')
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1200_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1245_1.pdf}
     \end{center}
     
     \hypertarget{function-to-perform-fitting-and-mse-computation}{%
@@ -20723,7 +21305,7 @@ overfitting occurs for high values of \(d\).
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1211_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1256_1.pdf}
     \end{center}
     
     \hypertarget{plotting-the-fitted-model}{%
@@ -20761,7 +21343,7 @@ grid of \(x\)-values.
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1213_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1258_1.pdf}
     \end{center}
     
     \hypertarget{exercise-5-automating-cross-validation-with-scikit-learn}{%
@@ -20899,7 +21481,7 @@ Polynomial degree with min. MSE: 4
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1220_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1265_1.pdf}
     \end{center}
     
     \hypertarget{exercise-6-optimising-hyperparameters-with-validation-curves}{%
@@ -21019,7 +21601,7 @@ Polynomial degree with min. MSE: 4
 \end{tcolorbox}
         
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1227_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{MLFP-part1_files/MLFP-part1_1272_1.pdf}
     \end{center}
     
     \hypertarget{error-handling}{%
