@@ -1,5 +1,5 @@
 """
-Unit 7, Exercise 5
+Unit 6, Exercise 5
 
 Author: Richard Foltyn
 """
@@ -119,6 +119,6 @@ for i, ax in enumerate(axes.flatten()):
 fig.suptitle("Okun's law")
 
 fig.tight_layout()
-fig.savefig('unit07_ex5.pdf')
+fig.savefig('unit06_ex5.pdf')
 
 

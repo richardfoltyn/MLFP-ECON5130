@@ -45,6 +45,6 @@ df_avg.plot.bar()
 # Get reference to current figure object using gcf()
 fig = plt.gcf()
 fig.tight_layout()
-fig.savefig('unit07_ex2.pdf')
+fig.savefig('unit06_ex2.pdf')
 
 

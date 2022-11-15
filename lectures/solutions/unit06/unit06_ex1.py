@@ -41,5 +41,5 @@ df_year.plot.line(y=varnames, subplots=True, layout=(2, 2),
 # Get reference to current figure object using gcf()
 fig = plt.gcf()
 fig.tight_layout()
-fig.savefig('unit07_ex1.pdf')
+fig.savefig('unit06_ex1.pdf')
 

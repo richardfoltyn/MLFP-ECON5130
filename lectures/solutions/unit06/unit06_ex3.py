@@ -1,5 +1,5 @@
 """
-Unit 7, Exercise 3
+Unit 6, Exercise 3
 
 Author: Richard Foltyn
 """
@@ -80,4 +80,4 @@ df_all.plot.bar(sharey=False, subplots=True, layout=(2, 2), legend=False,
 import matplotlib.pyplot as plt
 fig = plt.gcf()
 fig.tight_layout()
-fig.savefig('unit07_ex3.pdf')
+fig.savefig('unit06_ex3.pdf')

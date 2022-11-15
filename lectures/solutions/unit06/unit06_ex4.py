@@ -1,5 +1,5 @@
 """
-Unit 7, Exercise 4
+Unit 6, Exercise 4
 
 Author: Richard Foltyn
 """
@@ -47,7 +47,7 @@ df_count.plot.bar(xlabel='Country', rot=0, title=title)
 # Store figure
 fig = plt.gcf()
 fig.tight_layout()
-fig.savefig('unit07_ex4_by_country.pdf')
+fig.savefig('unit06_ex4_by_country.pdf')
 
 ###############################################################################
 # DataFrame with Pre-1800 indicator in rows, countries in columns
@@ -71,4 +71,4 @@ df_count.plot.bar(rot=0, title=title)
 # Store figure
 fig = plt.gcf()
 fig.tight_layout()
-fig.savefig('unit07_ex4_by_year.pdf')
+fig.savefig('unit06_ex4_by_year.pdf')
