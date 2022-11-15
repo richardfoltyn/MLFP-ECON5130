@@ -47,7 +47,7 @@
     \fi
 
     \usepackage{fancyvrb} % verbatim replacement that allows latex
-    \usepackage{grffile} % extends the file name processing of package graphics 
+    \usepackage{grffile} % extends the file name processing of package graphics
                          % to support a larger range
     \makeatletter % fix for old versions of grffile with XeLaTeX
     \@ifpackagelater{grffile}{2019/11/01}
@@ -131,7 +131,7 @@
     \newcommand{\RegionMarkerTok}[1]{{#1}}
     \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
     \newcommand{\NormalTok}[1]{{#1}}
-    
+
     % Additional commands for more recent versions of Pandoc
     \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
     \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
@@ -150,8 +150,8 @@
     \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
     \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
     \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
-    
-    
+
+
     % Define a nice break command that doesn't care if a line doesn't already
     % exist.
     \def\br{\hspace*{\fill} \\* }
@@ -277,53 +277,53 @@
 \makeatother
 
 
-    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    % For linebreaks inside Verbatim environment from package fancyvrb.
     \makeatletter
-        \newbox\Wrappedcontinuationbox 
-        \newbox\Wrappedvisiblespacebox 
-        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
-        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
-        \newcommand*\Wrappedcontinuationindent {3ex } 
-        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
-        % Take advantage of the already applied Pygments mark-up to insert 
-        % potential linebreaks for TeX processing. 
-        %        {, <, #, %, $, ' and ": go to next line. 
-        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
-        % Use of \textquotesingle for straight quote. 
-        \newcommand*\Wrappedbreaksatspecials {% 
-            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
-            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
-            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
-            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
-            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
-            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
-            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
-            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
-            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
-            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
-            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
-            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
-            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
-            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
-        } 
-        % Some characters . , ; ? ! / are not pygmentized. 
-        % This macro makes them "active" and they will insert potential linebreaks 
-        \newcommand*\Wrappedbreaksatpunct {% 
-            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
-            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
-            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
-            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
-            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
-            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
-            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
             \catcode`\.\active
-            \catcode`\,\active 
+            \catcode`\,\active
             \catcode`\;\active
             \catcode`\:\active
             \catcode`\?\active
             \catcode`\!\active
-            \catcode`\/\active 
-            \lccode`\~`\~ 	
+            \catcode`\/\active
+            \lccode`\~`\~
         }
     \makeatother
 
@@ -346,10 +346,10 @@
             \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
             {\kern\fontdimen2\font}%
         }%
-        
+
         % Allow breaks at special characters using \PYG... macros.
         \Wrappedbreaksatspecials
-        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
         \OriginalVerbatim[#1,fontsize=\small,codes*=\Wrappedbreaksatpunct]%
     }
     \makeatother
@@ -359,7 +359,7 @@
     \definecolor{outcolor}{HTML}{D84315}
     \definecolor{cellborder}{HTML}{CFCFCF}
     \definecolor{cellbackground}{HTML}{FCFCFC}
-    
+
     % prompt
     \makeatletter
     \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
@@ -371,7 +371,7 @@
 
     
     % Prevent overflowing lines due to hard-to-break entities
-    \sloppy 
+    \sloppy
     % Setup hyperref package
     \hypersetup{
       breaklinks=true,  % so long urls are correctly broken across lines
@@ -688,7 +688,7 @@ have to obtain an RNG instance explicitly, for example by using the
 \subsubsection{Drawing random numbers from
 distributions}\label{drawing-random-numbers-from-distributions}}
 
-Often we want to draw random numbers from a specific distribution, such
+Often we want to draw random numbers from a specific distribution such
 as the normal or log-normal distributions. The RNGs in
 \texttt{numpy.random} support a multitude of distributions, including:
 
@@ -910,13 +910,13 @@ Sometimes we need to compute the expectation of a function \(g(x)\) with
 respect to a given distribution with PDF \(f(x)\) on some interval
 \((a,b)\):
 
-\[E[g(x)] = \int_a^b g(x) f(x) dx\]
+\[\mathbb{E}[g(x)] = \int_a^b g(x) f(x) dx\]
 
 For example, we might want to know the mean of a \emph{truncated} normal
 with parameters \(\mu=0\), \(\sigma=1.0\) with support on
 \((-\infty,0)\), \ie
 
-\[E[x| x \leq 0] = \int_{-\infty}^0 x \frac{f(x)}{F(0)}dx\]
+\[\mathbb{E}[x| x \leq 0] = \int_{-\infty}^0 x \frac{f(x)}{F(0)}dx\]
 
 where \(f(x)\) and \(F(x)\) are the PDF and CDF of the standard normal.
 We can compute it as follows:
@@ -1243,17 +1243,18 @@ illustrated in the following figure:
 
 \begin{figure}
 \centering
-\includegraphics{solutions/unit06/unit06_ex2_PDF.pdf}
+\includegraphics{solutions/unit08/unit08_ex2_PDF.pdf}
 \caption{PDF of truncated normal}
 \end{figure}
 
-Compute the second non-central moment \(E[X^2]\) in four different ways:
+Compute the second non-central moment \(\mathbb{E}[X^2]\) in four
+different ways:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Use the fact that \(Var(X) = E[X^2] - E[X]^2\). Call the methods
-  \texttt{mean()} and \texttt{var()} of the
+  Use the fact that \(Var(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2\). Call
+  the methods \texttt{mean()} and \texttt{var()} of the
   \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.truncnorm.html}{truncated
   normal} implemented in SciPy to compute the (squared) mean and
   variance.
@@ -1268,13 +1269,13 @@ from scipy.stats import truncnorm
   directly compute the desired moment.
 \item
   Use the \texttt{expect()} method of SciPy's truncated normal to
-  compute the expectation \(E[X^2]\).
+  compute the expectation \(\mathbb{E}[X^2]\).
 \item
   Use \href{https://en.wikipedia.org/wiki/Monte_Carlo_integration}{Monte
-  Carlo integration} to compute the expectation \(E[X^2]\). There are
-  numerous ways to do MC integration. In this exercise, we use a variant
-  which draws random samples from a 2-dimensional uniform distribution
-  to compute an area under the integrand:
+  Carlo integration} to compute the expectation \(\mathbb{E}[X^2]\).
+  There are numerous ways to do MC integration. In this exercise, we use
+  a variant which draws random samples from a 2-dimensional uniform
+  distribution to compute an area under the integrand:
 
   \begin{itemize}
   \tightlist
@@ -1298,7 +1299,7 @@ from scipy.stats import truncnorm
 
   \begin{figure}
   \centering
-  \includegraphics{solutions/unit06/unit06_ex2_MC.pdf}
+  \includegraphics{solutions/unit08/unit08_ex2_MC.pdf}
   \caption{MC integration}
   \end{figure}
 
@@ -1325,9 +1326,9 @@ terminal wealth is given by \(W = a\cdot R\). The total gross return is
 the product of the period-1 and period-2 gross returns,
 \(R = R_1\cdot R_2\). We impose that per-period log returns
 \(r_t = \log R_t\) are jointly normally distributed with mean
-\(E[r_t] = \mu\), variance \(Var(r_t) = \sigma^2\) for \(t\in\{1,2\}\)
-with a correlation coefficient \(Corr(r_1,r_2) = \rho\). Let \(a = 1\),
-\(\mu = 0.04\), \(\sigma = 0.16\) and \(\rho = 0.5\).
+\(\mathbb{E}[r_t] = \mu\), variance \(Var(r_t) = \sigma^2\) for
+\(t\in\{1,2\}\) with a correlation coefficient \(Corr(r_1,r_2) = \rho\).
+Let \(a = 1\), \(\mu = 0.04\), \(\sigma = 0.16\) and \(\rho = 0.5\).
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1347,7 +1348,7 @@ with a correlation coefficient \(Corr(r_1,r_2) = \rho\). Let \(a = 1\),
     \href{https://en.wikipedia.org/wiki/Log-normal_distribution}{log-normally}
     distributed and has the expected value
 
-    \[E[R] = \exp\left(\mu_R + \frac{1}{2}\sigma_R^2 \right)\]
+    \[\mathbb{E}[R] = \exp\left(\mu_R + \frac{1}{2}\sigma_R^2 \right)\]
   \end{itemize}
 \item
   Compute the expected terminal wealth after 2 periods using Monte Carlo
@@ -1365,7 +1366,7 @@ with a correlation coefficient \(Corr(r_1,r_2) = \rho\). Let \(a = 1\),
   \item
     Compute the expected wealth as the sample average:
 
-    \[E[W] \approx \overline{W} = \frac{1}{N}\sum_{i=1}^N W_i\]
+    \[\mathbb{E}[W] \approx \overline{W} = \frac{1}{N}\sum_{i=1}^N W_i\]
   \end{enumerate}
 
   Make sure you get approximately the same result as in part 1 (you may
@@ -1531,7 +1532,7 @@ to estimate the confidence intervals of the mean estimate.
 \subsection{Solutions}\label{solutions}}
 
 The solutions are also provided as Python scripts in the
-\href{../lectures/solutions/unit06}{lectures/solutions/unit06/} folder.
+\href{../lectures/solutions/unit08}{lectures/solutions/unit08/} folder.
 
     \hypertarget{solution-for-exercise-1}{%
 \subsubsection{Solution for exercise 1}\label{solution-for-exercise-1}}
@@ -1666,7 +1667,7 @@ correct parameters to SciPy's \texttt{truncnorm} methods:
 \PY{n}{za} \PY{o}{=} \PY{p}{(}\PY{n}{a}\PY{o}{\PYZhy{}}\PY{n}{mu}\PY{p}{)}\PY{o}{/}\PY{n}{sigma}
 \PY{n}{zb} \PY{o}{=} \PY{p}{(}\PY{n}{b}\PY{o}{\PYZhy{}}\PY{n}{mu}\PY{p}{)}\PY{o}{/}\PY{n}{sigma}
 
-\PY{c+c1}{\PYZsh{} Method 1: Compute from E[X\PYZca{}2] = Var(X) + E[X]\PYZca{}2}
+\PY{c+c1}{\PYZsh{} Method 1: Compute from \PYZbs{}mathbb\PYZob{}E\PYZcb{}[X\PYZca{}2] = Var(X) + \PYZbs{}mathbb\PYZob{}E\PYZcb{}[X]\PYZca{}2}
 \PY{n}{var} \PY{o}{=} \PY{n}{truncnorm}\PY{o}{.}\PY{n}{var}\PY{p}{(}\PY{n}{za}\PY{p}{,} \PY{n}{zb}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{n}{mu}\PY{p}{,} \PY{n}{scale}\PY{o}{=}\PY{n}{sigma}\PY{p}{)}
 \PY{n}{mean} \PY{o}{=} \PY{n}{truncnorm}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{za}\PY{p}{,} \PY{n}{zb}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{n}{mu}\PY{p}{,} \PY{n}{scale}\PY{o}{=}\PY{n}{sigma}\PY{p}{)}
 \PY{n}{m2\PYZus{}var\PYZus{}mean} \PY{o}{=} \PY{n}{var} \PY{o}{+} \PY{n}{mean} \PY{o}{*}\PY{o}{*} \PY{l+m+mf}{2.0}
@@ -1773,7 +1774,7 @@ Since \((r_1, r_2)\) are jointly normal, a standard result is that their
 sum \(r_1 + r_2\) is normally distributed with mean and variance given
 by
 
-\[\mu_{rr} = E[r_1 + r_2] = 2\mu \]
+\[\mu_{rr} = \mathbb{E}[r_1 + r_2] = 2\mu \]
 
 \[
 \sigma^2_{rr} = Var(r_1+r_2) = Var(r_1) + Var(r_2) + 2\cdot Cov(r_1,r_2) = 2\sigma^2 + 2\rho\sigma^2 
@@ -1784,7 +1785,7 @@ returns have the same mean and variance.
 
 Moreover, since \(\log R = r_1 + r_2\) is normally distributed, \(R\) is
 log-normally distributed and has the expected value \[
-E[R] = \exp\left(\mu_{rr} + \frac{1}{2}\sigma_{rr}^2 \right)
+\mathbb{E}[R] = \exp\left(\mu_{rr} + \frac{1}{2}\sigma_{rr}^2 \right)
     = \exp\left(2\mu + (1+\rho) \sigma^2 \right)
 \] Since \(a = 1\), this is also the expected value of terminal wealth
 \(W\).
