@@ -1568,7 +1568,7 @@ method to perform hyperparameter tuning is
 search} which we won't cover in this unit.
 
     \hypertarget{examle-tuning-of-the-polynomial-degree}{%
-\subsubsection{Examle: Tuning of the polynomial
+\subsubsection{Example: Tuning of the polynomial
 degree}\label{examle-tuning-of-the-polynomial-degree}}
 
 To illustrate the concept, we demonstrate the procedure outlined above
@@ -1982,10 +1982,14 @@ A few more steps are required before we can run the Ridge regression:
   \href{https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html}{\texttt{StandardScaler}}
   transformation.
 \item
-  Finally, we build a
+  Finally, the estimation step is performed by the
+  \href{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html}{\texttt{Ridge}}
+  class.
+\item
+  We build a
   \href{https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html}{\texttt{Pipeline}}
-  that combines these transformation together with the final estimation
-  step. We use the function
+  that combines these transformation together with the estimation step.
+  We use the function
   \href{https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html}{\texttt{make\_pipeline()}}
   to simplify this step.
 \end{itemize}
