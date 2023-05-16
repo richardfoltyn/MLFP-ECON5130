@@ -30,6 +30,8 @@ as a static PDF file. Alternatively, you can download the entire course as a
 
 ## Installation
 
+Detailed slides on how to set up your working environment are available [here](https://github.com/richardfoltyn/MLFP-ECON5130/blob/main/slides/python-setup.pdf).
+
 ### Running without installation
 
 You have two options to run these notebooks directly in the cloud:
