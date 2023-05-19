@@ -31,9 +31,9 @@ ipyleaflet
 plotly>=5,<6
 bqplot
 
-numpy=1.21.*
-pandas=1.4.*
-matplotlib=3.5.*
+numpy~=1.21
+pandas~=1.4
+matplotlib~=3.5
 pandas-datareader
 yfinance
 fredapi
