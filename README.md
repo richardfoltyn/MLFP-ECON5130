@@ -1,5 +1,6 @@
 # Machine Learning in Finance with Python - Part 1
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![lite-badge](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://richardfoltyn.github.io/MLFP-ECON5130)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/richardfoltyn/MLFP-ECON5130/main?filepath=index.ipynb)
 
 Author: Richard Foltyn, University of Glasgow
@@ -36,14 +37,26 @@ Detailed slides on how to set up your working environment are available [here](h
 
 You have two options to run these notebooks directly in the cloud:
 
-1.  Click on the ![Binder](https://mybinder.org/badge_logo.svg) button
-    above to use the notebooks directly in your web browser. It will take
-    a while to create a Python environment in the cloud, but you can
-    access all Python modules and data files in the repository.
+1. Click on the ![lite-badge](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg) button
+    above to launch the notebooks directly in your web browser.
+
+    - In unit 7, the modules `openpyxl`, `yfinance`, `pandas_datareader`
+    and `nasdaqdatalink` cannot be imported.
 2.  Click on the ![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)
     icon next to each notebook. This will immediately open the notebook
-    in [Google Colab](https://colab.research.google.com), but you need
-    a Google account to run anything and importing custom modules will not work.
+    in [Google Colab](https://colab.research.google.com).
+    
+    - You need a Google account to run anything.
+    - Some modules need to be manually installed using `%pip install` before
+      they can be imported.
+3.  Click on the ![Binder](https://mybinder.org/badge_logo.svg) button
+    above to launch the notebooks hosted on [mybinder.org](https://mybinder.org/).
+
+    - It will take a while to create a Python environment in the cloud, but you can
+      access all Python modules and data files in the repository.
+    - mybinder.org seems to have become unreliable (as of May 2023) so this
+      method **might not work**.
+
 
 ### Running locally
 
