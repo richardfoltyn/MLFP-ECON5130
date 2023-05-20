@@ -5,7 +5,6 @@
 
 Author: Richard Foltyn, University of Glasgow
 
-***
 
 ## Units
 
@@ -28,13 +27,12 @@ as a static PDF file. Alternatively, you can download the entire course as a
 | 10    | Introduction to supervised learning | [PDF](latex/unit10.pdf) |  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit10.ipynb)
 | 11    | Error handling (optional) | [PDF](latex/unit09.pdf) |  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit09.ipynb) |
 
-***
 
 ## Python environment
 
 Detailed slides on how to set up your working environment are available [here](https://github.com/richardfoltyn/MLFP-ECON5130/blob/main/slides/python-setup.pdf).
 
-***
+
 ## Licence
 
 This material is licensed under a 
@@ -42,7 +40,7 @@ This material is licensed under a
 except for the data files contained in the `data/` folder, which
 fall under the terms imposed by the original content creators.
 
-***
+
 ## Credits
 
 Special thanks go to Jonna Olsson for reading through all units and
