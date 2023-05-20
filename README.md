@@ -5,6 +5,8 @@
 
 Author: Richard Foltyn, University of Glasgow
 
+***
+
 ## Units
 
 This introductory course consists of several units. Each unit corresponds
@@ -26,86 +28,13 @@ as a static PDF file. Alternatively, you can download the entire course as a
 | 10    | Introduction to supervised learning | [PDF](latex/unit10.pdf) |  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit10.ipynb)
 | 11    | Error handling (optional) | [PDF](latex/unit09.pdf) |  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit09.ipynb) |
 
-
 ***
 
-## Installation
+## Python environment
 
 Detailed slides on how to set up your working environment are available [here](https://github.com/richardfoltyn/MLFP-ECON5130/blob/main/slides/python-setup.pdf).
 
-### Running without installation
-
-You have two options to run these notebooks directly in the cloud:
-
-1. Click on the ![lite-badge](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg) button
-    above to launch the notebooks directly in your web browser.
-
-    - In unit 7, the modules `openpyxl`, `yfinance`, `pandas_datareader`
-    and `nasdaqdatalink` cannot be imported.
-2.  Click on the ![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)
-    icon next to each notebook. This will immediately open the notebook
-    in [Google Colab](https://colab.research.google.com).
-    
-    - You need a Google account to run anything.
-    - Some modules need to be manually installed using `%pip install` before
-      they can be imported.
-3.  Click on the ![Binder](https://mybinder.org/badge_logo.svg) button
-    above to launch the notebooks hosted on [mybinder.org](https://mybinder.org/).
-
-    - It will take a while to create a Python environment in the cloud, but you can
-      access all Python modules and data files in the repository.
-    - mybinder.org seems to have become unreliable (as of May 2023) so this
-      method **might not work**.
-
-
-### Running locally
-
-#### Download the repository contents
-
-If you are familiar with git, clone the repository:
-```bash
-git clone https://github.com/richardfoltyn/MLFP-ECON5130.git
-```
-Otherwise, download the contents as a ZIP file by clicking on
-![Code](images/gh-code.png) above.
-
-#### Install Anaconda
-
-On Windows, you need to install a local Python environment such as 
-[Anaconda](https://www.anaconda.com/products/distribution). On Linux,
-your distribution comes with Python but the required packages are most likely
-outdated, so it is still recommended installing Anaconda.
-
-##### Windows
-
-Once Anaconda is installed, click on _Jupyter Notebook_ in the Start menu
-and navigate to where you extracted the repository contents. Select
-`index.ipynb` to run the main notebook.
-
-![Jupyter Notebook](images/conda-start.png)
-
-##### Linux
-
-You need to create a new Python environment which contains all the 
-required packages. You can use the specification provided in [environment.yml](environment.yml)
-to accomplish that:
-```bash
-conda env create -f environment.yml
-```
-Activate the virtual environment you just created:
-```bash
-conda activate MLFP
-```
-To start the Jupyter notebook server, navigate to where you extracted
-the repository contents and run
-```bash
-cd path/to/repository
-jupyter notebook index.ipynb
-```
-
-
 ***
-
 ## Licence
 
 This material is licensed under a 
@@ -113,6 +42,7 @@ This material is licensed under a
 except for the data files contained in the `data/` folder, which
 fall under the terms imposed by the original content creators.
 
+***
 ## Credits
 
 Special thanks go to Jonna Olsson for reading through all units and
