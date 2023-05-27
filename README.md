@@ -25,7 +25,7 @@ as a static PDF file. Alternatively, you can download the entire course as a
 | 8    | Random number generation and statistics | [PDF](latex/unit08.pdf) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit08.ipynb) |
 | 9    | Introduction to unsupervised learning | [PDF](latex/unit09.pdf) |  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit09.ipynb)
 | 10    | Introduction to supervised learning | [PDF](latex/unit10.pdf) |  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit10.ipynb)
-| 11    | Error handling (optional) | [PDF](latex/unit09.pdf) |  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit09.ipynb) |
+| 11    | Error handling (optional) | [PDF](latex/unit11.pdf) |  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/richardfoltyn/MLFP-ECON5130/blob/main/lectures/unit11.ipynb) |
 
 
 ## Python environment
